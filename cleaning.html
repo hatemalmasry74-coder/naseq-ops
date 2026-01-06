@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -12,38 +12,28 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <!-- Page Layout (Cleaning) -->
   <style>
     .page{max-width:1100px;margin:0 auto;padding:18px}
     .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
     .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
     .footer{margin-top:18px;color:var(--text-muted);font-size:12px}
 
-    /* Inputs (تتوافق مع هوية نسق) */
     .input{
-      width:100%;
-      padding:10px 12px;
-      border-radius:10px;
-      border:1px solid var(--border-light);
-      background:#fff;
-      color:var(--text-main);
+      width:100%;padding:10px 12px;border-radius:10px;
+      border:1px solid var(--border-light);background:#fff;
       outline:none;
     }
 
-    /* Pills */
-    .pill{padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border-light);background:#fff}
-    .pill.ok{border-color:rgba(46,125,50,.35);background:rgba(46,125,50,.08)}
-    .pill.warn{border-color:rgba(237,108,2,.35);background:rgba(237,108,2,.08)}
-    .pill.danger{border-color:rgba(193,33,38,.45);background:rgba(193,33,38,.08)}
+    .pill{padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border-light)}
+    .pill.ok{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.35)}
+    .pill.warn{background:rgba(237,108,2,.08);border-color:rgba(237,108,2,.35)}
+    .pill.danger{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.45)}
 
-    /* Table */
     .table{width:100%;border-collapse:separate;border-spacing:0 10px}
     .table th{font-size:12px;color:var(--text-muted);text-align:right}
     .table td{
-      background:#fff;
-      border:1px solid var(--border-light);
-      padding:10px;
-      border-left:none;border-right:none;
+      background:#fff;border:1px solid var(--border-light);
+      padding:10px;border-left:none;border-right:none
     }
     .table tr td:first-child{
       border-right:1px solid var(--border-light);
@@ -54,37 +44,27 @@
       border-top-left-radius:10px;border-bottom-left-radius:10px
     }
 
-    /* Topbar + Nav (تعتمد على كلاسّات ملفك الموجودة) */
-    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px}
-    .brand{display:flex;align-items:center;gap:10px}
-    .logo{
-      width:38px;height:38px;border-radius:12px;
-      display:grid;place-items:center;
-      background:var(--nasaq-primary);color:#fff;font-weight:900;
-    }
-    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border-light);background:#fff;font-size:12px}
-    .container{max-width:1100px;margin:0 auto;padding:18px}
-    .nav{display:flex;gap:10px;flex-wrap:wrap}
-    .nav a{
-      padding:10px 12px;border-radius:12px;
-      border:1px solid var(--border-light);
-      background:#fff;color:var(--text-main);text-decoration:none;
-      font-size:13px;
-    }
-    .nav a.active{
-      border-color:rgba(193,33,38,.35);
-      background:rgba(193,33,38,.08);
+    .btn{
+      background:var(--nasaq-primary);color:#fff;
+      border:none;border-radius:10px;padding:10px 14px;cursor:pointer
     }
 
-    /* Buttons (لو ملفك فيه .btn مسبقاً ما راح يضر) */
-    .btn{
-      background:var(--nasaq-primary);
-      color:#fff;border:none;border-radius:10px;
-      padding:10px 14px;cursor:pointer;
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{width:38px;height:38px;border-radius:12px;background:var(--nasaq-primary);color:#fff;
+      display:grid;place-items:center;font-weight:900}
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border-light);background:#fff}
+
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .nav a{padding:10px 12px;border-radius:12px;border:1px solid var(--border-light);background:#fff;text-decoration:none}
+    .nav a.active{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.35)}
+
+    @media print{
+      .topbar,.nav,#printSummary,#printDetailed,#fStatus,#fSearch{display:none!important}
+      .col-notes{display:none}
+      body[data-print="detailed"] .col-notes{display:table-cell}
     }
-    .btn:hover{opacity:.92}
-    .muted{color:var(--text-muted)}
-    .small{font-size:12px}
   </style>
 </head>
 
@@ -94,17 +74,17 @@
       <div class="logo">ن</div>
       <div>
         <div style="font-weight:900">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
+        <div class="muted">Pilot: طوبى • سدف • دبل بي</div>
       </div>
     </div>
-    <div class="badge">MVP محلي (Prototype)</div>
+    <div class="badge">MVP محلي</div>
   </div>
 
   <div class="container">
-    <div class="nav" style="margin-bottom:14px">
+    <div class="nav">
       <a data-nav href="index.html">لوحة التحكم</a>
       <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">الملاحظات &amp; CAPA</a>
+      <a data-nav href="issues.html">CAPA & الملاحظات</a>
       <a data-nav href="tasks.html">المهام</a>
       <a data-nav href="cleaning.html">النظافة اليومية</a>
       <a data-nav href="sop.html">مكتبة SOP</a>
@@ -112,194 +92,208 @@
     </div>
 
     <div class="grid">
-      <div class="card" style="grid-column: span 5">
+      <div class="card" style="grid-column:span 5">
         <h3>تسجيل نظافة يومية</h3>
-        <div class="muted">نموذج مبسط مستوحى من جدول التنظيف بالوقت.</div>
 
-        <div style="margin-top:10px">
-          <label class="small muted">البراند</label>
-          <select id="cBrand" class="input"></select>
-        </div>
-        <div style="margin-top:10px">
-          <label class="small muted">الفرع</label>
-          <select id="cBranch" class="input"></select>
-        </div>
-        <div style="margin-top:10px">
-          <label class="small muted">الفترة</label>
-          <select id="cSlot" class="input">
-            <option>7:00–7:30</option><option>7:30–8:00</option><option>8:00–8:30</option>
-            <option>8:30–9:00</option><option>9:00–9:30</option><option>9:30–10:00</option>
-            <option>10:00–10:30</option><option>10:30–11:00</option><option>11:00–11:30</option>
-          </select>
-        </div>
-        <div style="margin-top:10px">
-          <label class="small muted">المهمة</label>
-          <select id="cTask" class="input">
-            <option>Floor</option><option>Bathroom</option><option>Back area</option><option>Store</option>
-            <option>Lights</option><option>Glasses</option><option>Windows</option>
-          </select>
-        </div>
-        <div style="margin-top:10px">
-          <label class="small muted">المنفذ</label>
-          <input id="cBy" class="input" placeholder="اسم الموظف"/>
-        </div>
-        <div style="margin-top:10px">
-          <label class="small muted">الحالة</label>
-          <select id="cDone" class="input">
-            <option>تم</option>
-            <option>لم يتم</option>
-          </select>
-        </div>
+        <label class="small muted">البراند</label>
+        <select id="cBrand" class="input"></select>
 
-        <div class="row" style="margin-top:12px">
-          <button class="btn" id="addClean" type="button">حفظ</button>
-        </div>
+        <label class="small muted">الفرع</label>
+        <select id="cBranch" class="input"></select>
+
+        <label class="small muted">الفترة</label>
+        <select id="cSlot" class="input">
+          <option>7:00–7:30</option><option>7:30–8:00</option>
+          <option>8:00–8:30</option><option>8:30–9:00</option>
+        </select>
+
+        <label class="small muted">المهمة</label>
+        <select id="cTask" class="input">
+          <option>Floor</option><option>Bathroom</option>
+          <option>Back area</option><option>Store</option>
+        </select>
+
+        <label class="small muted">المنفذ</label>
+        <input id="cBy" class="input" placeholder="اسم الموظف">
+
+        <label class="small muted">الحالة</label>
+        <select id="cDone" class="input">
+          <option>تم</option>
+          <option>جزئي</option>
+          <option>لم يتم</option>
+        </select>
+
+        <label class="small muted">ملاحظات</label>
+        <textarea id="cNotes" class="input" style="min-height:80px;resize:vertical" placeholder="اكتب الملاحظة (اختياري)"></textarea>
+
+        <button class="btn" type="button" id="addClean">حفظ</button>
       </div>
 
-      <div class="card" style="grid-column: span 7">
+      <div class="card" style="grid-column:span 7">
         <h3>سجل النظافة</h3>
+
+        <div class="row">
+          <select id="fStatus" class="input" style="max-width:220px">
+            <option value="">كل الحالات</option>
+            <option>تم</option><option>جزئي</option><option>لم يتم</option>
+          </select>
+          <input id="fSearch" class="input" style="flex:1;min-width:200px" placeholder="بحث (منفذ/مهمة/فترة/ملاحظة)">
+          <button class="btn" type="button" id="printSummary">PDF مختصر</button>
+          <button class="btn" type="button" id="printDetailed">PDF تفصيلي</button>
+        </div>
+
         <table class="table">
-          <thead><tr>
-            <th>التاريخ</th><th>البراند</th><th>الفرع</th><th>الفترة</th><th>المهمة</th><th>الحالة</th><th>المنفذ</th>
-          </tr></thead>
+          <thead>
+            <tr>
+              <th>التاريخ</th><th>البراند</th><th>الفرع</th>
+              <th>الفترة</th><th>المهمة</th><th>الحالة</th>
+              <th>المنفذ</th><th>CAPA</th><th class="col-notes">ملاحظات</th>
+            </tr>
+          </thead>
           <tbody id="cleanTbody"></tbody>
         </table>
       </div>
     </div>
 
     <div class="footer">
-      هذا نموذج أولي محلي لتجربة الفكرة. البيانات تُحفظ في المتصفح (LocalStorage). للاستخدام الفعلي على الإنترنت نحتاج استضافة + قاعدة بيانات + صلاحيات.
+      نموذج تشغيلي أولي — البيانات محلية (LocalStorage)
     </div>
   </div>
 
-  <script>
-    const DB_KEY = "naseq_ops_db_v1";
+<script>
+  const DB_KEY = "naseq_ops_db_v1";
 
-    function nowISO(){
-      const d = new Date();
-      return d.toISOString();
-    }
+  const now = () => new Date().toISOString();
+  const load = () => {
+    const raw = localStorage.getItem(DB_KEY);
+    if(!raw) return seed();
+    try { return JSON.parse(raw) || seed(); } catch(e){ return seed(); }
+  };
+  const save = (db) => localStorage.setItem(DB_KEY, JSON.stringify(db));
 
-    function seedDB(){
-      const seeded = {
-        meta: { createdAt: nowISO(), language: "ar", pilot: true },
-        brands: [
-          { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
-          { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
-          { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
-        ],
-        users: [{ id:"admin", name:"نَسَق (Admin)", role:"admin" }],
-        visits: [],
-        issues: [],
-        tasks: [],
-        cleaningLogs: [],
-        sops: [
-          { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
-          { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
-        ]
-      };
-      localStorage.setItem(DB_KEY, JSON.stringify(seeded));
-      return seeded;
-    }
+  function seed(){
+    const db = {
+      brands:[
+        {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+        {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+        {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
+      ],
+      cleaningLogs:[],
+      issues:[]
+    };
+    save(db);
+    return db;
+  }
 
-    function loadDB(){
-      const raw = localStorage.getItem(DB_KEY);
-      if(!raw) return seedDB();
-      try { return JSON.parse(raw); } catch(e){ return seedDB(); }
-    }
+  function statusPill(s){
+    if(s==="تم") return '<span class="pill ok">تم</span>';
+    if(s==="جزئي") return '<span class="pill warn">جزئي</span>';
+    return '<span class="pill danger">لم يتم</span>';
+  }
 
-    function saveDB(db){
-      localStorage.setItem(DB_KEY, JSON.stringify(db));
-    }
-
-    function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
-
-    function setActiveNav(){
-      const path = location.pathname.split("/").pop() || "index.html";
-      $all("[data-nav]").forEach(a => {
-        if(a.getAttribute("href") === path) a.classList.add("active");
-      });
-    }
-
-    function renderBrandBranchSelectors(brandSelId, branchSelId){
-      const db = loadDB();
-      const brandSel = document.getElementById(brandSelId);
-      const branchSel = document.getElementById(branchSelId);
-      if(!brandSel || !branchSel) return;
-
-      brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-
-      function fillBranches(){
-        const b = db.brands.find(x=>x.id===brandSel.value);
-        branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-      }
-
-      brandSel.addEventListener("change", fillBranches);
-      fillBranches();
-    }
-
-    function fmtDate(iso){
-      try{
-        const d = new Date(iso);
-        return d.toLocaleString("ar-SA");
-      }catch(e){ return iso; }
-    }
-
-    function statusPill(status){
-      const map = { "متأخر": "warn", "منجز": "ok" };
-      const cls = map[status] || "";
-      return `<span class="pill ${cls}">${status}</span>`;
-    }
-
-    function brandName(id){
-      const db = loadDB();
-      return db.brands.find(b=>b.id===id)?.name || id;
-    }
-
-    function branchName(brandId, branchId){
-      const db = loadDB();
-      const b = db.brands.find(x=>x.id===brandId);
-      return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
-    }
-
-    function renderClean(){
-      const db = loadDB();
-      const tbody = document.getElementById("cleanTbody");
-
-      tbody.innerHTML = db.cleaningLogs.slice().reverse().map(r=>`
-        <tr>
-          <td class="muted">${fmtDate(r.createdAt)}</td>
-          <td>${brandName(r.brandId)}</td>
-          <td>${branchName(r.brandId, r.branchId)}</td>
-          <td>${r.slot}</td>
-          <td>${r.task}</td>
-          <td>${r.done==="تم" ? statusPill("منجز") : statusPill("متأخر")}</td>
-          <td class="muted">${r.by}</td>
-        </tr>
-      `).join("") || `<tr><td colspan="7" class="muted">لا يوجد سجلات.</td></tr>`;
-    }
-
-    document.getElementById("addClean").addEventListener("click", ()=>{
-      const db = loadDB();
-      db.cleaningLogs.push({
-        id:"c_"+Math.random().toString(16).slice(2),
-        brandId: document.getElementById("cBrand").value,
-        branchId: document.getElementById("cBranch").value,
-        slot: document.getElementById("cSlot").value,
-        task: document.getElementById("cTask").value,
-        done: document.getElementById("cDone").value,
-        by: document.getElementById("cBy").value.trim() || "غير محدد",
-        createdAt: nowISO()
-      });
-      saveDB(db);
-      alert("تم الحفظ ✅");
-      renderClean();
+  function setActiveNav(){
+    const path = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll("[data-nav]").forEach(a=>{
+      if(a.getAttribute("href") === path) a.classList.add("active");
     });
+  }
 
-    // Init
+  function render(){
+    const db = load();
+    const tbody = document.getElementById("cleanTbody");
+
+    const fs = (document.getElementById("fStatus").value || "").trim();
+    const q  = (document.getElementById("fSearch").value || "").trim().toLowerCase();
+
+    const rows = db.cleaningLogs
+      .filter(r => (!fs || r.done === fs))
+      .filter(r => (!q || JSON.stringify(r).toLowerCase().includes(q)))
+      .slice()
+      .reverse();
+
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td>${new Date(r.createdAt).toLocaleString("ar-SA")}</td>
+        <td>${r.brand}</td>
+        <td>${r.branch}</td>
+        <td>${r.slot}</td>
+        <td>${r.task}</td>
+        <td>${statusPill(r.done)}</td>
+        <td>${r.by}</td>
+        <td>${r.capa || "—"}</td>
+        <td class="col-notes">${r.notes || "—"}</td>
+      </tr>
+    `).join("") || "<tr><td colspan='9' class='muted'>لا يوجد سجلات</td></tr>";
+  }
+
+  document.getElementById("addClean").addEventListener("click", ()=>{
+    const db = load();
+
+    const brandText  = cBrand.options[cBrand.selectedIndex]?.text || "—";
+    const branchText = cBranch.options[cBranch.selectedIndex]?.text || "—";
+
+    const rec = {
+      brand: brandText,
+      branch: branchText,
+      slot: cSlot.value,
+      task: cTask.value,
+      by: (cBy.value || "").trim() || "—",
+      done: cDone.value,
+      notes: (cNotes.value || "").trim(),
+      createdAt: now(),
+      capa: null
+    };
+
+    if(rec.done !== "تم"){
+      rec.capa = "CAPA-" + Math.random().toString(16).slice(2,6);
+      db.issues.push({ id: rec.capa, source: "cleaning", createdAt: rec.createdAt });
+    }
+
+    db.cleaningLogs.push(rec);
+    save(db);
+
+    // تنظيف الإدخال
+    cBy.value = "";
+    cNotes.value = "";
+
+    render();
+    alert("تم الحفظ ✅");
+  });
+
+  document.getElementById("printSummary").addEventListener("click", ()=>{
+    document.body.dataset.print = "summary";
+    window.print();
+  });
+
+  document.getElementById("printDetailed").addEventListener("click", ()=>{
+    document.body.dataset.print = "detailed";
+    window.print();
+  });
+
+  document.getElementById("fStatus").addEventListener("change", render);
+  document.getElementById("fSearch").addEventListener("input", render);
+
+  (function init(){
     setActiveNav();
-    renderBrandBranchSelectors("cBrand","cBranch");
-    renderClean();
-  </script>
+
+    const db = load();
+
+    // Fill brands
+    cBrand.innerHTML = "";
+    db.brands.forEach(b => cBrand.add(new Option(b.name, b.id)));
+
+    // Fill branches based on selected brand
+    function fillBranches(){
+      cBranch.innerHTML = "";
+      const b = db.brands.find(x => x.id === cBrand.value);
+      (b?.branches || []).forEach(br => cBranch.add(new Option(br.name, br.id)));
+    }
+
+    cBrand.addEventListener("change", fillBranches);
+    fillBranches();
+
+    render();
+  })();
+</script>
 </body>
 </html>
