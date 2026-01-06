@@ -1,0 +1,49 @@
+/* ===============================
+   NASAQ BRAND THEME
+   =============================== */
+
+:root {
+  /* Brand Colors */
+  --nasaq-primary: #C12126;
+  --nasaq-cream: #FDF0D6;
+  --nasaq-ink: #2B2B2B;
+
+  /* UI */
+  --bg-main: var(--nasaq-cream);
+  --bg-card: #ffffff;
+  --text-main: var(--nasaq-ink);
+  --text-muted: rgba(43,43,43,0.65);
+  --border-light: rgba(43,43,43,0.15);
+}
+
+/* Global */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Almarai', sans-serif;
+  margin: 0;
+}
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Buttons */
+button {
+  background-color: var(--nasaq-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+feat: add nasaq brand theme
