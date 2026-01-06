@@ -3,248 +3,244 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>منصة نسق – المهام</title>
+  <title>منصة نَسَق – المهام</title>
 
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    .mini{font-size:12px}
+    .pill.link{cursor:pointer}
+    .row .input{flex:1;min-width:180px}
+    @media print{
+      .topbar,.nav,.no-print{display:none!important}
+      body{background:#fff!important;color:#000!important}
+    }
+  </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">ن</div>
-      <div>
-        <div style="font-weight:900">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
-      </div>
-    </div>
-    <div class="badge">MVP محلي (Prototype)</div>
-  </div>
-
-  <div class="container">
-    <div class="nav">
-      <a data-nav href="index.html">لوحة التحكم</a>
-      <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">CAPA & الملاحظات</a>
-      <a data-nav href="tasks.html">المهام</a>
-      <a data-nav href="cleaning.html">النظافة اليومية</a>
-      <a data-nav href="sop.html">مكتبة SOP</a>
-      <a data-nav href="settings.html">الإعدادات</a>
-    </div>
-
-    <div class="grid">
-      <div class="card" style="grid-column:span 5">
-        <h3>إضافة مهمة</h3>
-        <div class="muted">مهام يومية/أسبوعية مبسطة (MVP).</div>
-
-        <label class="small">البراند</label>
-        <select id="tBrand" class="input"></select>
-
-        <label class="small">الفرع</label>
-        <select id="tBranch" class="input"></select>
-
-        <label class="small">الوصف</label>
-        <input id="tDesc" class="input" placeholder="مثال: متابعة تقفيلة الكاش + مطابقة الفواتير">
-
-        <label class="small">الدور/المسؤول</label>
-        <input id="tOwner" class="input" placeholder="مثال: مدير الفرع / محاسب / مشرف">
-
-        <label class="small">تاريخ الاستحقاق</label>
-        <input id="tDue" type="date" class="input">
-
-        <div class="row" style="margin-top:12px">
-          <button class="btn primary" id="addTask">إضافة</button>
-        </div>
-      </div>
-
-      <div class="card" style="grid-column:span 7">
-        <h3>قائمة المهام</h3>
-
-        <div class="row" style="margin-bottom:10px">
-          <select id="fStatus" class="input" style="max-width:220px">
-            <option value="">كل الحالات</option>
-            <option>مفتوح</option>
-            <option>قيد التنفيذ</option>
-            <option>منجز</option>
-            <option>متأخر</option>
-          </select>
-          <input id="q" class="input" placeholder="بحث (وصف/مسؤول/براند/فرع)">
-        </div>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>البراند</th>
-              <th>الفرع</th>
-              <th>المهمة</th>
-              <th>المسؤول</th>
-              <th>الاستحقاق</th>
-              <th>الحالة</th>
-              <th>إجراء</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="footer">
-      نموذج أولي محلي — البيانات محلية (LocalStorage).
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">ن</div>
+    <div>
+      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
+      <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
     </div>
   </div>
+  <div class="badge">MVP محلي</div>
+</div>
+
+<div class="container">
+  <div class="nav">
+    <a data-nav href="index.html">لوحة التحكم</a>
+    <a data-nav href="visits.html">الزيارات</a>
+    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
+    <a data-nav href="tasks.html">المهام</a>
+    <a data-nav href="cleaning.html">النظافة اليومية</a>
+    <a data-nav href="sop.html">مكتبة SOP</a>
+    <a data-nav href="settings.html">الإعدادات</a>
+  </div>
+
+  <div class="grid">
+    <!-- CREATE TASK -->
+    <div class="card" style="grid-column:span 5">
+      <h3>إضافة مهمة</h3>
+      <div class="muted mini">
+        يمكن ربط المهمة بـ CAPA لمتابعة الإغلاق.
+      </div>
+
+      <label class="small">البراند</label>
+      <select id="tBrand" class="input"></select>
+
+      <label class="small">الفرع</label>
+      <select id="tBranch" class="input"></select>
+
+      <label class="small">وصف المهمة</label>
+      <input id="tTitle" class="input" placeholder="مثال: معالجة ملاحظة نظافة">
+
+      <label class="small">الدور / المسؤول</label>
+      <input id="tOwner" class="input" placeholder="مثال: مدير الفرع">
+
+      <label class="small">تاريخ الاستحقاق</label>
+      <input id="tDue" type="date" class="input">
+
+      <label class="small">الحالة</label>
+      <select id="tStatus" class="input">
+        <option>جديدة</option>
+        <option>قيد التنفيذ</option>
+        <option>متأخر</option>
+        <option>منجزة</option>
+      </select>
+
+      <label class="small">CAPA (اختياري)</label>
+      <input id="tCapa" class="input" placeholder="CAPA-XXXX">
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" id="addTask">إضافة</button>
+        <button class="btn ghost" id="resetTask" type="button">تفريغ</button>
+      </div>
+    </div>
+
+    <!-- TASKS TABLE -->
+    <div class="card" style="grid-column:span 7">
+      <h3>قائمة المهام</h3>
+
+      <div class="row no-print" style="margin:10px 0">
+        <select id="fStatus" class="input" style="max-width:220px">
+          <option value="">كل الحالات</option>
+          <option>جديدة</option>
+          <option>قيد التنفيذ</option>
+          <option>متأخر</option>
+          <option>منجزة</option>
+        </select>
+        <input id="fSearch" class="input" placeholder="بحث (مهمة / مسؤول / CAPA)">
+        <button class="btn" onclick="window.print()">PDF</button>
+      </div>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>الحالة</th>
+            <th>البراند</th>
+            <th>الفرع</th>
+            <th>المهمة</th>
+            <th>المسؤول</th>
+            <th>الاستحقاق</th>
+            <th>CAPA</th>
+          </tr>
+        </thead>
+        <tbody id="taskTbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    كل مهمة يمكن ربطها بـ CAPA لإغلاق الملاحظات بشكل منضبط.
+  </div>
+</div>
 
 <script>
+/* ===== DB ===== */
 const DB_KEY="naseq_ops_db_v1";
 const nowISO=()=>new Date().toISOString();
+const load=()=>JSON.parse(localStorage.getItem(DB_KEY)||"null")||seed();
+const save=db=>localStorage.setItem(DB_KEY,JSON.stringify(db));
 
-function seedDB(){
+function seed(){
   const db={
-    meta:{createdAt:nowISO(),lang:"ar"},
     brands:[
-      { id:"tuba", name:"طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}] },
-      { id:"sdf",  name:"سدف",  branches:[{id:"sdf-main",  name:"سدف – الفرع الرئيسي"}] },
-      { id:"dbb",  name:"دبل بي",branches:[{id:"dbb-main",  name:"دبل بي – الفرع الرئيسي"}] }
+      {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+      {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+      {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
     ],
-    visits:[],
     tasks:[],
     issues:[],
-    cleaningLogs:[],
-    sops:[]
+    visits:[],
+    cleaningLogs:[]
   };
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-  return db;
+  save(db);return db;
 }
-function loadDB(){
-  const raw=localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try{ return JSON.parse(raw); }catch(e){ return seedDB(); }
-}
-function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+/* ===== Helpers ===== */
+const $=id=>document.getElementById(id);
+const $$=sel=>Array.from(document.querySelectorAll(sel));
 
 function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-nav]").forEach(a=>{
-    if(a.getAttribute("href")===path) a.classList.add("active");
-  });
+  const p=location.pathname.split("/").pop();
+  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p&&a.classList.add("active"));
 }
-function renderBrandBranch(brandSelId, branchSelId){
-  const db=loadDB();
-  const brand=document.getElementById(brandSelId);
-  const branch=document.getElementById(branchSelId);
-
-  brand.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  const fill=()=>{
-    const b=db.brands.find(x=>x.id===brand.value);
-    branch.innerHTML=(b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-  };
-  brand.addEventListener("change", fill);
-  fill();
-}
-function pillStatus(s){
-  if(s==="منجز") return `<span class="pill ok">منجز</span>`;
+function statusPill(s){
+  if(s==="منجزة") return `<span class="pill ok">منجزة</span>`;
   if(s==="متأخر") return `<span class="pill danger">متأخر</span>`;
   if(s==="قيد التنفيذ") return `<span class="pill warn">قيد التنفيذ</span>`;
-  return `<span class="pill">مفتوح</span>`;
-}
-function fmtDate(yyyyMmDd){
-  if(!yyyyMmDd) return "—";
-  try{
-    const d=new Date(yyyyMmDd+"T00:00:00");
-    return d.toLocaleDateString("ar-SA");
-  }catch(e){ return yyyyMmDd; }
-}
-function newId(prefix){
-  return prefix + "_" + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);
-}
-function computeStatus(due, status){
-  if(status==="منجز") return "منجز";
-  if(!due) return status || "مفتوح";
-  const today = new Date().toISOString().slice(0,10);
-  if(due < today) return "متأخر";
-  return status || "مفتوح";
+  return `<span class="pill">جديدة</span>`;
 }
 
+/* ===== Init brand/branch ===== */
+function initSelectors(){
+  const db=load();
+  $("tBrand").innerHTML=db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+  $("tBrand").onchange=()=>{
+    const b=db.brands.find(x=>x.id===$("tBrand").value);
+    $("tBranch").innerHTML=b.branches.map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+  };
+  $("tBrand").dispatchEvent(new Event("change"));
+}
+
+/* ===== Render ===== */
 function renderTasks(){
-  const db=loadDB();
-  const q=(document.getElementById("q").value||"").toLowerCase();
-  const fs=(document.getElementById("fStatus").value||"");
+  const db=load();
+  let rows=db.tasks.slice();
 
-  const rows = db.tasks
-    .map(t=>({ ...t, status: computeStatus(t.due, t.status) }))
-    .filter(t => (!fs || t.status===fs))
-    .filter(t => !q || JSON.stringify(t).toLowerCase().includes(q))
-    .slice().reverse()
-    .map(t=>`
-      <tr>
-        <td>${t.brandName}</td>
-        <td>${t.branchName}</td>
-        <td class="muted">${t.desc}</td>
-        <td class="muted">${t.owner || "—"}</td>
-        <td>${fmtDate(t.due)}</td>
-        <td>${pillStatus(t.status)}</td>
-        <td>
-          <div class="row">
-            <button class="btn ghost" onclick="setTaskStatus('${t.id}','قيد التنفيذ')">بدء</button>
-            <button class="btn primary" onclick="setTaskStatus('${t.id}','منجز')">إنهاء</button>
-          </div>
-        </td>
-      </tr>
-    `).join("");
-
-  document.getElementById("tbody").innerHTML =
-    rows || `<tr><td colspan="7" class="muted">لا توجد مهام.</td></tr>`;
-}
-
-window.setTaskStatus = (id, status)=>{
-  const db=loadDB();
-  const t=db.tasks.find(x=>x.id===id);
-  if(!t) return;
-  t.status=status;
-  saveDB(db);
-  renderTasks();
-};
-
-document.getElementById("addTask").addEventListener("click", ()=>{
-  const db=loadDB();
-  const bSel=document.getElementById("tBrand");
-  const brSel=document.getElementById("tBranch");
-
-  const desc=(document.getElementById("tDesc").value||"").trim();
-  if(!desc){
-    alert("اكتب وصف المهمة أولاً");
-    return;
+  if($("fStatus").value) rows=rows.filter(t=>t.status===$("fStatus").value);
+  if($("fSearch").value){
+    const q=$("fSearch").value.toLowerCase();
+    rows=rows.filter(t=>JSON.stringify(t).toLowerCase().includes(q));
   }
 
+  $("taskTbody").innerHTML=rows.reverse().map(t=>`
+    <tr>
+      <td>${statusPill(t.status)}</td>
+      <td>${t.brandName}</td>
+      <td>${t.branchName}</td>
+      <td>${t.title}</td>
+      <td>${t.owner||"—"}</td>
+      <td class="muted">${t.dueDate||"—"}</td>
+      <td>
+        ${t.capaId
+          ? `<span class="pill warn link" onclick="openCapa('${t.capaId}')">${t.capaId}</span>`
+          : "—"}
+      </td>
+    </tr>
+  `).join("") || `<tr><td colspan="7" class="muted">لا توجد مهام.</td></tr>`;
+}
+
+/* ===== Add task ===== */
+function addTask(){
+  const db=load();
   const rec={
-    id:newId("task"),
-    brandId:bSel.value,
-    brandName:bSel.options[bSel.selectedIndex].text,
-    branchId:brSel.value,
-    branchName:brSel.options[brSel.selectedIndex].text,
-    desc,
-    owner:(document.getElementById("tOwner").value||"").trim(),
-    due: document.getElementById("tDue").value || "",
-    status: "مفتوح",
-    createdAt: nowISO()
+    id:"t_"+Math.random().toString(16).slice(2),
+    brandId:$("tBrand").value,
+    brandName:$("tBrand").selectedOptions[0].text,
+    branchId:$("tBranch").value,
+    branchName:$("tBranch").selectedOptions[0].text,
+    title:$("tTitle").value,
+    owner:$("tOwner").value,
+    dueDate:$("tDue").value,
+    status:$("tStatus").value,
+    capaId:($("tCapa").value||"").trim()||null,
+    createdAt:nowISO()
   };
-
+  if(!rec.title) return alert("اكتب وصف المهمة");
   db.tasks.push(rec);
-  saveDB(db);
-
-  document.getElementById("tDesc").value="";
-  document.getElementById("tOwner").value="";
-  document.getElementById("tDue").value="";
-
-  alert("تمت الإضافة ✅");
+  save(db);
+  alert("تمت إضافة المهمة");
+  resetTask();
   renderTasks();
-});
+}
 
-document.getElementById("q").addEventListener("input", renderTasks);
-document.getElementById("fStatus").addEventListener("change", renderTasks);
+function resetTask(){
+  $("tTitle").value="";
+  $("tOwner").value="";
+  $("tDue").value="";
+  $("tStatus").value="جديدة";
+  $("tCapa").value="";
+}
 
-setActiveNav();
-renderBrandBranch("tBrand","tBranch");
-renderTasks();
+function openCapa(id){
+  location.href=`issues.html?edit=${id}`;
+}
+
+/* ===== Init ===== */
+(function(){
+  setActiveNav();
+  initSelectors();
+  renderTasks();
+  $("addTask").onclick=addTask;
+  $("resetTask").onclick=resetTask;
+  ["fStatus","fSearch"].forEach(id=>$(id).onchange=$(id).oninput=renderTasks);
+})();
 </script>
 </body>
 </html>
