@@ -1,285 +1,290 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>منصة نَسَق – مكتبة SOP</title>
 
-  <title>منصة نسق – لوحة التحكم</title>
-
-  <!-- NASAQ Brand Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
+
   <style>
-:root{--bg:#0b1220;--card:#111a2e;--muted:#9fb0d0;--text:#eaf0ff;--accent:#4da3ff;--danger:#ff5d5d;--warn:#ffcc66;--ok:#4ade80;}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);direction:rtl}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:18px}
-.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;backdrop-filter:blur(8px)}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:grid;place-items:center;font-weight:800}
-.badge{padding:6px 10px;border-radius:999px;background:rgba(77,163,255,0.15);border:1px solid rgba(77,163,255,0.35);color:#cfe6ff;font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:14px}
-.card h3{margin:0 0 10px 0;font-size:16px}
-.kpi{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.kpi .num{font-size:28px;font-weight:800}
-.muted{color:var(--muted);font-size:12px;line-height:1.5}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.input, select, textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.15);color:var(--text);outline:none}
-textarea{min-height:90px;resize:vertical}
-.btn{cursor:pointer;border:none;border-radius:12px;padding:10px 12px;background:rgba(77,163,255,0.18);color:var(--text);border:1px solid rgba(77,163,255,0.35);font-weight:700}
-.btn:hover{filter:brightness(1.08)}
-.btn.secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12)}
-.btn.danger{background:rgba(255,93,93,0.15);border:1px solid rgba(255,93,93,0.35)}
-.table{width:100%;border-collapse:separate;border-spacing:0 10px}
-.table th{font-size:12px;color:var(--muted);text-align:right;padding:0 8px}
-.table td{padding:12px 8px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
-.table tr td:first-child{border-right:1px solid rgba(255,255,255,0.08);border-top-right-radius:14px;border-bottom-right-radius:14px}
-.table tr td:last-child{border-left:1px solid rgba(255,255,255,0.08);border-top-left-radius:14px;border-bottom-left-radius:14px}
-.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
-.pill.danger{border-color:rgba(255,93,93,0.35);background:rgba(255,93,93,0.12)}
-.pill.warn{border-color:rgba(255,204,102,0.35);background:rgba(255,204,102,0.12)}
-.pill.ok{border-color:rgba(74,222,128,0.35);background:rgba(74,222,128,0.10)}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);font-size:13px}
-.nav a.active{border-color:rgba(77,163,255,0.45);background:rgba(77,163,255,0.12)}
-.footer{margin-top:18px;color:var(--muted);font-size:12px}
-.small{font-size:12px}
-hr{border:none;border-top:1px solid rgba(255,255,255,0.10);margin:12px 0}
-</style>
+    .mini{font-size:12px}
+    .row .input{flex:1;min-width:180px}
+    .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+    .item{
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;padding:12px;
+      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      align-items:flex-start;
+    }
+    .muted2{color:rgba(234,240,255,.72)}
+    .tag{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;font-size:12px;
+      border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04)
+    }
+    .filebox{
+      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px; direction:ltr; text-align:left;
+      padding:10px;border-radius:12px;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10); color:rgba(234,240,255,.85);
+      overflow:auto;
+      max-width:520px;
+    }
+    .btn{white-space:nowrap}
+    @media print{
+      .topbar,.nav,.no-print{display:none!important}
+      body{background:#fff!important;color:#000!important}
+    }
+  </style>
 </head>
+
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">ن</div>
-      <div>
-        <div style="font-weight:900">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">ن</div>
+    <div>
+      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
+      <div class="muted">Pilot: طوبى • سدف • دبل بي — SOP Library</div>
+    </div>
+  </div>
+  <div class="badge">MVP محلي</div>
+</div>
+
+<div class="container">
+  <div class="nav">
+    <a data-nav href="index.html">لوحة التحكم</a>
+    <a data-nav href="visits.html">الزيارات</a>
+    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
+    <a data-nav href="tasks.html">المهام</a>
+    <a data-nav href="cleaning.html">النظافة اليومية</a>
+    <a data-nav href="sop.html">مكتبة SOP</a>
+    <a data-nav href="settings.html">الإعدادات</a>
+  </div>
+
+  <div class="grid">
+    <!-- Add SOP -->
+    <div class="card" style="grid-column:span 5">
+      <h3>إضافة SOP</h3>
+      <div class="muted mini">
+        في MVP المحلي: نحفظ (اسم + وصف + رابط ملف). في الإنتاج سنخزن الملف على السيرفر.
+      </div>
+
+      <label class="small" style="margin-top:12px;display:block">العنوان</label>
+      <input id="sTitle" class="input" placeholder="مثال: SOP درجة حرارة الثلاجات">
+
+      <label class="small" style="margin-top:10px;display:block">التصنيف</label>
+      <select id="sCategory" class="input">
+        <option>تشغيل</option>
+        <option>مالي</option>
+        <option>سلامة غذاء</option>
+        <option>HR</option>
+        <option>أخرى</option>
+      </select>
+
+      <label class="small" style="margin-top:10px;display:block">وصف مختصر</label>
+      <textarea id="sDesc" class="input" style="min-height:90px" placeholder="ملخص سريع عن محتوى الملف..."></textarea>
+
+      <label class="small" style="margin-top:10px;display:block">ملف (PDF/Word/صورة) — اختياري</label>
+      <input id="sFile" type="file" class="input" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp">
+
+      <div class="row no-print" style="margin-top:12px">
+        <button class="btn primary" id="addSop">حفظ</button>
+        <button class="btn ghost" id="resetSop" type="button">تفريغ</button>
+      </div>
+
+      <div class="muted mini" style="margin-top:10px">
+        تلميح: إذا ما عندك ملف الآن، اتركه فاضي — وسيظهر SOP كنص فقط.
       </div>
     </div>
-    <div class="badge">MVP محلي (Prototype)</div>
-  </div>
 
-  <div class="container">
-    <div class="nav" style="margin-bottom:14px">
-      <a data-nav href="index.html">لوحة التحكم</a>
-      <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">الملاحظات &amp; CAPA</a>
-      <a data-nav href="tasks.html">المهام</a>
-      <a data-nav href="cleaning.html">النظافة اليومية</a>
-      <a data-nav href="sop.html">مكتبة SOP</a>
-      <a data-nav href="settings.html">الإعدادات</a>
-    </div>
+    <!-- SOP List -->
+    <div class="card" style="grid-column:span 7">
+      <h3>مكتبة SOP</h3>
+      <div class="row no-print" style="margin:10px 0">
+        <select id="fCat" class="input" style="max-width:220px">
+          <option value="">كل التصنيفات</option>
+          <option>تشغيل</option><option>مالي</option><option>سلامة غذاء</option><option>HR</option><option>أخرى</option>
+        </select>
+        <input id="fSearch" class="input" placeholder="بحث (عنوان/وصف/تصنيف)">
+        <button class="btn" onclick="window.print()">PDF</button>
+      </div>
 
-    
-<div class="grid">
-  <div class="card" style="grid-column: span 7">
-    <h3>مكتبة SOP</h3>
-    <div class="muted">مستودع تعليمات التشغيل (حفظ/نظافة/مالية). أضف أي سياسة داخلية هنا.</div>
-    <div id="sopList" style="margin-top:10px"></div>
-  </div>
+      <div id="sopList" class="list"></div>
 
-  <div class="card" style="grid-column: span 5">
-    <h3>إضافة SOP</h3>
-    <div style="margin-top:10px">
-      <label class="small muted">العنوان</label>
-      <input id="sTitle" class="input" placeholder="مثال: طريقة حفظ المنتجات بالثلاجة"/>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">المحتوى</label>
-      <textarea id="sContent" class="input" placeholder="اكتب التعليمات..."></textarea>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <button class="btn" id="addSop">حفظ</button>
+      <div class="footer">
+        الملفات هنا للاستخدام الداخلي. فعليًا سنضيف صلاحيات + أرشفة + نسخ نسخية.
+      </div>
     </div>
   </div>
 </div>
 
+<script>
+/* ===== DB ===== */
+const DB_KEY="naseq_ops_db_v1";
+const nowISO=()=>new Date().toISOString();
+const load=()=>JSON.parse(localStorage.getItem(DB_KEY)||"null")||seed();
+const save=db=>localStorage.setItem(DB_KEY,JSON.stringify(db));
 
-    <div class="footer">
-      هذا نموذج أولي محلي لتجربة الفكرة. البيانات تُحفظ في المتصفح (LocalStorage). للاستخدام الفعلي على الإنترنت نحتاج استضافة + قاعدة بيانات + صلاحيات.
-    </div>
-  </div>
-
-  <script>
-const DB_KEY = "naseq_ops_db_v1";
-
-function nowISO(){
-  const d = new Date();
-  return d.toISOString();
-}
-
-function seedDB(){
-  const seeded = {
-    meta: { createdAt: nowISO(), language: "ar", pilot: true },
-    brands: [
-      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
-      { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
-      { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
+function seed(){
+  const db={
+    meta:{createdAt:nowISO(), language:"ar", pilot:true},
+    brands:[
+      {id:"tuba",name:"طوبى",branches:[{id:"tuba-main",name:"طوبى – الفرع الرئيسي"}]},
+      {id:"sdf",name:"سدف",branches:[{id:"sdf-main",name:"سدف – الفرع الرئيسي"}]},
+      {id:"dbb",name:"دبل بي",branches:[{id:"dbb-main",name:"دبل بي – الفرع الرئيسي"}]}
     ],
-    users: [
-      { id:"admin", name:"نَسَق (Admin)", role:"admin" }
-    ],
-    visits: [],
-    issues: [],
-    tasks: [],
-    cleaningLogs: [],
-    sops: [
-      { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
-      { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
+    visits:[], tasks:[], cleaningLogs:[], issues:[],
+    sops:[
+      {id:"sop-fridge", title:"SOP – درجة حرارة الثلاجة", category:"سلامة غذاء",
+        desc:"تسجيل درجة الحرارة يوميًا + متابعة الصلاحية بعد الفتح.", fileName:"", fileUrl:"",
+        createdAt:nowISO()}
     ]
   };
-  localStorage.setItem(DB_KEY, JSON.stringify(seeded));
-  return seeded;
+  save(db); return db;
 }
 
-function loadDB(){
-  const raw = localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
-}
-
-function saveDB(db){
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-}
-
-function $(sel){ return document.querySelector(sel); }
-function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+/* ===== Helpers ===== */
+const $=id=>document.getElementById(id);
+const $$=sel=>Array.from(document.querySelectorAll(sel));
 
 function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  $all("[data-nav]").forEach(a => {
-    if(a.getAttribute("href") === path) a.classList.add("active");
+  const p=location.pathname.split("/").pop();
+  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p && a.classList.add("active"));
+}
+function safe(s){ return (s||"").toString().replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+function renderSops(){
+  const db=load();
+  let rows=(db.sops||[]).slice();
+
+  const cat=$("fCat").value;
+  const q=($("fSearch").value||"").toLowerCase();
+
+  if(cat) rows=rows.filter(x=>x.category===cat);
+  if(q) rows=rows.filter(x=>JSON.stringify(x).toLowerCase().includes(q));
+
+  rows=rows.reverse();
+
+  $("sopList").innerHTML = rows.map(s=>`
+    <div class="item">
+      <div style="min-width:260px;max-width:760px">
+        <b>${safe(s.title)}</b>
+        <div class="muted2 mini" style="margin-top:6px">
+          <span class="tag">${safe(s.category||"أخرى")}</span>
+          <span class="tag">تاريخ: ${new Date(s.createdAt||nowISO()).toLocaleDateString("ar-SA")}</span>
+        </div>
+        <div class="muted2 mini" style="margin-top:10px">${safe(s.desc||"—")}</div>
+
+        ${s.fileUrl ? `
+          <div style="margin-top:10px">
+            <div class="muted2 mini">File:</div>
+            <div class="filebox">${safe(s.fileName||"file")}</div>
+          </div>
+        ` : ``}
+      </div>
+
+      <div class="no-print" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        ${s.fileUrl ? `<a class="btn primary" href="${s.fileUrl}" target="_blank" rel="noopener">فتح الملف</a>` : ``}
+        <button class="btn ghost" data-copy="${s.id}">نسخ ملخص</button>
+        <button class="btn danger" data-del="${s.id}">حذف</button>
+      </div>
+    </div>
+  `).join("") || `<div class="muted2 mini">لا توجد SOP حتى الآن.</div>`;
+
+  $$("[data-del]").forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.getAttribute("data-del");
+      delSop(id);
+    };
+  });
+  $$("[data-copy]").forEach(btn=>{
+    btn.onclick=()=>{
+      const id=btn.getAttribute("data-copy");
+      copySop(id);
+    };
   });
 }
 
-function renderBrandBranchSelectors(brandSelId, branchSelId){
-  const db = loadDB();
-  const brandSel = document.getElementById(brandSelId);
-  const branchSel = document.getElementById(branchSelId);
-  if(!brandSel || !branchSel) return;
+function addSop(){
+  const title=($("sTitle").value||"").trim();
+  if(!title) return alert("اكتب عنوان SOP");
 
-  brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  function fillBranches(){
-    const b = db.brands.find(x=>x.id===brandSel.value);
-    branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+  const db=load();
+  const file=$("sFile").files?.[0] || null;
+
+  let fileUrl="", fileName="";
+  if(file){
+    // محليًا: ObjectURL
+    fileUrl = URL.createObjectURL(file);
+    fileName = file.name;
   }
-  brandSel.addEventListener("change", fillBranches);
-  fillBranches();
+
+  db.sops = db.sops || [];
+  db.sops.push({
+    id:"sop_"+Math.random().toString(16).slice(2),
+    title,
+    category:$("sCategory").value,
+    desc:($("sDesc").value||"").trim(),
+    fileName,
+    fileUrl,
+    createdAt:nowISO()
+  });
+
+  save(db);
+  resetSop();
+  renderSops();
+  alert("تم حفظ SOP ✅");
 }
 
-function fmtDate(iso){
+function resetSop(){
+  $("sTitle").value="";
+  $("sCategory").value="تشغيل";
+  $("sDesc").value="";
+  $("sFile").value="";
+}
+
+function delSop(id){
+  const db=load();
+  const item=db.sops?.find(x=>x.id===id);
+  const ok=confirm(`تأكيد حذف SOP: ${item?.title||id}`);
+  if(!ok) return;
+
+  // إذا كان عنده ObjectURL، نحرره
+  if(item?.fileUrl && item.fileUrl.startsWith("blob:")){
+    try{ URL.revokeObjectURL(item.fileUrl); }catch(e){}
+  }
+
+  db.sops = (db.sops||[]).filter(x=>x.id!==id);
+  save(db);
+  renderSops();
+}
+
+async function copySop(id){
+  const db=load();
+  const s=db.sops?.find(x=>x.id===id);
+  if(!s) return;
+  const text = `SOP: ${s.title}\nCategory: ${s.category}\nDesc: ${s.desc||"-"}\nFile: ${s.fileName||"-"}`;
   try{
-    const d = new Date(iso);
-    return d.toLocaleString("ar-SA");
-  }catch(e){ return iso; }
+    await navigator.clipboard.writeText(text);
+    alert("تم النسخ ✅");
+  }catch(e){
+    alert("لم يتم النسخ — المتصفح منع الوصول للـ Clipboard");
+  }
 }
 
-function statusPill(status){
-  const map = {
-    "مفتوح": "danger",
-    "متأخر": "warn",
-    "مغلق": "ok",
-    "جديد": "warn",
-    "قيد التنفيذ": "warn",
-    "منجز": "ok"
-  };
-  const cls = map[status] || "";
-  return `<span class="pill ${cls}">${status}</span>`;
-}
+/* ===== Init ===== */
+(function(){
+  setActiveNav();
+  renderSops();
 
-function brandName(id){
-  const db = loadDB();
-  return db.brands.find(b=>b.id===id)?.name || id;
-}
-
-function branchName(brandId, branchId){
-  const db = loadDB();
-  const b = db.brands.find(x=>x.id===brandId);
-  return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
-}
-
-function computeDashboard(){
-  const db = loadDB();
-  const openIssues = db.issues.filter(i=>i.status!=="مغلق");
-  const overdueIssues = db.issues.filter(i=>i.status==="متأخر");
-  const critical = db.issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
-  const today = new Date().toISOString().slice(0,10);
-  const todayTasks = db.tasks.filter(t=> (t.dueDate||"").slice(0,10)===today );
-  const doneToday = todayTasks.filter(t=>t.status==="منجز").length;
-
-  return { openIssues: openIssues.length, overdueIssues: overdueIssues.length, critical: critical.length, todayTasks: todayTasks.length, doneToday };
-}
-
-function downloadJSON(){
-  const db = loadDB();
-  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "naseq_ops_export.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importJSON(file){
-  const reader = new FileReader();
-  reader.onload = () => {
-    try{
-      const obj = JSON.parse(reader.result);
-      localStorage.setItem(DB_KEY, JSON.stringify(obj));
-      alert("تم الاستيراد بنجاح ✅");
-      location.reload();
-    }catch(e){
-      alert("ملف غير صالح");
-    }
-  };
-  reader.readAsText(file);
-}
+  $("addSop").onclick=addSop;
+  $("resetSop").onclick=resetSop;
+  $("fCat").onchange=renderSops;
+  $("fSearch").oninput=renderSops;
+})();
 </script>
-  <script>
-    setActiveNav();
-    
-function renderSops(){
-  const db = loadDB();
-  const root = document.getElementById("sopList");
-  root.innerHTML = db.sops.slice().reverse().map(s=>`
-    <div class="card" style="margin-bottom:10px">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-        <div>
-          <div style="font-weight:900">${s.title}</div>
-          <div class="muted" style="margin-top:6px;white-space:pre-wrap">${s.content}</div>
-        </div>
-        <button class="btn danger small" onclick="delSop('${s.id}')">حذف</button>
-      </div>
-    </div>
-  `).join("") || `<div class="muted">لا توجد سياسات بعد.</div>`;
-}
-
-window.delSop = function(id){
-  const db = loadDB();
-  db.sops = db.sops.filter(x=>x.id!==id);
-  saveDB(db);
-  renderSops();
-}
-
-document.getElementById("addSop").addEventListener("click", ()=>{
-  const db = loadDB();
-  const title = document.getElementById("sTitle").value.trim();
-  const content = document.getElementById("sContent").value.trim();
-  if(!title || !content){ alert("أكمل العنوان والمحتوى"); return; }
-  db.sops.push({ id:"s_"+Math.random().toString(16).slice(2), title, content });
-  saveDB(db);
-  document.getElementById("sTitle").value="";
-  document.getElementById("sContent").value="";
-  renderSops();
-});
-
-renderSops();
-
-  </script>
 </body>
 </html>
