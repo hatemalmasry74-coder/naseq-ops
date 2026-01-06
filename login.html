@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>تسجيل الدخول – منصة نَسَق</title>
+
+  <link rel="stylesheet" href="nasaq-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .login-card{
+      width:100%;
+      max-width:420px;
+      background:rgba(255,255,255,.04);
+      border:1px solid var(--border-light);
+      border-radius:18px;
+      padding:24px;
+    }
+    .login-card h2{
+      margin-bottom:6px;
+    }
+    .login-card .muted{
+      margin-bottom:18px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="login-card">
+    <div class="row" style="justify-content:center;margin-bottom:14px">
+      <div class="logo">ن</div>
+    </div>
+
+    <h2>غرفة عمليات نَسَق</h2>
+    <div class="muted">تسجيل الدخول (MVP محلي)</div>
+
+    <label class="small muted">البريد الإلكتروني</label>
+    <input id="email" class="input" placeholder="admin@nasaq.local">
+
+    <label class="small muted" style="margin-top:10px">كلمة المرور</label>
+    <input id="password" type="password" class="input" placeholder="••••••••">
+
+    <button class="btn" style="width:100%;margin-top:16px" id="loginBtn">
+      دخول
+    </button>
+
+    <div id="error" class="muted" style="margin-top:10px;color:#ff8a80;display:none">
+      بيانات الدخول غير صحيحة
+    </div>
+
+    <div class="muted small" style="margin-top:18px">
+      حساب تجريبي:<br>
+      admin@nasaq.local / admin123
+    </div>
+  </div>
+
+<script src="auth.js"></script>
+<script>
+  document.getElementById("loginBtn").addEventListener("click", ()=>{
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const ok = login(email, password);
+    if(ok){
+      window.location.href = "index.html";
+    }else{
+      document.getElementById("error").style.display = "block";
+    }
+  });
+</script>
+
+</body>
+</html>
