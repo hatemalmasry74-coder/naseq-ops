@@ -3,247 +3,254 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>منصة نسق – الزيارات</title>
+  <title>منصة نَسَق – الزيارات</title>
 
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
+    .mini{font-size:12px}
+    .hl{outline:2px solid rgba(77,163,255,.6);border-radius:12px}
+    .tag-link{cursor:pointer;text-decoration:underline}
+    .pill.link{cursor:pointer}
+    .row .input{flex:1;min-width:180px}
     @media print{
-      .topbar,.nav,#printBtn,.filters{display:none!important}
+      .topbar,.nav,.no-print{display:none!important}
+      body{background:#fff!important;color:#000!important}
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">ن</div>
-      <div>
-        <div style="font-weight:900">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
-      </div>
+<div class="topbar">
+  <div class="brand">
+    <div class="logo">ن</div>
+    <div>
+      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
+      <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
     </div>
-    <div class="badge">MVP محلي (Prototype)</div>
+  </div>
+  <div class="badge">MVP محلي</div>
+</div>
+
+<div class="container">
+  <div class="nav">
+    <a data-nav href="index.html">لوحة التحكم</a>
+    <a data-nav href="visits.html">الزيارات</a>
+    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
+    <a data-nav href="tasks.html">المهام</a>
+    <a data-nav href="cleaning.html">النظافة اليومية</a>
+    <a data-nav href="sop.html">مكتبة SOP</a>
+    <a data-nav href="settings.html">الإعدادات</a>
   </div>
 
-  <div class="container">
-    <div class="nav">
-      <a data-nav href="index.html">لوحة التحكم</a>
-      <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">CAPA & الملاحظات</a>
-      <a data-nav href="tasks.html">المهام</a>
-      <a data-nav href="cleaning.html">النظافة اليومية</a>
-      <a data-nav href="sop.html">مكتبة SOP</a>
-      <a data-nav href="settings.html">الإعدادات</a>
+  <div class="grid">
+    <!-- CREATE VISIT -->
+    <div class="card" style="grid-column:span 5">
+      <h3>إنشاء زيارة</h3>
+      <div class="muted mini">
+        أي زيارة (غير مطابقة) يمكن تحويلها مباشرة إلى CAPA.
+      </div>
+
+      <label class="small">البراند</label>
+      <select id="vBrand" class="input"></select>
+
+      <label class="small">الفرع</label>
+      <select id="vBranch" class="input"></select>
+
+      <label class="small">نوع الزيارة</label>
+      <select id="vType" class="input">
+        <option>تشغيلية</option>
+        <option>مالية</option>
+        <option>نظافة</option>
+        <option>إدارية</option>
+      </select>
+
+      <label class="small">التقييم</label>
+      <select id="vResult" class="input">
+        <option value="مطابق">مطابق</option>
+        <option value="غير مطابق">غير مطابق</option>
+      </select>
+
+      <label class="small">ملاحظات الزيارة</label>
+      <textarea id="vNotes" class="input" style="min-height:90px"
+        placeholder="اكتب ملخص الزيارة..."></textarea>
+
+      <div class="row" style="margin-top:12px">
+        <button class="btn primary" id="addVisit">حفظ الزيارة</button>
+        <button class="btn ghost" id="resetVisit" type="button">تفريغ</button>
+      </div>
     </div>
 
-    <div class="grid">
-      <div class="card" style="grid-column:span 5">
-        <h3>إنشاء زيارة</h3>
-        <div class="muted">الزيارة التشغيلية/المالية/النظافة… ويمكن تحويل أي بند إلى CAPA.</div>
+    <!-- VISITS TABLE -->
+    <div class="card" style="grid-column:span 7">
+      <h3>سجل الزيارات</h3>
 
-        <label class="small">البراند</label>
-        <select id="vBrand" class="input"></select>
-
-        <label class="small">الفرع</label>
-        <select id="vBranch" class="input"></select>
-
-        <label class="small">نوع الزيارة</label>
-        <select id="vType" class="input">
-          <option>زيارة تشغيلية</option>
-          <option>زيارة مالية</option>
-          <option>زيارة نظافة</option>
-          <option>متابعة خطة عمل</option>
+      <div class="row no-print" style="margin:10px 0">
+        <select id="fType" class="input" style="max-width:220px">
+          <option value="">كل الأنواع</option>
+          <option>تشغيلية</option><option>مالية</option>
+          <option>نظافة</option><option>إدارية</option>
         </select>
-
-        <label class="small">ملخص الزيارة</label>
-        <textarea id="vNotes" class="input" placeholder="اكتب ملخص الزيارة..."></textarea>
-
-        <div class="row" style="margin-top:10px">
-          <label class="row" style="gap:8px">
-            <input id="vNeedsCapa" type="checkbox" style="width:auto">
-            <span class="small">تحويل الملخص إلى CAPA (ملاحظة تستدعي إجراء)</span>
-          </label>
-        </div>
-
-        <div class="row" style="margin-top:12px">
-          <button class="btn primary" id="addVisit">حفظ الزيارة</button>
-          <button class="btn ghost" id="printBtn">طباعة PDF</button>
-        </div>
+        <select id="fResult" class="input" style="max-width:220px">
+          <option value="">كل النتائج</option>
+          <option>مطابق</option><option>غير مطابق</option>
+        </select>
+        <input id="fSearch" class="input" placeholder="بحث (براند/فرع/ملاحظة/CAPA)">
+        <button class="btn" onclick="window.print()">PDF</button>
       </div>
 
-      <div class="card" style="grid-column:span 7">
-        <h3>سجل الزيارات</h3>
-
-        <div class="row filters" style="margin-bottom:10px">
-          <input id="q" class="input" placeholder="بحث (براند/فرع/نوع/ملاحظات)">
-          <select id="fType" class="input" style="max-width:220px">
-            <option value="">كل الأنواع</option>
-            <option>زيارة تشغيلية</option>
-            <option>زيارة مالية</option>
-            <option>زيارة نظافة</option>
-            <option>متابعة خطة عمل</option>
-          </select>
-        </div>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>التاريخ</th>
-              <th>البراند</th>
-              <th>الفرع</th>
-              <th>النوع</th>
-              <th>ملاحظات</th>
-              <th>CAPA</th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="footer">
-      هذا نموذج أولي محلي (LocalStorage). للاستخدام الفعلي نحتاج استضافة + قاعدة بيانات + صلاحيات.
+      <table class="table">
+        <thead>
+          <tr>
+            <th>التاريخ</th>
+            <th>البراند</th>
+            <th>الفرع</th>
+            <th>النوع</th>
+            <th>النتيجة</th>
+            <th>CAPA</th>
+            <th>ملاحظات</th>
+          </tr>
+        </thead>
+        <tbody id="visitTbody"></tbody>
+      </table>
     </div>
   </div>
+
+  <div class="footer">
+    نموذج أولي — أي زيارة غير مطابقة يمكن متابعتها عبر CAPA.
+  </div>
+</div>
 
 <script>
-/* ===== Shared Core ===== */
+/* ===== DB ===== */
 const DB_KEY="naseq_ops_db_v1";
 const nowISO=()=>new Date().toISOString();
+const load=()=>JSON.parse(localStorage.getItem(DB_KEY)||"null")||seed();
+const save=db=>localStorage.setItem(DB_KEY,JSON.stringify(db));
 
-function seedDB(){
+function seed(){
   const db={
-    meta:{createdAt:nowISO(),lang:"ar"},
     brands:[
-      { id:"tuba", name:"طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}] },
-      { id:"sdf",  name:"سدف",  branches:[{id:"sdf-main",  name:"سدف – الفرع الرئيسي"}] },
-      { id:"dbb",  name:"دبل بي",branches:[{id:"dbb-main",  name:"دبل بي – الفرع الرئيسي"}] }
+      {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+      {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+      {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
     ],
     visits:[],
-    tasks:[],
     issues:[],
     cleaningLogs:[],
-    sops:[]
+    tasks:[]
   };
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-  return db;
+  save(db);return db;
 }
-function loadDB(){
-  const raw=localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try{ return JSON.parse(raw); }catch(e){ return seedDB(); }
-}
-function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
 
+/* ===== Helpers ===== */
+const $=id=>document.getElementById(id);
+const $$=sel=>Array.from(document.querySelectorAll(sel));
 function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  document.querySelectorAll("[data-nav]").forEach(a=>{
-    if(a.getAttribute("href")===path) a.classList.add("active");
-  });
+  const p=location.pathname.split("/").pop();
+  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p&&a.classList.add("active"));
 }
-function renderBrandBranch(brandSelId, branchSelId){
-  const db=loadDB();
-  const brand=document.getElementById(brandSelId);
-  const branch=document.getElementById(branchSelId);
+function genCapa(){return "CAPA-"+Math.random().toString(16).slice(2,6).toUpperCase();}
 
-  brand.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  const fill=()=>{
-    const b=db.brands.find(x=>x.id===brand.value);
-    branch.innerHTML=(b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+/* ===== Init brand/branch ===== */
+function initSelectors(){
+  const db=load();
+  $("vBrand").innerHTML=db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+  $("vBrand").onchange=()=>{
+    const b=db.brands.find(x=>x.id===$("vBrand").value);
+    $("vBranch").innerHTML=b.branches.map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
   };
-  brand.addEventListener("change", fill);
-  fill();
-}
-function fmtDate(iso){
-  try{ return new Date(iso).toLocaleString("ar-SA"); }catch(e){ return iso; }
-}
-function newId(prefix){
-  return prefix + "_" + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);
+  $("vBrand").dispatchEvent(new Event("change"));
 }
 
-/* ===== Page Logic: Visits ===== */
+/* ===== Render ===== */
 function renderVisits(){
-  const db=loadDB();
-  const q=(document.getElementById("q").value||"").toLowerCase();
-  const fType=document.getElementById("fType").value||"";
-  const rows = db.visits
-    .filter(v => (!fType || v.type===fType))
-    .filter(v => !q || JSON.stringify(v).toLowerCase().includes(q))
-    .slice().reverse()
-    .map(v=>`
-      <tr>
-        <td class="muted">${fmtDate(v.createdAt)}</td>
-        <td>${v.brandName}</td>
-        <td>${v.branchName}</td>
-        <td>${v.type}</td>
-        <td class="muted">${(v.notes||"—").slice(0,140)}</td>
-        <td>${v.capaId ? `<span class="pill warn">${v.capaId}</span>` : "—"}</td>
-      </tr>
-    `).join("");
+  const db=load();
+  let rows=db.visits.slice();
+  if($("fType").value) rows=rows.filter(r=>r.type===$("fType").value);
+  if($("fResult").value) rows=rows.filter(r=>r.result===$("fResult").value);
+  if($("fSearch").value){
+    const q=$("fSearch").value.toLowerCase();
+    rows=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
+  }
 
-  document.getElementById("tbody").innerHTML =
-    rows || `<tr><td colspan="6" class="muted">لا توجد زيارات بعد.</td></tr>`;
+  $("visitTbody").innerHTML=rows.reverse().map(r=>`
+    <tr>
+      <td>${new Date(r.createdAt).toLocaleString("ar-SA")}</td>
+      <td>${r.brandName}</td>
+      <td>${r.branchName}</td>
+      <td>${r.type}</td>
+      <td>
+        <span class="pill ${r.result==="مطابق"?"ok":"danger"}">${r.result}</span>
+      </td>
+      <td>
+        ${r.capaId
+          ? `<span class="pill warn link" onclick="openCapa('${r.capaId}')">${r.capaId}</span>`
+          : "—"}
+      </td>
+      <td class="muted">${r.notes||"—"}</td>
+    </tr>
+  `).join("") || `<tr><td colspan="7" class="muted">لا توجد زيارات.</td></tr>`;
 }
 
-document.getElementById("addVisit").addEventListener("click", ()=>{
-  const db=loadDB();
-  const bSel=document.getElementById("vBrand");
-  const brSel=document.getElementById("vBranch");
-
+/* ===== Add visit ===== */
+function addVisit(){
+  const db=load();
   const rec={
-    id:newId("visit"),
-    brandId:bSel.value,
-    brandName:bSel.options[bSel.selectedIndex].text,
-    branchId:brSel.value,
-    branchName:brSel.options[brSel.selectedIndex].text,
-    type:document.getElementById("vType").value,
-    notes:(document.getElementById("vNotes").value||"").trim(),
+    id:"v_"+Math.random().toString(16).slice(2),
+    brandId:$("vBrand").value,
+    brandName:$("vBrand").selectedOptions[0].text,
+    branchId:$("vBranch").value,
+    branchName:$("vBranch").selectedOptions[0].text,
+    type:$("vType").value,
+    result:$("vResult").value,
+    notes:$("vNotes").value,
     createdAt:nowISO(),
     capaId:null
   };
 
-  if(document.getElementById("vNeedsCapa").checked){
-    const capaId = "CAPA-" + Math.random().toString(16).slice(2,6).toUpperCase();
-    rec.capaId = capaId;
-
+  if(rec.result==="غير مطابق"){
+    rec.capaId=genCapa();
     db.issues.push({
-      id: capaId,
-      source: "visits",
-      sourceId: rec.id,
-      brandId: rec.brandId,
-      branchId: rec.branchId,
-      brandName: rec.brandName,
-      branchName: rec.branchName,
-      severity: "متوسط",
-      status: "مفتوح",
-      owner: "",
-      due: "",
-      note: rec.notes || "ملاحظة من الزيارة",
-      createdAt: nowISO(),
-      updates:[]
+      id:rec.capaId,
+      source:"visit",
+      status:"مفتوح",
+      severity:"متوسط",
+      title:`زيارة ${rec.type} غير مطابقة`,
+      note:rec.notes,
+      brandId:rec.brandId,
+      branchId:rec.branchId,
+      createdAt:nowISO()
     });
   }
 
   db.visits.push(rec);
-  saveDB(db);
-
-  document.getElementById("vNotes").value="";
-  document.getElementById("vNeedsCapa").checked=false;
-
-  alert("تم الحفظ ✅");
+  save(db);
+  alert(rec.capaId ? `تم الحفظ وإنشاء CAPA ${rec.capaId}` : "تم حفظ الزيارة");
+  resetVisit();
   renderVisits();
-});
+}
 
-document.getElementById("printBtn").addEventListener("click", ()=>window.print());
-document.getElementById("q").addEventListener("input", renderVisits);
-document.getElementById("fType").addEventListener("change", renderVisits);
+function resetVisit(){
+  $("vType").value="تشغيلية";
+  $("vResult").value="مطابق";
+  $("vNotes").value="";
+}
 
-/* init */
-setActiveNav();
-renderBrandBranch("vBrand","vBranch");
-renderVisits();
+function openCapa(id){
+  location.href=`issues.html?edit=${id}`;
+}
+
+/* ===== Init ===== */
+(function(){
+  setActiveNav();
+  initSelectors();
+  renderVisits();
+  $("addVisit").onclick=addVisit;
+  $("resetVisit").onclick=resetVisit;
+  ["fType","fResult","fSearch"].forEach(id=>$(id).onchange=$(id).oninput=renderVisits);
+})();
 </script>
 </body>
 </html>
