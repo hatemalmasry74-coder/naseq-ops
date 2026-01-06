@@ -4,54 +4,90 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>منصة نسق – لوحة التحكم</title>
+  <title>منصة نسق – النظافة اليومية</title>
 
   <!-- NASAQ Brand Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
+
+  <!-- Page Layout (Cleaning) -->
   <style>
-:root{--bg:#0b1220;--card:#111a2e;--muted:#9fb0d0;--text:#eaf0ff;--accent:#4da3ff;--danger:#ff5d5d;--warn:#ffcc66;--ok:#4ade80;}
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);direction:rtl}
-a{color:inherit;text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:18px}
-.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;backdrop-filter:blur(8px)}
-.brand{display:flex;align-items:center;gap:10px}
-.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:grid;place-items:center;font-weight:800}
-.badge{padding:6px 10px;border-radius:999px;background:rgba(77,163,255,0.15);border:1px solid rgba(77,163,255,0.35);color:#cfe6ff;font-size:12px}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:14px}
-.card h3{margin:0 0 10px 0;font-size:16px}
-.kpi{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.kpi .num{font-size:28px;font-weight:800}
-.muted{color:var(--muted);font-size:12px;line-height:1.5}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.input, select, textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.15);color:var(--text);outline:none}
-textarea{min-height:90px;resize:vertical}
-.btn{cursor:pointer;border:none;border-radius:12px;padding:10px 12px;background:rgba(77,163,255,0.18);color:var(--text);border:1px solid rgba(77,163,255,0.35);font-weight:700}
-.btn:hover{filter:brightness(1.08)}
-.btn.secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12)}
-.btn.danger{background:rgba(255,93,93,0.15);border:1px solid rgba(255,93,93,0.35)}
-.table{width:100%;border-collapse:separate;border-spacing:0 10px}
-.table th{font-size:12px;color:var(--muted);text-align:right;padding:0 8px}
-.table td{padding:12px 8px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
-.table tr td:first-child{border-right:1px solid rgba(255,255,255,0.08);border-top-right-radius:14px;border-bottom-right-radius:14px}
-.table tr td:last-child{border-left:1px solid rgba(255,255,255,0.08);border-top-left-radius:14px;border-bottom-left-radius:14px}
-.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
-.pill.danger{border-color:rgba(255,93,93,0.35);background:rgba(255,93,93,0.12)}
-.pill.warn{border-color:rgba(255,204,102,0.35);background:rgba(255,204,102,0.12)}
-.pill.ok{border-color:rgba(74,222,128,0.35);background:rgba(74,222,128,0.10)}
-.nav{display:flex;gap:8px;flex-wrap:wrap}
-.nav a{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);font-size:13px}
-.nav a.active{border-color:rgba(77,163,255,0.45);background:rgba(77,163,255,0.12)}
-.footer{margin-top:18px;color:var(--muted);font-size:12px}
-.small{font-size:12px}
-hr{border:none;border-top:1px solid rgba(255,255,255,0.10);margin:12px 0}
-</style>
+    .page{max-width:1100px;margin:0 auto;padding:18px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .footer{margin-top:18px;color:var(--text-muted);font-size:12px}
+
+    /* Inputs (تتوافق مع هوية نسق) */
+    .input{
+      width:100%;
+      padding:10px 12px;
+      border-radius:10px;
+      border:1px solid var(--border-light);
+      background:#fff;
+      color:var(--text-main);
+      outline:none;
+    }
+
+    /* Pills */
+    .pill{padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border-light);background:#fff}
+    .pill.ok{border-color:rgba(46,125,50,.35);background:rgba(46,125,50,.08)}
+    .pill.warn{border-color:rgba(237,108,2,.35);background:rgba(237,108,2,.08)}
+    .pill.danger{border-color:rgba(193,33,38,.45);background:rgba(193,33,38,.08)}
+
+    /* Table */
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .table th{font-size:12px;color:var(--text-muted);text-align:right}
+    .table td{
+      background:#fff;
+      border:1px solid var(--border-light);
+      padding:10px;
+      border-left:none;border-right:none;
+    }
+    .table tr td:first-child{
+      border-right:1px solid var(--border-light);
+      border-top-right-radius:10px;border-bottom-right-radius:10px
+    }
+    .table tr td:last-child{
+      border-left:1px solid var(--border-light);
+      border-top-left-radius:10px;border-bottom-left-radius:10px
+    }
+
+    /* Topbar + Nav (تعتمد على كلاسّات ملفك الموجودة) */
+    .topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .logo{
+      width:38px;height:38px;border-radius:12px;
+      display:grid;place-items:center;
+      background:var(--nasaq-primary);color:#fff;font-weight:900;
+    }
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border-light);background:#fff;font-size:12px}
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+    .nav{display:flex;gap:10px;flex-wrap:wrap}
+    .nav a{
+      padding:10px 12px;border-radius:12px;
+      border:1px solid var(--border-light);
+      background:#fff;color:var(--text-main);text-decoration:none;
+      font-size:13px;
+    }
+    .nav a.active{
+      border-color:rgba(193,33,38,.35);
+      background:rgba(193,33,38,.08);
+    }
+
+    /* Buttons (لو ملفك فيه .btn مسبقاً ما راح يضر) */
+    .btn{
+      background:var(--nasaq-primary);
+      color:#fff;border:none;border-radius:10px;
+      padding:10px 14px;cursor:pointer;
+    }
+    .btn:hover{opacity:.92}
+    .muted{color:var(--text-muted)}
+    .small{font-size:12px}
+  </style>
 </head>
+
 <body>
   <div class="topbar">
     <div class="brand">
@@ -75,62 +111,61 @@ hr{border:none;border-top:1px solid rgba(255,255,255,0.10);margin:12px 0}
       <a data-nav href="settings.html">الإعدادات</a>
     </div>
 
-    
-<div class="grid">
-  <div class="card" style="grid-column: span 5">
-    <h3>تسجيل نظافة يومية</h3>
-    <div class="muted">نموذج مبسط مستوحى من جدول التنظيف بالوقت.</div>
+    <div class="grid">
+      <div class="card" style="grid-column: span 5">
+        <h3>تسجيل نظافة يومية</h3>
+        <div class="muted">نموذج مبسط مستوحى من جدول التنظيف بالوقت.</div>
 
-    <div style="margin-top:10px">
-      <label class="small muted">البراند</label>
-      <select id="cBrand" class="input"></select>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">الفرع</label>
-      <select id="cBranch" class="input"></select>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">الفترة</label>
-      <select id="cSlot" class="input">
-        <option>7:00–7:30</option><option>7:30–8:00</option><option>8:00–8:30</option>
-        <option>8:30–9:00</option><option>9:00–9:30</option><option>9:30–10:00</option>
-        <option>10:00–10:30</option><option>10:30–11:00</option><option>11:00–11:30</option>
-      </select>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">المهمة</label>
-      <select id="cTask" class="input">
-        <option>Floor</option><option>Bathroom</option><option>Back area</option><option>Store</option>
-        <option>Lights</option><option>Glasses</option><option>Windows</option>
-      </select>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">المنفذ</label>
-      <input id="cBy" class="input" placeholder="اسم الموظف"/>
-    </div>
-    <div style="margin-top:10px">
-      <label class="small muted">الحالة</label>
-      <select id="cDone" class="input">
-        <option>تم</option>
-        <option>لم يتم</option>
-      </select>
-    </div>
-    <div class="row" style="margin-top:12px">
-      <button class="btn" id="addClean">حفظ</button>
-    </div>
-  </div>
+        <div style="margin-top:10px">
+          <label class="small muted">البراند</label>
+          <select id="cBrand" class="input"></select>
+        </div>
+        <div style="margin-top:10px">
+          <label class="small muted">الفرع</label>
+          <select id="cBranch" class="input"></select>
+        </div>
+        <div style="margin-top:10px">
+          <label class="small muted">الفترة</label>
+          <select id="cSlot" class="input">
+            <option>7:00–7:30</option><option>7:30–8:00</option><option>8:00–8:30</option>
+            <option>8:30–9:00</option><option>9:00–9:30</option><option>9:30–10:00</option>
+            <option>10:00–10:30</option><option>10:30–11:00</option><option>11:00–11:30</option>
+          </select>
+        </div>
+        <div style="margin-top:10px">
+          <label class="small muted">المهمة</label>
+          <select id="cTask" class="input">
+            <option>Floor</option><option>Bathroom</option><option>Back area</option><option>Store</option>
+            <option>Lights</option><option>Glasses</option><option>Windows</option>
+          </select>
+        </div>
+        <div style="margin-top:10px">
+          <label class="small muted">المنفذ</label>
+          <input id="cBy" class="input" placeholder="اسم الموظف"/>
+        </div>
+        <div style="margin-top:10px">
+          <label class="small muted">الحالة</label>
+          <select id="cDone" class="input">
+            <option>تم</option>
+            <option>لم يتم</option>
+          </select>
+        </div>
 
-  <div class="card" style="grid-column: span 7">
-    <h3>سجل النظافة</h3>
-    <table class="table">
-      <thead><tr>
-        <th>التاريخ</th><th>البراند</th><th>الفرع</th><th>الفترة</th><th>المهمة</th><th>الحالة</th><th>المنفذ</th>
-      </tr></thead>
-      <tbody id="cleanTbody"></tbody>
-    </table>
-  </div>
-</div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" id="addClean" type="button">حفظ</button>
+        </div>
+      </div>
 
+      <div class="card" style="grid-column: span 7">
+        <h3>سجل النظافة</h3>
+        <table class="table">
+          <thead><tr>
+            <th>التاريخ</th><th>البراند</th><th>الفرع</th><th>الفترة</th><th>المهمة</th><th>الحالة</th><th>المنفذ</th>
+          </tr></thead>
+          <tbody id="cleanTbody"></tbody>
+        </table>
+      </div>
+    </div>
 
     <div class="footer">
       هذا نموذج أولي محلي لتجربة الفكرة. البيانات تُحفظ في المتصفح (LocalStorage). للاستخدام الفعلي على الإنترنت نحتاج استضافة + قاعدة بيانات + صلاحيات.
@@ -138,180 +173,133 @@ hr{border:none;border-top:1px solid rgba(255,255,255,0.10);margin:12px 0}
   </div>
 
   <script>
-const DB_KEY = "naseq_ops_db_v1";
+    const DB_KEY = "naseq_ops_db_v1";
 
-function nowISO(){
-  const d = new Date();
-  return d.toISOString();
-}
-
-function seedDB(){
-  const seeded = {
-    meta: { createdAt: nowISO(), language: "ar", pilot: true },
-    brands: [
-      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
-      { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
-      { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
-    ],
-    users: [
-      { id:"admin", name:"نَسَق (Admin)", role:"admin" }
-    ],
-    visits: [],
-    issues: [],
-    tasks: [],
-    cleaningLogs: [],
-    sops: [
-      { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
-      { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
-    ]
-  };
-  localStorage.setItem(DB_KEY, JSON.stringify(seeded));
-  return seeded;
-}
-
-function loadDB(){
-  const raw = localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
-}
-
-function saveDB(db){
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-}
-
-function $(sel){ return document.querySelector(sel); }
-function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
-
-function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  $all("[data-nav]").forEach(a => {
-    if(a.getAttribute("href") === path) a.classList.add("active");
-  });
-}
-
-function renderBrandBranchSelectors(brandSelId, branchSelId){
-  const db = loadDB();
-  const brandSel = document.getElementById(brandSelId);
-  const branchSel = document.getElementById(branchSelId);
-  if(!brandSel || !branchSel) return;
-
-  brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  function fillBranches(){
-    const b = db.brands.find(x=>x.id===brandSel.value);
-    branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-  }
-  brandSel.addEventListener("change", fillBranches);
-  fillBranches();
-}
-
-function fmtDate(iso){
-  try{
-    const d = new Date(iso);
-    return d.toLocaleString("ar-SA");
-  }catch(e){ return iso; }
-}
-
-function statusPill(status){
-  const map = {
-    "مفتوح": "danger",
-    "متأخر": "warn",
-    "مغلق": "ok",
-    "جديد": "warn",
-    "قيد التنفيذ": "warn",
-    "منجز": "ok"
-  };
-  const cls = map[status] || "";
-  return `<span class="pill ${cls}">${status}</span>`;
-}
-
-function brandName(id){
-  const db = loadDB();
-  return db.brands.find(b=>b.id===id)?.name || id;
-}
-
-function branchName(brandId, branchId){
-  const db = loadDB();
-  const b = db.brands.find(x=>x.id===brandId);
-  return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
-}
-
-function computeDashboard(){
-  const db = loadDB();
-  const openIssues = db.issues.filter(i=>i.status!=="مغلق");
-  const overdueIssues = db.issues.filter(i=>i.status==="متأخر");
-  const critical = db.issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
-  const today = new Date().toISOString().slice(0,10);
-  const todayTasks = db.tasks.filter(t=> (t.dueDate||"").slice(0,10)===today );
-  const doneToday = todayTasks.filter(t=>t.status==="منجز").length;
-
-  return { openIssues: openIssues.length, overdueIssues: overdueIssues.length, critical: critical.length, todayTasks: todayTasks.length, doneToday };
-}
-
-function downloadJSON(){
-  const db = loadDB();
-  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "naseq_ops_export.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importJSON(file){
-  const reader = new FileReader();
-  reader.onload = () => {
-    try{
-      const obj = JSON.parse(reader.result);
-      localStorage.setItem(DB_KEY, JSON.stringify(obj));
-      alert("تم الاستيراد بنجاح ✅");
-      location.reload();
-    }catch(e){
-      alert("ملف غير صالح");
+    function nowISO(){
+      const d = new Date();
+      return d.toISOString();
     }
-  };
-  reader.readAsText(file);
-}
-</script>
-  <script>
+
+    function seedDB(){
+      const seeded = {
+        meta: { createdAt: nowISO(), language: "ar", pilot: true },
+        brands: [
+          { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
+          { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
+          { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
+        ],
+        users: [{ id:"admin", name:"نَسَق (Admin)", role:"admin" }],
+        visits: [],
+        issues: [],
+        tasks: [],
+        cleaningLogs: [],
+        sops: [
+          { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
+          { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
+        ]
+      };
+      localStorage.setItem(DB_KEY, JSON.stringify(seeded));
+      return seeded;
+    }
+
+    function loadDB(){
+      const raw = localStorage.getItem(DB_KEY);
+      if(!raw) return seedDB();
+      try { return JSON.parse(raw); } catch(e){ return seedDB(); }
+    }
+
+    function saveDB(db){
+      localStorage.setItem(DB_KEY, JSON.stringify(db));
+    }
+
+    function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+    function setActiveNav(){
+      const path = location.pathname.split("/").pop() || "index.html";
+      $all("[data-nav]").forEach(a => {
+        if(a.getAttribute("href") === path) a.classList.add("active");
+      });
+    }
+
+    function renderBrandBranchSelectors(brandSelId, branchSelId){
+      const db = loadDB();
+      const brandSel = document.getElementById(brandSelId);
+      const branchSel = document.getElementById(branchSelId);
+      if(!brandSel || !branchSel) return;
+
+      brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+
+      function fillBranches(){
+        const b = db.brands.find(x=>x.id===brandSel.value);
+        branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+      }
+
+      brandSel.addEventListener("change", fillBranches);
+      fillBranches();
+    }
+
+    function fmtDate(iso){
+      try{
+        const d = new Date(iso);
+        return d.toLocaleString("ar-SA");
+      }catch(e){ return iso; }
+    }
+
+    function statusPill(status){
+      const map = { "متأخر": "warn", "منجز": "ok" };
+      const cls = map[status] || "";
+      return `<span class="pill ${cls}">${status}</span>`;
+    }
+
+    function brandName(id){
+      const db = loadDB();
+      return db.brands.find(b=>b.id===id)?.name || id;
+    }
+
+    function branchName(brandId, branchId){
+      const db = loadDB();
+      const b = db.brands.find(x=>x.id===brandId);
+      return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
+    }
+
+    function renderClean(){
+      const db = loadDB();
+      const tbody = document.getElementById("cleanTbody");
+
+      tbody.innerHTML = db.cleaningLogs.slice().reverse().map(r=>`
+        <tr>
+          <td class="muted">${fmtDate(r.createdAt)}</td>
+          <td>${brandName(r.brandId)}</td>
+          <td>${branchName(r.brandId, r.branchId)}</td>
+          <td>${r.slot}</td>
+          <td>${r.task}</td>
+          <td>${r.done==="تم" ? statusPill("منجز") : statusPill("متأخر")}</td>
+          <td class="muted">${r.by}</td>
+        </tr>
+      `).join("") || `<tr><td colspan="7" class="muted">لا يوجد سجلات.</td></tr>`;
+    }
+
+    document.getElementById("addClean").addEventListener("click", ()=>{
+      const db = loadDB();
+      db.cleaningLogs.push({
+        id:"c_"+Math.random().toString(16).slice(2),
+        brandId: document.getElementById("cBrand").value,
+        branchId: document.getElementById("cBranch").value,
+        slot: document.getElementById("cSlot").value,
+        task: document.getElementById("cTask").value,
+        done: document.getElementById("cDone").value,
+        by: document.getElementById("cBy").value.trim() || "غير محدد",
+        createdAt: nowISO()
+      });
+      saveDB(db);
+      alert("تم الحفظ ✅");
+      renderClean();
+    });
+
+    // Init
     setActiveNav();
-    
-renderBrandBranchSelectors("cBrand","cBranch");
-
-function renderClean(){
-  const db = loadDB();
-  const tbody = document.getElementById("cleanTbody");
-  tbody.innerHTML = db.cleaningLogs.slice().reverse().map(r=>`
-    <tr>
-      <td class="muted">${fmtDate(r.createdAt)}</td>
-      <td>${brandName(r.brandId)}</td>
-      <td>${branchName(r.brandId, r.branchId)}</td>
-      <td>${r.slot}</td>
-      <td>${r.task}</td>
-      <td>${r.done==="تم" ? statusPill("منجز") : statusPill("متأخر")}</td>
-      <td class="muted">${r.by}</td>
-    </tr>
-  `).join("") || `<tr><td colspan="7" class="muted">لا يوجد سجلات.</td></tr>`;
-}
-
-document.getElementById("addClean").addEventListener("click", ()=>{
-  const db = loadDB();
-  db.cleaningLogs.push({
-    id:"c_"+Math.random().toString(16).slice(2),
-    brandId: document.getElementById("cBrand").value,
-    branchId: document.getElementById("cBranch").value,
-    slot: document.getElementById("cSlot").value,
-    task: document.getElementById("cTask").value,
-    done: document.getElementById("cDone").value,
-    by: document.getElementById("cBy").value.trim() || "غير محدد",
-    createdAt: nowISO()
-  });
-  saveDB(db);
-  alert("تم الحفظ ✅");
-  renderClean();
-});
-
-renderClean();
-
+    renderBrandBranchSelectors("cBrand","cBranch");
+    renderClean();
   </script>
 </body>
 </html>
