@@ -7,6 +7,18 @@
 
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* تحسينات خفيفة خاصة بالصفحة */
+    .kv{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;margin-top:10px}
+    .kv b{color:rgba(234,240,255,.80);font-size:12px}
+    .kv span{color:rgba(234,240,255,.70);font-size:12px}
+    .mini-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .nowrap{white-space:nowrap}
+    @media (max-width: 900px){
+      .kv{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 
 <body>
@@ -15,10 +27,10 @@
       <div class="logo">ن</div>
       <div>
         <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي</div>
+        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
       </div>
     </div>
-    <div class="badge">MVP محلي</div>
+    <div class="badge">MVP محلي (Prototype)</div>
   </div>
 
   <div class="container">
@@ -35,16 +47,24 @@
     <div class="grid">
       <!-- Editor -->
       <div class="card" style="grid-column: span 5">
-        <h3>تحديث ملاحظة</h3>
-        <div class="muted" id="editHint">اختر ملاحظة من الجدول للتحديث، أو افتحها من صفحة النظافة.</div>
+        <h3>تحديث ملاحظة (CAPA)</h3>
+        <div class="muted" id="editHint">اختر ملاحظة من الجدول للتحديث، أو افتحها من صفحة النظافة/الزيارات.</div>
 
-        <label class="small muted" style="margin-top:10px;display:block">رقم CAPA</label>
+        <!-- معلومات سريعة عن السجل -->
+        <div class="kv" id="metaBox" style="display:none">
+          <b>المصدر</b><span id="mSource">—</span>
+          <b>البراند</b><span id="mBrand">—</span>
+          <b>الفرع</b><span id="mBranch">—</span>
+          <b>آخر تحديث</b><span id="mUpdated">—</span>
+        </div>
+
+        <label class="small" style="margin-top:12px;display:block">رقم CAPA</label>
         <input id="eId" class="input" placeholder="CAPA-XXXX" disabled>
 
-        <label class="small muted" style="margin-top:10px;display:block">المسؤول</label>
-        <input id="eOwner" class="input" placeholder="مثال: مدير الفرع">
+        <label class="small" style="margin-top:10px;display:block">المسؤول</label>
+        <input id="eOwner" class="input" placeholder="مثال: مدير الفرع / مشرف">
 
-        <label class="small muted" style="margin-top:10px;display:block">الحالة</label>
+        <label class="small" style="margin-top:10px;display:block">الحالة</label>
         <select id="eStatus" class="input">
           <option>مفتوح</option>
           <option>قيد التنفيذ</option>
@@ -52,15 +72,20 @@
           <option>مغلق</option>
         </select>
 
-        <label class="small muted" style="margin-top:10px;display:block">الاستحقاق</label>
+        <label class="small" style="margin-top:10px;display:block">الاستحقاق</label>
         <input id="eDue" class="input" type="date">
 
-        <label class="small muted" style="margin-top:10px;display:block">إثبات / ملاحظة الإغلاق</label>
-        <textarea id="eEvidence" class="input" placeholder="مثال: تم التنظيف وإرفاق صورة في الزيارة القادمة..."></textarea>
+        <label class="small" style="margin-top:10px;display:block">إثبات / ملاحظة الإغلاق</label>
+        <textarea id="eEvidence" class="input" placeholder="مثال: تم التصحيح + تم التحقق (صورة/زيارة)..."></textarea>
 
-        <div class="row" style="margin-top:12px">
-          <button class="btn" id="saveEdit">حفظ التحديث</button>
-          <button class="btn secondary" id="clearEdit">زيارة جديدة</button>
+        <div class="mini-actions">
+          <button class="btn primary" id="saveEdit">حفظ التحديث</button>
+          <button class="btn ghost" id="clearEdit">مسح التحديد</button>
+          <button class="btn danger" id="openSource" style="display:none">فتح المصدر</button>
+        </div>
+
+        <div class="muted small" style="margin-top:12px">
+          تلميح: أي “جزئي/لم يتم” في النظافة يولد CAPA تلقائيًا ويمكنك تحديثه هنا.
         </div>
       </div>
 
@@ -68,7 +93,7 @@
       <div class="card" style="grid-column: span 7">
         <h3>CAPA &amp; الملاحظات</h3>
         <div class="muted" style="margin-bottom:10px">
-          تابع الملاحظات، حدّد المسؤول، أغلق مع إثبات. (حاليًا محليًا – LocalStorage)
+          تابع الملاحظات، حدّد المسؤول، أغلق مع إثبات. (محليًا – LocalStorage)
         </div>
 
         <div class="row" style="margin-bottom:10px">
@@ -76,19 +101,29 @@
             <option value="">كل الحالات</option>
             <option>مفتوح</option><option>قيد التنفيذ</option><option>متأخر</option><option>مغلق</option>
           </select>
-          <input id="fSearch" class="input" placeholder="بحث (CAPA/ملاحظة/مسؤول/براند/فرع)">
+
+          <select id="fSource" class="input" style="max-width:220px">
+            <option value="">كل المصادر</option>
+            <option value="cleaning">النظافة</option>
+            <option value="visits">الزيارات</option>
+            <option value="tasks">المهام</option>
+            <option value="manual">يدوي</option>
+          </select>
+
+          <input id="fSearch" class="input" placeholder="بحث (CAPA/ملاحظة/مسؤول/براند/فرع/مصدر)">
         </div>
 
         <table class="table">
           <thead>
             <tr>
-              <th>الحالة</th>
-              <th>الخطورة</th>
-              <th>البراند</th>
-              <th>الفرع</th>
+              <th class="nowrap">الحالة</th>
+              <th class="nowrap">الخطورة</th>
+              <th class="nowrap">المصدر</th>
+              <th class="nowrap">البراند</th>
+              <th class="nowrap">الفرع</th>
               <th>الملاحظة</th>
-              <th>الاستحقاق</th>
-              <th>المسؤول</th>
+              <th class="nowrap">الاستحقاق</th>
+              <th class="nowrap">المسؤول</th>
             </tr>
           </thead>
           <tbody id="issueTbody"></tbody>
@@ -97,13 +132,14 @@
     </div>
 
     <div class="footer">
-      تلميح: من صفحة النظافة، أي “جزئي/لم يتم” سينشئ CAPA تلقائيًا ويمكن فتحه مباشرة.
+      ربط المصادر: النظافة/الزيارات/المهام → CAPA. (LocalStorage)
     </div>
   </div>
 
 <script>
 const DB_KEY = "naseq_ops_db_v1";
 const nowISO = () => new Date().toISOString();
+const todayISO = () => new Date().toISOString().slice(0,10);
 
 function seedDB(){
   const db = {
@@ -140,17 +176,32 @@ function setActiveNav(){
   });
 }
 
+function fmtDateTime(iso){
+  try { return new Date(iso).toLocaleString("ar-SA"); } catch(e){ return iso || "—"; }
+}
+function fmtDate(yyyyMmDd){
+  if(!yyyyMmDd) return "—";
+  try { return new Date(yyyyMmDd+"T00:00:00").toLocaleDateString("ar-SA"); } catch(e){ return yyyyMmDd; }
+}
+
 function statusPill(status){
   if(status === "مغلق") return `<span class="pill ok">مغلق</span>`;
-  if(status === "متأخر") return `<span class="pill warn">متأخر</span>`;
+  if(status === "متأخر") return `<span class="pill danger">متأخر</span>`;
   if(status === "قيد التنفيذ") return `<span class="pill warn">قيد التنفيذ</span>`;
-  return `<span class="pill danger">مفتوح</span>`;
+  return `<span class="pill">مفتوح</span>`;
 }
 
 function severityPill(sev){
   if(sev === "عالي") return `<span class="pill danger">عالي</span>`;
   if(sev === "متوسط") return `<span class="pill warn">متوسط</span>`;
   return `<span class="pill ok">منخفض</span>`;
+}
+
+function sourceLabel(src){
+  if(src === "cleaning") return "النظافة";
+  if(src === "visits") return "الزيارات";
+  if(src === "tasks") return "المهام";
+  return "يدوي";
 }
 
 function brandNameById(id){
@@ -163,43 +214,72 @@ function branchNameById(brandId, branchId){
   return b?.branches?.find(br=>br.id===branchId)?.name || branchId || "—";
 }
 
+/* يحسب متأخر تلقائيًا */
+function computeAutoStatus(issue){
+  if(issue.status === "مغلق") return "مغلق";
+  if(issue.dueDate && issue.dueDate < todayISO()) return "متأخر";
+  return issue.status || "مفتوح";
+}
+
+/* رابط فتح المصدر (حتى لو الصفحة لا تستخدمه الآن، مفيد للمستقبل) */
+function sourceLink(issue){
+  const id = encodeURIComponent(issue.id || "");
+  const src = issue.source || "manual";
+  if(src === "cleaning") return `cleaning.html?capa=${id}`;
+  if(src === "visits")   return `visits.html?capa=${id}`;
+  if(src === "tasks")    return `tasks.html?capa=${id}`;
+  return `issues.html?edit=${id}`;
+}
+
 let currentEditId = null;
+let currentEditSourceUrl = null;
 
 function renderIssues(){
   const db = loadDB();
   const tbody = $id("issueTbody");
 
   const fs = $id("fStatus").value;
+  const fsrc = $id("fSource").value;
   const q  = ($id("fSearch").value || "").toLowerCase();
 
-  const rows = db.issues.filter(i => {
-    const okStatus = (!fs || i.status === fs);
+  // طبّق الحالة التلقائية بدون ما نغيّر البيانات (عرض فقط)
+  const items = db.issues.map(i => ({...i, _autoStatus: computeAutoStatus(i)}));
+
+  const rows = items.filter(i => {
+    const okStatus = (!fs || i._autoStatus === fs);
+    const okSource = (!fsrc || (i.source||"manual") === fsrc);
     const blob = JSON.stringify({
-      id:i.id, status:i.status, severity:i.severity,
+      id:i.id,
+      status:i._autoStatus,
+      severity:i.severity,
+      source:i.source||"manual",
       brand: brandNameById(i.brandId),
       branch: branchNameById(i.brandId, i.branchId),
-      title:i.title, note:i.note, owner:i.owner, dueDate:i.dueDate
+      title:i.title,
+      note:i.note,
+      owner:i.owner,
+      dueDate:i.dueDate
     }).toLowerCase();
     const okQ = (!q || blob.includes(q));
-    return okStatus && okQ;
+    return okStatus && okSource && okQ;
   });
 
   tbody.innerHTML = rows.slice().reverse().map(i => `
     <tr data-id="${i.id}" style="cursor:pointer">
-      <td>${statusPill(i.status)}</td>
+      <td>${statusPill(i._autoStatus)}</td>
       <td>${severityPill(i.severity || "متوسط")}</td>
+      <td class="muted">${sourceLabel(i.source||"manual")}</td>
       <td>${brandNameById(i.brandId)}</td>
       <td>${branchNameById(i.brandId, i.branchId)}</td>
       <td>
-        <div style="font-weight:700">${i.id} — ${i.title || "—"}</div>
-        <div class="muted small">${i.note || "—"}</div>
+        <div style="font-weight:800">${i.id} — ${(i.title || "—")}</div>
+        <div class="muted small">${(i.note || "—")}</div>
       </td>
-      <td class="muted">${i.dueDate || "—"}</td>
+      <td class="muted">${fmtDate(i.dueDate)}</td>
       <td class="muted">${i.owner || "—"}</td>
     </tr>
-  `).join("") || `<tr><td colspan="7" class="muted">لا توجد ملاحظات حتى الآن.</td></tr>`;
+  `).join("") || `<tr><td colspan="8" class="muted">لا توجد ملاحظات حتى الآن.</td></tr>`;
 
-  // click handler to edit
   $all("tr[data-id]").forEach(tr => {
     tr.addEventListener("click", () => openEdit(tr.getAttribute("data-id")));
   });
@@ -211,24 +291,40 @@ function openEdit(id){
   if(!item) return;
 
   currentEditId = id;
-  $id("editHint").textContent = `تحديث ${id} (المصدر: ${item.source || "—"})`;
+  const autoStatus = computeAutoStatus(item);
+
+  $id("editHint").textContent = `تحديث ${id} (المصدر: ${sourceLabel(item.source||"manual")})`;
+
+  $id("metaBox").style.display = "grid";
+  $id("mSource").textContent = sourceLabel(item.source||"manual");
+  $id("mBrand").textContent = brandNameById(item.brandId);
+  $id("mBranch").textContent = branchNameById(item.brandId, item.branchId);
+  $id("mUpdated").textContent = fmtDateTime(item.updatedAt || item.createdAt || "");
+
   $id("eId").value = item.id;
   $id("eOwner").value = item.owner || "";
-  $id("eStatus").value = item.status || "مفتوح";
+  $id("eStatus").value = autoStatus || "مفتوح";
   $id("eDue").value = item.dueDate || "";
   $id("eEvidence").value = item.evidence || "";
-  // scroll to editor on mobile
+
+  currentEditSourceUrl = sourceLink(item);
+  $id("openSource").style.display = "inline-block";
+
   window.scrollTo({ top: 0, behavior:"smooth" });
 }
 
 function clearEdit(){
   currentEditId = null;
-  $id("editHint").textContent = "اختر ملاحظة من الجدول للتحديث، أو افتحها من صفحة النظافة.";
+  currentEditSourceUrl = null;
+
+  $id("editHint").textContent = "اختر ملاحظة من الجدول للتحديث، أو افتحها من صفحة النظافة/الزيارات.";
+  $id("metaBox").style.display = "none";
   $id("eId").value = "";
   $id("eOwner").value = "";
   $id("eStatus").value = "مفتوح";
   $id("eDue").value = "";
   $id("eEvidence").value = "";
+  $id("openSource").style.display = "none";
 }
 
 function saveEdit(){
@@ -245,6 +341,7 @@ function saveEdit(){
 
   saveDB(db);
   renderIssues();
+  openEdit(currentEditId); // تحديث الميتا
   alert("تم حفظ التحديث ✅");
 }
 
@@ -259,15 +356,20 @@ function getQueryParam(name){
   renderIssues();
 
   $id("fStatus").addEventListener("change", renderIssues);
+  $id("fSource").addEventListener("change", renderIssues);
   $id("fSearch").addEventListener("input", renderIssues);
 
   $id("saveEdit").addEventListener("click", saveEdit);
   $id("clearEdit").addEventListener("click", clearEdit);
 
-  // Deep link from cleaning: issues.html?edit=CAPA-XXXX
+  $id("openSource").addEventListener("click", ()=>{
+    if(!currentEditSourceUrl) return;
+    location.href = currentEditSourceUrl;
+  });
+
+  // Deep link: issues.html?edit=CAPA-XXXX
   const editId = getQueryParam("edit");
   if(editId){
-    // render first then open
     openEdit(editId);
   }
 })();
