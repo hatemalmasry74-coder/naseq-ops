@@ -3,69 +3,10 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>منصة نَسَق – النظافة اليومية</title>
 
-  <title>منصة نسق – النظافة اليومية</title>
-
-  <!-- NASAQ Brand Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
-
-  <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
-
-  <style>
-    .page{max-width:1100px;margin:0 auto;padding:18px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .footer{margin-top:18px;color:var(--text-muted);font-size:12px}
-
-    .input{
-      width:100%;padding:10px 12px;border-radius:10px;
-      border:1px solid var(--border-light);background:#fff;
-      outline:none;
-    }
-
-    .pill{padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border-light)}
-    .pill.ok{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.35)}
-    .pill.warn{background:rgba(237,108,2,.08);border-color:rgba(237,108,2,.35)}
-    .pill.danger{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.45)}
-
-    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
-    .table th{font-size:12px;color:var(--text-muted);text-align:right}
-    .table td{
-      background:#fff;border:1px solid var(--border-light);
-      padding:10px;border-left:none;border-right:none
-    }
-    .table tr td:first-child{
-      border-right:1px solid var(--border-light);
-      border-top-right-radius:10px;border-bottom-right-radius:10px
-    }
-    .table tr td:last-child{
-      border-left:1px solid var(--border-light);
-      border-top-left-radius:10px;border-bottom-left-radius:10px
-    }
-
-    .btn{
-      background:var(--nasaq-primary);color:#fff;
-      border:none;border-radius:10px;padding:10px 14px;cursor:pointer
-    }
-
-    .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
-    .brand{display:flex;gap:10px;align-items:center}
-    .logo{width:38px;height:38px;border-radius:12px;background:var(--nasaq-primary);color:#fff;
-      display:grid;place-items:center;font-weight:900}
-    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border-light);background:#fff}
-
-    .container{max-width:1100px;margin:0 auto;padding:18px}
-    .nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-    .nav a{padding:10px 12px;border-radius:12px;border:1px solid var(--border-light);background:#fff;text-decoration:none}
-    .nav a.active{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.35)}
-
-    @media print{
-      .topbar,.nav,#printSummary,#printDetailed,#fStatus,#fSearch{display:none!important}
-      .col-notes{display:none}
-      body[data-print="detailed"] .col-notes{display:table-cell}
-    }
-  </style>
 </head>
 
 <body>
@@ -73,7 +14,7 @@
     <div class="brand">
       <div class="logo">ن</div>
       <div>
-        <div style="font-weight:900">غرفة عمليات نَسَق</div>
+        <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
         <div class="muted">Pilot: طوبى • سدف • دبل بي</div>
       </div>
     </div>
@@ -84,7 +25,7 @@
     <div class="nav">
       <a data-nav href="index.html">لوحة التحكم</a>
       <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">CAPA & الملاحظات</a>
+      <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
       <a data-nav href="tasks.html">المهام</a>
       <a data-nav href="cleaning.html">النظافة اليومية</a>
       <a data-nav href="sop.html">مكتبة SOP</a>
@@ -92,62 +33,81 @@
     </div>
 
     <div class="grid">
-      <div class="card" style="grid-column:span 5">
+      <!-- Form -->
+      <div class="card" style="grid-column: span 5">
         <h3>تسجيل نظافة يومية</h3>
+        <div class="muted" style="margin-bottom:10px">أي حالة (جزئي/لم يتم) ستُنشئ CAPA تلقائيًا.</div>
 
         <label class="small muted">البراند</label>
         <select id="cBrand" class="input"></select>
 
-        <label class="small muted">الفرع</label>
+        <label class="small muted" style="margin-top:10px;display:block">الفرع</label>
         <select id="cBranch" class="input"></select>
 
-        <label class="small muted">الفترة</label>
+        <label class="small muted" style="margin-top:10px;display:block">الفترة</label>
         <select id="cSlot" class="input">
-          <option>7:00–7:30</option><option>7:30–8:00</option>
-          <option>8:00–8:30</option><option>8:30–9:00</option>
+          <option>7:00–7:30</option><option>7:30–8:00</option><option>8:00–8:30</option><option>8:30–9:00</option>
+          <option>9:00–9:30</option><option>9:30–10:00</option><option>10:00–10:30</option><option>10:30–11:00</option>
+          <option>11:00–11:30</option><option>11:30–12:00</option>
         </select>
 
-        <label class="small muted">المهمة</label>
+        <label class="small muted" style="margin-top:10px;display:block">المهمة</label>
         <select id="cTask" class="input">
-          <option>Floor</option><option>Bathroom</option>
-          <option>Back area</option><option>Store</option>
+          <option>Floor</option>
+          <option>Bathroom</option>
+          <option>Back area</option>
+          <option>Store</option>
+          <option>Windows</option>
+          <option>Glasses</option>
         </select>
 
-        <label class="small muted">المنفذ</label>
+        <label class="small muted" style="margin-top:10px;display:block">المنفذ</label>
         <input id="cBy" class="input" placeholder="اسم الموظف">
 
-        <label class="small muted">الحالة</label>
+        <label class="small muted" style="margin-top:10px;display:block">الحالة</label>
         <select id="cDone" class="input">
           <option>تم</option>
           <option>جزئي</option>
           <option>لم يتم</option>
         </select>
 
-        <label class="small muted">ملاحظات</label>
-        <textarea id="cNotes" class="input" style="min-height:80px;resize:vertical" placeholder="اكتب الملاحظة (اختياري)"></textarea>
+        <label class="small muted" style="margin-top:10px;display:block">ملاحظات</label>
+        <textarea id="cNotes" class="input" placeholder="اكتب الملاحظة (اختياري)"></textarea>
 
-        <button class="btn" type="button" id="addClean">حفظ</button>
+        <div class="row" style="margin-top:12px;justify-content:flex-start">
+          <button class="btn" id="addClean">حفظ</button>
+          <button class="btn secondary" id="btnGoCAPA" title="فتح CAPA آخر عنصر تم إنشاؤه">فتح CAPA</button>
+        </div>
+
+        <div class="muted small" style="margin-top:10px" id="lastCapaHint"></div>
       </div>
 
-      <div class="card" style="grid-column:span 7">
+      <!-- Table -->
+      <div class="card" style="grid-column: span 7">
         <h3>سجل النظافة</h3>
 
-        <div class="row">
+        <div class="row" style="margin-bottom:10px">
           <select id="fStatus" class="input" style="max-width:220px">
             <option value="">كل الحالات</option>
             <option>تم</option><option>جزئي</option><option>لم يتم</option>
           </select>
-          <input id="fSearch" class="input" style="flex:1;min-width:200px" placeholder="بحث (منفذ/مهمة/فترة/ملاحظة)">
-          <button class="btn" type="button" id="printSummary">PDF مختصر</button>
-          <button class="btn" type="button" id="printDetailed">PDF تفصيلي</button>
+          <input id="fSearch" class="input" placeholder="بحث (منفذ/مهمة/ملاحظة/فرع...)">
+          <button class="btn" id="printSummary">PDF مختصر</button>
+          <button class="btn" id="printDetailed">PDF تفصيلي</button>
         </div>
 
         <table class="table">
           <thead>
             <tr>
-              <th>التاريخ</th><th>البراند</th><th>الفرع</th>
-              <th>الفترة</th><th>المهمة</th><th>الحالة</th>
-              <th>المنفذ</th><th>CAPA</th><th class="col-notes">ملاحظات</th>
+              <th>التاريخ</th>
+              <th>البراند</th>
+              <th>الفرع</th>
+              <th>الفترة</th>
+              <th>المهمة</th>
+              <th>الحالة</th>
+              <th>المنفذ</th>
+              <th>CAPA</th>
+              <th class="col-notes">ملاحظات</th>
             </tr>
           </thead>
           <tbody id="cleanTbody"></tbody>
@@ -156,144 +116,218 @@
     </div>
 
     <div class="footer">
-      نموذج تشغيلي أولي — البيانات محلية (LocalStorage)
+      نموذج تشغيلي أولي — البيانات محلية (LocalStorage). للاستخدام الفعلي: قاعدة بيانات + صلاحيات + أرشفة.
     </div>
   </div>
 
 <script>
-  const DB_KEY = "naseq_ops_db_v1";
+/* =========================
+   Shared Local DB
+   ========================= */
+const DB_KEY = "naseq_ops_db_v1";
+const nowISO = () => new Date().toISOString();
 
-  const now = () => new Date().toISOString();
-  const load = () => {
-    const raw = localStorage.getItem(DB_KEY);
-    if(!raw) return seed();
-    try { return JSON.parse(raw) || seed(); } catch(e){ return seed(); }
+function seedDB(){
+  const db = {
+    meta: { createdAt: nowISO(), language: "ar", pilot: true },
+    brands: [
+      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
+      { id: "sdf",  name: "سدف",  branches:[{id:"sdf-main",  name:"سدف – الفرع الرئيسي"}]},
+      { id: "dbb",  name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
+    ],
+    cleaningLogs: [],
+    issues: [],
+    tasks: [],
+    visits: [],
+    sops: []
   };
-  const save = (db) => localStorage.setItem(DB_KEY, JSON.stringify(db));
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+  return db;
+}
 
-  function seed(){
-    const db = {
-      brands:[
-        {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
-        {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
-        {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
-      ],
-      cleaningLogs:[],
-      issues:[]
-    };
-    save(db);
-    return db;
+function loadDB(){
+  const raw = localStorage.getItem(DB_KEY);
+  if(!raw) return seedDB();
+  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
+}
+function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+
+function $id(id){ return document.getElementById(id); }
+function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+function setActiveNav(){
+  const path = location.pathname.split("/").pop() || "index.html";
+  $all("[data-nav]").forEach(a => {
+    if(a.getAttribute("href") === path) a.classList.add("active");
+  });
+}
+
+function fmtDate(iso){
+  try { return new Date(iso).toLocaleString("ar-SA"); } catch(e){ return iso; }
+}
+
+function statusPill(status){
+  if(status === "تم") return `<span class="pill ok">تم</span>`;
+  if(status === "جزئي") return `<span class="pill warn">جزئي</span>`;
+  return `<span class="pill danger">لم يتم</span>`;
+}
+
+function genCAPAId(){
+  return "CAPA-" + Math.random().toString(16).slice(2,6).toUpperCase();
+}
+
+function initBrandBranchSelectors(){
+  const db = loadDB();
+  const brandSel = $id("cBrand");
+  const branchSel = $id("cBranch");
+
+  brandSel.innerHTML = db.brands.map(b => `<option value="${b.id}">${b.name}</option>`).join("");
+
+  function fillBranches(){
+    const b = db.brands.find(x => x.id === brandSel.value);
+    branchSel.innerHTML = (b?.branches || []).map(br => `<option value="${br.id}">${br.name}</option>`).join("");
   }
 
-  function statusPill(s){
-    if(s==="تم") return '<span class="pill ok">تم</span>';
-    if(s==="جزئي") return '<span class="pill warn">جزئي</span>';
-    return '<span class="pill danger">لم يتم</span>';
-  }
+  brandSel.addEventListener("change", fillBranches);
+  fillBranches();
+}
 
-  function setActiveNav(){
-    const path = location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll("[data-nav]").forEach(a=>{
-      if(a.getAttribute("href") === path) a.classList.add("active");
-    });
-  }
+/* =========================
+   Cleaning -> CAPA Link
+   ========================= */
+function createIssueFromCleaning(rec){
+  const db = loadDB();
+  const id = genCAPAId();
 
-  function render(){
-    const db = load();
-    const tbody = document.getElementById("cleanTbody");
+  const issue = {
+    id,
+    createdAt: nowISO(),
+    source: "cleaning",
+    status: "مفتوح",
+    severity: rec.done === "لم يتم" ? "عالي" : "متوسط",
+    brandId: rec.brandId,
+    branchId: rec.branchId,
+    title: `نظافة: ${rec.task} (${rec.slot})`,
+    note: rec.notes || `تم تسجيل حالة (${rec.done}) في بند النظافة.`,
+    owner: "",
+    dueDate: "",
+    evidence: "" // لاحقًا: روابط مرفقات
+  };
 
-    const fs = (document.getElementById("fStatus").value || "").trim();
-    const q  = (document.getElementById("fSearch").value || "").trim().toLowerCase();
+  db.issues.push(issue);
+  saveDB(db);
+  return id;
+}
 
-    const rows = db.cleaningLogs
-      .filter(r => (!fs || r.done === fs))
-      .filter(r => (!q || JSON.stringify(r).toLowerCase().includes(q)))
-      .slice()
-      .reverse();
+function renderTable(){
+  const db = loadDB();
+  const tbody = $id("cleanTbody");
 
-    tbody.innerHTML = rows.map(r => `
+  const fs = $id("fStatus").value;
+  const q  = ($id("fSearch").value || "").toLowerCase();
+
+  const filtered = db.cleaningLogs.filter(r => {
+    const okStatus = (!fs || r.done === fs);
+    const blob = JSON.stringify(r).toLowerCase();
+    const okQ = (!q || blob.includes(q));
+    return okStatus && okQ;
+  });
+
+  tbody.innerHTML = filtered.slice().reverse().map(r => {
+    const capaCell = r.capaId
+      ? `<a class="btn link" style="padding:6px 10px;border-radius:999px;text-decoration:none"
+            href="issues.html?edit=${encodeURIComponent(r.capaId)}">فتح ${r.capaId}</a>`
+      : `<span class="muted">—</span>`;
+
+    return `
       <tr>
-        <td>${new Date(r.createdAt).toLocaleString("ar-SA")}</td>
-        <td>${r.brand}</td>
-        <td>${r.branch}</td>
+        <td class="muted">${fmtDate(r.createdAt)}</td>
+        <td>${r.brandName}</td>
+        <td>${r.branchName}</td>
         <td>${r.slot}</td>
         <td>${r.task}</td>
         <td>${statusPill(r.done)}</td>
-        <td>${r.by}</td>
-        <td>${r.capa || "—"}</td>
-        <td class="col-notes">${r.notes || "—"}</td>
+        <td class="muted">${r.by}</td>
+        <td>${capaCell}</td>
+        <td class="col-notes muted">${r.notes ? r.notes : "—"}</td>
       </tr>
-    `).join("") || "<tr><td colspan='9' class='muted'>لا يوجد سجلات</td></tr>";
+    `;
+  }).join("") || `<tr><td colspan="9" class="muted">لا يوجد سجلات.</td></tr>`;
+}
+
+function saveCleaning(){
+  const db = loadDB();
+
+  const brandId = $id("cBrand").value;
+  const branchId = $id("cBranch").value;
+
+  const brandName = db.brands.find(b => b.id === brandId)?.name || brandId;
+  const branchName = db.brands.find(b => b.id === brandId)?.branches?.find(br => br.id === branchId)?.name || branchId;
+
+  const rec = {
+    id: "CLN-" + Math.random().toString(16).slice(2,8).toUpperCase(),
+    createdAt: nowISO(),
+    brandId, branchId,
+    brandName, branchName,
+    slot: $id("cSlot").value,
+    task: $id("cTask").value,
+    by: ($id("cBy").value || "").trim() || "غير محدد",
+    done: $id("cDone").value,
+    notes: ($id("cNotes").value || "").trim(),
+    capaId: null
+  };
+
+  // Auto-create CAPA if not completed
+  if(rec.done !== "تم"){
+    rec.capaId = createIssueFromCleaning(rec);
+    localStorage.setItem("nasaq_last_capa", rec.capaId);
+    $id("lastCapaHint").textContent = `تم إنشاء ${rec.capaId} تلقائيًا بسبب الحالة (${rec.done}).`;
+  }else{
+    $id("lastCapaHint").textContent = "";
+    localStorage.removeItem("nasaq_last_capa");
   }
 
-  document.getElementById("addClean").addEventListener("click", ()=>{
-    const db = load();
+  db.cleaningLogs.push(rec);
+  saveDB(db);
 
-    const brandText  = cBrand.options[cBrand.selectedIndex]?.text || "—";
-    const branchText = cBranch.options[cBranch.selectedIndex]?.text || "—";
+  renderTable();
+  alert("تم الحفظ ✅");
+}
 
-    const rec = {
-      brand: brandText,
-      branch: branchText,
-      slot: cSlot.value,
-      task: cTask.value,
-      by: (cBy.value || "").trim() || "—",
-      done: cDone.value,
-      notes: (cNotes.value || "").trim(),
-      createdAt: now(),
-      capa: null
-    };
+/* =========================
+   Print
+   ========================= */
+function printSummary(){
+  document.body.dataset.print = "summary";
+  window.print();
+}
+function printDetailed(){
+  document.body.dataset.print = "detailed";
+  window.print();
+}
 
-    if(rec.done !== "تم"){
-      rec.capa = "CAPA-" + Math.random().toString(16).slice(2,6);
-      db.issues.push({ id: rec.capa, source: "cleaning", createdAt: rec.createdAt });
-    }
+/* =========================
+   Init
+   ========================= */
+(function init(){
+  setActiveNav();
+  initBrandBranchSelectors();
 
-    db.cleaningLogs.push(rec);
-    save(db);
+  $id("addClean").addEventListener("click", saveCleaning);
+  $id("fStatus").addEventListener("change", renderTable);
+  $id("fSearch").addEventListener("input", renderTable);
 
-    // تنظيف الإدخال
-    cBy.value = "";
-    cNotes.value = "";
+  $id("printSummary").addEventListener("click", printSummary);
+  $id("printDetailed").addEventListener("click", printDetailed);
 
-    render();
-    alert("تم الحفظ ✅");
+  $id("btnGoCAPA").addEventListener("click", () => {
+    const last = localStorage.getItem("nasaq_last_capa");
+    if(!last) return alert("لا يوجد CAPA حديث لفتحه الآن.");
+    location.href = `issues.html?edit=${encodeURIComponent(last)}`;
   });
 
-  document.getElementById("printSummary").addEventListener("click", ()=>{
-    document.body.dataset.print = "summary";
-    window.print();
-  });
-
-  document.getElementById("printDetailed").addEventListener("click", ()=>{
-    document.body.dataset.print = "detailed";
-    window.print();
-  });
-
-  document.getElementById("fStatus").addEventListener("change", render);
-  document.getElementById("fSearch").addEventListener("input", render);
-
-  (function init(){
-    setActiveNav();
-
-    const db = load();
-
-    // Fill brands
-    cBrand.innerHTML = "";
-    db.brands.forEach(b => cBrand.add(new Option(b.name, b.id)));
-
-    // Fill branches based on selected brand
-    function fillBranches(){
-      cBranch.innerHTML = "";
-      const b = db.brands.find(x => x.id === cBrand.value);
-      (b?.branches || []).forEach(br => cBranch.add(new Option(br.name, br.id)));
-    }
-
-    cBrand.addEventListener("change", fillBranches);
-    fillBranches();
-
-    render();
-  })();
+  renderTable();
+})();
 </script>
 </body>
 </html>
