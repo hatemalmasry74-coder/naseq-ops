@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>غرفة عمليات نسق — الإعدادات</title>
+  <style>
+:root{--bg:#0b1220;--card:#111a2e;--muted:#9fb0d0;--text:#eaf0ff;--accent:#4da3ff;--danger:#ff5d5d;--warn:#ffcc66;--ok:#4ade80;}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:var(--bg);color:var(--text);direction:rtl}
+a{color:inherit;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:18px}
+.topbar{display:flex;gap:12px;align-items:center;justify-content:space-between;padding:14px 18px;background:rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.08);position:sticky;top:0;backdrop-filter:blur(8px)}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#8b5cf6);display:grid;place-items:center;font-weight:800}
+.badge{padding:6px 10px;border-radius:999px;background:rgba(77,163,255,0.15);border:1px solid rgba(77,163,255,0.35);color:#cfe6ff;font-size:12px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:14px}
+.card h3{margin:0 0 10px 0;font-size:16px}
+.kpi{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.kpi .num{font-size:28px;font-weight:800}
+.muted{color:var(--muted);font-size:12px;line-height:1.5}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.input, select, textarea{width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.15);color:var(--text);outline:none}
+textarea{min-height:90px;resize:vertical}
+.btn{cursor:pointer;border:none;border-radius:12px;padding:10px 12px;background:rgba(77,163,255,0.18);color:var(--text);border:1px solid rgba(77,163,255,0.35);font-weight:700}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12)}
+.btn.danger{background:rgba(255,93,93,0.15);border:1px solid rgba(255,93,93,0.35)}
+.table{width:100%;border-collapse:separate;border-spacing:0 10px}
+.table th{font-size:12px;color:var(--muted);text-align:right;padding:0 8px}
+.table td{padding:12px 8px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08)}
+.table tr td:first-child{border-right:1px solid rgba(255,255,255,0.08);border-top-right-radius:14px;border-bottom-right-radius:14px}
+.table tr td:last-child{border-left:1px solid rgba(255,255,255,0.08);border-top-left-radius:14px;border-bottom-left-radius:14px}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.04)}
+.pill.danger{border-color:rgba(255,93,93,0.35);background:rgba(255,93,93,0.12)}
+.pill.warn{border-color:rgba(255,204,102,0.35);background:rgba(255,204,102,0.12)}
+.pill.ok{border-color:rgba(74,222,128,0.35);background:rgba(74,222,128,0.10)}
+.nav{display:flex;gap:8px;flex-wrap:wrap}
+.nav a{padding:8px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.10);background:rgba(255,255,255,0.03);font-size:13px}
+.nav a.active{border-color:rgba(77,163,255,0.45);background:rgba(77,163,255,0.12)}
+.footer{margin-top:18px;color:var(--muted);font-size:12px}
+.small{font-size:12px}
+hr{border:none;border-top:1px solid rgba(255,255,255,0.10);margin:12px 0}
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">ن</div>
+      <div>
+        <div style="font-weight:900">غرفة عمليات نَسَق</div>
+        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
+      </div>
+    </div>
+    <div class="badge">MVP محلي (Prototype)</div>
+  </div>
+
+  <div class="container">
+    <div class="nav" style="margin-bottom:14px">
+      <a data-nav href="index.html">لوحة التحكم</a>
+      <a data-nav href="visits.html">الزيارات</a>
+      <a data-nav href="issues.html">الملاحظات &amp; CAPA</a>
+      <a data-nav href="tasks.html">المهام</a>
+      <a data-nav href="cleaning.html">النظافة اليومية</a>
+      <a data-nav href="sop.html">مكتبة SOP</a>
+      <a data-nav href="settings.html">الإعدادات</a>
+    </div>
+
+    
+<div class="grid">
+  <div class="card" style="grid-column: span 6">
+    <h3>إعدادات البراندات والفروع</h3>
+    <div class="muted">Pilot: فرع واحد لكل براند. يمكنك إضافة فروع لاحقًا.</div>
+    <div style="margin-top:10px">
+      <label class="small muted">اختر البراند</label>
+      <select id="sBrand" class="input"></select>
+    </div>
+    <div style="margin-top:10px">
+      <label class="small muted">اسم الفرع الجديد</label>
+      <input id="newBranchName" class="input" placeholder="مثال: طوبى – فرع الجامعة"/>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn" id="addBranch">إضافة فرع</button>
+    </div>
+    <hr/>
+    <div id="branchesView" class="muted"></div>
+  </div>
+
+  <div class="card" style="grid-column: span 6">
+    <h3>إعداد اللغة</h3>
+    <div class="muted">النظام الآن عربي. تم تجهيز البنية لتفعيل لغات مستقبلًا (في نسخة الاستضافة).</div>
+    <div style="margin-top:10px">
+      <label class="small muted">اللغة الحالية</label>
+      <select id="langSel" class="input" disabled>
+        <option selected>العربية</option>
+      </select>
+    </div>
+    <div class="muted" style="margin-top:10px">ملاحظة: هذا نموذج محلي، التعدد اللغوي يُفعّل بالكامل عند تحويله لتطبيق مستضاف مع قاعدة بيانات.</div>
+  </div>
+</div>
+
+
+    <div class="footer">
+      هذا نموذج أولي محلي لتجربة الفكرة. البيانات تُحفظ في المتصفح (LocalStorage). للاستخدام الفعلي على الإنترنت نحتاج استضافة + قاعدة بيانات + صلاحيات.
+    </div>
+  </div>
+
+  <script>
+const DB_KEY = "naseq_ops_db_v1";
+
+function nowISO(){
+  const d = new Date();
+  return d.toISOString();
+}
+
+function seedDB(){
+  const seeded = {
+    meta: { createdAt: nowISO(), language: "ar", pilot: true },
+    brands: [
+      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
+      { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
+      { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
+    ],
+    users: [
+      { id:"admin", name:"نَسَق (Admin)", role:"admin" }
+    ],
+    visits: [],
+    issues: [],
+    tasks: [],
+    cleaningLogs: [],
+    sops: [
+      { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
+      { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
+    ]
+  };
+  localStorage.setItem(DB_KEY, JSON.stringify(seeded));
+  return seeded;
+}
+
+function loadDB(){
+  const raw = localStorage.getItem(DB_KEY);
+  if(!raw) return seedDB();
+  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
+}
+
+function saveDB(db){
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
+
+function $(sel){ return document.querySelector(sel); }
+function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+function setActiveNav(){
+  const path = location.pathname.split("/").pop() || "index.html";
+  $all("[data-nav]").forEach(a => {
+    if(a.getAttribute("href") === path) a.classList.add("active");
+  });
+}
+
+function renderBrandBranchSelectors(brandSelId, branchSelId){
+  const db = loadDB();
+  const brandSel = document.getElementById(brandSelId);
+  const branchSel = document.getElementById(branchSelId);
+  if(!brandSel || !branchSel) return;
+
+  brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+  function fillBranches(){
+    const b = db.brands.find(x=>x.id===brandSel.value);
+    branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+  }
+  brandSel.addEventListener("change", fillBranches);
+  fillBranches();
+}
+
+function fmtDate(iso){
+  try{
+    const d = new Date(iso);
+    return d.toLocaleString("ar-SA");
+  }catch(e){ return iso; }
+}
+
+function statusPill(status){
+  const map = {
+    "مفتوح": "danger",
+    "متأخر": "warn",
+    "مغلق": "ok",
+    "جديد": "warn",
+    "قيد التنفيذ": "warn",
+    "منجز": "ok"
+  };
+  const cls = map[status] || "";
+  return `<span class="pill ${cls}">${status}</span>`;
+}
+
+function brandName(id){
+  const db = loadDB();
+  return db.brands.find(b=>b.id===id)?.name || id;
+}
+
+function branchName(brandId, branchId){
+  const db = loadDB();
+  const b = db.brands.find(x=>x.id===brandId);
+  return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
+}
+
+function computeDashboard(){
+  const db = loadDB();
+  const openIssues = db.issues.filter(i=>i.status!=="مغلق");
+  const overdueIssues = db.issues.filter(i=>i.status==="متأخر");
+  const critical = db.issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
+  const today = new Date().toISOString().slice(0,10);
+  const todayTasks = db.tasks.filter(t=> (t.dueDate||"").slice(0,10)===today );
+  const doneToday = todayTasks.filter(t=>t.status==="منجز").length;
+
+  return { openIssues: openIssues.length, overdueIssues: overdueIssues.length, critical: critical.length, todayTasks: todayTasks.length, doneToday };
+}
+
+function downloadJSON(){
+  const db = loadDB();
+  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download = "naseq_ops_export.json";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importJSON(file){
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const obj = JSON.parse(reader.result);
+      localStorage.setItem(DB_KEY, JSON.stringify(obj));
+      alert("تم الاستيراد بنجاح ✅");
+      location.reload();
+    }catch(e){
+      alert("ملف غير صالح");
+    }
+  };
+  reader.readAsText(file);
+}
+</script>
+  <script>
+    setActiveNav();
+    
+const db = loadDB();
+const sBrand = document.getElementById("sBrand");
+sBrand.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+
+function renderBranches(){
+  const db = loadDB();
+  const b = db.brands.find(x=>x.id===sBrand.value);
+  const root = document.getElementById("branchesView");
+  const list = (b?.branches||[]).map(br=>`• ${br.name}`).join("<br/>");
+  root.innerHTML = `<b>الفروع الحالية:</b><br/>${list || "لا يوجد"}`;
+}
+sBrand.addEventListener("change", renderBranches);
+renderBranches();
+
+document.getElementById("addBranch").addEventListener("click", ()=>{
+  const db = loadDB();
+  const b = db.brands.find(x=>x.id===sBrand.value);
+  const name = document.getElementById("newBranchName").value.trim();
+  if(!name){ alert("اكتب اسم الفرع"); return; }
+  const id = b.id + "-" + name.replace(/\s+/g,"-").replace(/[^\w؀-ۿ-]/g,"").toLowerCase().slice(0,24) + "-" + Math.random().toString(16).slice(2,6);
+  b.branches.push({id, name});
+  saveDB(db);
+  document.getElementById("newBranchName").value="";
+  alert("تمت الإضافة ✅");
+  renderBranches();
+});
+
+  </script>
+</body>
+</html>
