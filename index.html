@@ -1,236 +1,584 @@
 <!doctype html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>منصة نسق – لوحة التحكم</title>
+  <title>منصة نسق – لوحة CEO</title>
 
   <!-- NASAQ Brand Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
 
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 18px}
+    .brand{display:flex;gap:10px;align-items:center}
+    .logo{width:38px;height:38px;border-radius:12px;background:var(--nasaq-primary);color:#fff;display:grid;place-items:center;font-weight:900}
+    .badge{padding:6px 10px;border-radius:999px;border:1px solid var(--border-light);background:#fff}
+
+    .nav{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+    .nav a{padding:10px 12px;border-radius:12px;border:1px solid var(--border-light);background:#fff;text-decoration:none}
+    .nav a.active{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.35)}
+
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+
+    .kpi{display:flex;gap:12px;align-items:center;justify-content:space-between}
+    .kpi .num{font-size:28px;font-weight:900}
+    .muted{color:var(--text-muted)}
+    .small{font-size:12px}
+    .chip{padding:8px 10px;border:1px solid var(--border-light);border-radius:999px;background:#fff;cursor:pointer}
+    .chip.active{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.35)}
+    .select{padding:10px 12px;border-radius:10px;border:1px solid var(--border-light);background:#fff;outline:none}
+    .btn{background:var(--nasaq-primary);color:#fff;border:none;border-radius:10px;padding:10px 14px;cursor:pointer}
+
+    .pill{padding:6px 10px;border-radius:999px;font-size:12px;border:1px solid var(--border-light);display:inline-block}
+    .pill.ok{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.35)}
+    .pill.warn{background:rgba(237,108,2,.08);border-color:rgba(237,108,2,.35)}
+    .pill.danger{background:rgba(193,33,38,.08);border-color:rgba(193,33,38,.45)}
+    .pill.neutral{background:rgba(0,0,0,.04)}
+
+    .table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    .table th{font-size:12px;color:var(--text-muted);text-align:right}
+    .table td{
+      background:#fff;border:1px solid var(--border-light);
+      padding:10px;border-left:none;border-right:none;vertical-align:top
+    }
+    .table tr td:first-child{
+      border-right:1px solid var(--border-light);
+      border-top-right-radius:10px;border-bottom-right-radius:10px
+    }
+    .table tr td:last-child{
+      border-left:1px solid var(--border-light);
+      border-top-left-radius:10px;border-bottom-left-radius:10px
+    }
+
+    .alertBox{display:flex;flex-direction:column;gap:10px}
+    .alertItem{background:#fff;border:1px solid var(--border-light);border-radius:14px;padding:12px}
+    .alertTitle{font-weight:800;margin-bottom:6px}
+    .footer{margin-top:18px;color:var(--text-muted);font-size:12px}
+
+    @media (max-width:900px){
+      .topbar{flex-direction:column;align-items:flex-start;gap:10px}
+    }
+  </style>
 </head>
 
+<body>
   <div class="topbar">
     <div class="brand">
       <div class="logo">ن</div>
       <div>
         <div style="font-weight:900">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
+        <div class="muted">CEO Dashboard — عربي الآن (جاهز للإنجليزية لاحقًا)</div>
       </div>
     </div>
-    <div class="badge">MVP محلي (Prototype)</div>
+    <div class="badge">MVP محلي</div>
   </div>
 
   <div class="container">
-    <div class="nav" style="margin-bottom:14px">
+    <div class="nav">
       <a data-nav href="index.html">لوحة التحكم</a>
       <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">الملاحظات &amp; CAPA</a>
+      <a data-nav href="issues.html">CAPA & الملاحظات</a>
       <a data-nav href="tasks.html">المهام</a>
       <a data-nav href="cleaning.html">النظافة اليومية</a>
       <a data-nav href="sop.html">مكتبة SOP</a>
       <a data-nav href="settings.html">الإعدادات</a>
     </div>
-<div class="grid">
-  <div class="card" style="grid-column: span 4">
-    <h3>ملاحظات حرجة</h3>
-    <div class="kpi"><div class="num" id="kpiCritical">0</div><div class="pill danger">عالي</div></div>
-    <div class="muted">عدد الملاحظات بدرجة خطورة عالية ولم تُغلق بعد.</div>
-  </div>
-  <div class="card" style="grid-column: span 4">
-    <h3>ملاحظات متأخرة</h3>
-    <div class="kpi"><div class="num" id="kpiOverdue">0</div><div class="pill warn">متأخر</div></div>
-    <div class="muted">ملاحظات تجاوزت تاريخ الإغلاق المطلوب.</div>
-  </div>
-  <div class="card" style="grid-column: span 4">
-    <h3>مهام اليوم</h3>
-    <div class="kpi"><div class="num"><span id="kpiDone">0</span>/<span id="kpiToday">0</span></div><div class="pill ok">منجز</div></div>
-    <div class="muted">نسبة المهام المنجزة اليوم (حسب تاريخ الاستحقاق).</div>
-  </div>
 
-  <div class="card" style="grid-column: span 7">
-    <h3>ملخص سريع</h3>
-    <div class="row">
-      <div class="pill">إجمالي الملاحظات المفتوحة: <b id="kpiOpen">0</b></div>
-      <div class="pill">تجربة Pilot: 3 براندات / 3 فروع</div>
-    </div>
-    <hr/>
-    <div class="muted">ابدأ بإضافة زيارة جديدة، وسيتم إنشاء الملاحظات والإجراءات التصحيحية تلقائيًا.</div>
-    <div class="row" style="margin-top:10px">
-      <a class="btn" href="visits.html">+ إنشاء زيارة</a>
-      <a class="btn secondary" href="issues.html">عرض الملاحظات</a>
-      <a class="btn secondary" href="tasks.html">إدارة المهام</a>
-    </div>
-  </div>
+    <!-- Controls -->
+    <div class="card" style="margin-bottom:14px">
+      <div class="row" style="justify-content:space-between">
+        <div class="row">
+          <span class="chip active" data-range="today">اليوم</span>
+          <span class="chip" data-range="week">هذا الأسبوع</span>
+          <span class="chip" data-range="all">كل البيانات</span>
+        </div>
 
-  <div class="card" style="grid-column: span 5">
-    <h3>أدوات</h3>
-    <div class="muted">تصدير/استيراد البيانات لتجربة المشاركة بين الأجهزة.</div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn" onclick="downloadJSON()">تصدير البيانات (JSON)</button>
-      <label class="btn secondary" style="display:inline-flex;align-items:center;gap:8px">
-        استيراد
-        <input id="importFile" type="file" accept="application/json" style="display:none" onchange="importJSON(this.files[0])"/>
-      </label>
-      <button class="btn danger" onclick="if(confirm('سيتم إعادة ضبط البيانات!')){ localStorage.removeItem(DB_KEY); location.reload(); }">إعادة ضبط</button>
+        <div class="row">
+          <select id="brandFilter" class="select" style="min-width:220px">
+            <option value="">كل البراندات</option>
+          </select>
+          <button class="btn" type="button" id="refreshBtn">تحديث</button>
+        </div>
+      </div>
+      <div class="small muted" style="margin-top:8px">
+        ملاحظة: هذه لوحة قرار (Decision Dashboard) — تعرض أهم ما يحتاجه المدير التنفيذي بسرعة.
+      </div>
     </div>
-  </div>
-</div>
 
+    <!-- KPI -->
+    <div class="grid" style="margin-bottom:14px">
+      <div class="card" style="grid-column:span 3">
+        <div class="kpi">
+          <div>
+            <div class="small muted">الملاحظات المفتوحة</div>
+            <div class="num" id="kpiOpenIssues">—</div>
+            <div class="small muted" id="kpiOpenIssuesHint">—</div>
+          </div>
+          <div class="pill danger">Open</div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column:span 3">
+        <div class="kpi">
+          <div>
+            <div class="small muted">CAPA المتأخرة</div>
+            <div class="num" id="kpiOverdue">—</div>
+            <div class="small muted" id="kpiOverdueHint">—</div>
+          </div>
+          <div class="pill warn">Overdue</div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column:span 3">
+        <div class="kpi">
+          <div>
+            <div class="small muted">التزام النظافة</div>
+            <div class="num" id="kpiCleaningPct">—</div>
+            <div class="small muted" id="kpiCleaningHint">—</div>
+          </div>
+          <div class="pill ok">Hygiene</div>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column:span 3">
+        <div class="kpi">
+          <div>
+            <div class="small muted">مهام اليوم</div>
+            <div class="num" id="kpiTasksToday">—</div>
+            <div class="small muted" id="kpiTasksHint">—</div>
+          </div>
+          <div class="pill neutral">Tasks</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alerts + Top list -->
+    <div class="grid">
+      <div class="card" style="grid-column:span 5">
+        <h3 style="margin:0 0 8px 0">تنبيهات ذكية</h3>
+        <div class="small muted" style="margin-bottom:10px">ملخص لما يحتاج تدخّل سريع.</div>
+        <div class="alertBox" id="alertsBox"></div>
+      </div>
+
+      <div class="card" style="grid-column:span 7">
+        <h3 style="margin:0 0 8px 0">أهم العناصر (Top 5)</h3>
+        <div class="small muted" style="margin-bottom:10px">مختصر تنفيذي: أكثر ما يؤثر على التشغيل الآن.</div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th>النوع</th>
+              <th>البراند</th>
+              <th>الوصف</th>
+              <th>الحالة</th>
+              <th>العمر</th>
+            </tr>
+          </thead>
+          <tbody id="topTbody"></tbody>
+        </table>
+      </div>
+    </div>
 
     <div class="footer">
-      هذا نموذج أولي محلي لتجربة الفكرة. البيانات تُحفظ في المتصفح (LocalStorage). للاستخدام الفعلي على الإنترنت نحتاج استضافة + قاعدة بيانات + صلاحيات.
+      البيانات تُقرأ من LocalStorage. للنسخة Production سنربط قاعدة بيانات + صلاحيات + اعتماد إلكتروني.
     </div>
   </div>
 
-  <script>
-const DB_KEY = "naseq_ops_db_v1";
-
-function nowISO(){
-  const d = new Date();
-  return d.toISOString();
-}
-
-function seedDB(){
-  const seeded = {
-    meta: { createdAt: nowISO(), language: "ar", pilot: true },
-    brands: [
-      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
-      { id: "sdf", name: "سدف", branches:[{id:"sdf-main", name:"سدف – الفرع الرئيسي"}]},
-      { id: "dbb", name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
-    ],
-    users: [
-      { id:"admin", name:"نَسَق (Admin)", role:"admin" }
-    ],
-    visits: [],
-    issues: [],
-    tasks: [],
-    cleaningLogs: [],
-    sops: [
-      { id:"fridge-temp", title:"درجة حرارة الثلاجة", content:"الهدف: 1–4° م (حسب السياسة الداخلية). سجّل تاريخ الفتح وتابع الصلاحية بعد الفتح." },
-      { id:"invoice", title:"التأكد من الفاتورة الضريبية", content:"اسم المنشأة + الرقم الضريبي + التاريخ + الإجمالي + مطابقة الصرف." }
-    ]
-  };
-  localStorage.setItem(DB_KEY, JSON.stringify(seeded));
-  return seeded;
-}
-
-function loadDB(){
-  const raw = localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
-}
-
-function saveDB(db){
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-}
-
-function $(sel){ return document.querySelector(sel); }
-function $all(sel){ return Array.from(document.querySelectorAll(sel)); }
-
-function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  $all("[data-nav]").forEach(a => {
-    if(a.getAttribute("href") === path) a.classList.add("active");
-  });
-}
-
-function renderBrandBranchSelectors(brandSelId, branchSelId){
-  const db = loadDB();
-  const brandSel = document.getElementById(brandSelId);
-  const branchSel = document.getElementById(branchSelId);
-  if(!brandSel || !branchSel) return;
-
-  brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  function fillBranches(){
-    const b = db.brands.find(x=>x.id===brandSel.value);
-    branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-  }
-  brandSel.addEventListener("change", fillBranches);
-  fillBranches();
-}
-
-function fmtDate(iso){
-  try{
-    const d = new Date(iso);
-    return d.toLocaleString("ar-SA");
-  }catch(e){ return iso; }
-}
-
-function statusPill(status){
-  const map = {
-    "مفتوح": "danger",
-    "متأخر": "warn",
-    "مغلق": "ok",
-    "جديد": "warn",
-    "قيد التنفيذ": "warn",
-    "منجز": "ok"
-  };
-  const cls = map[status] || "";
-  return `<span class="pill ${cls}">${status}</span>`;
-}
-
-function brandName(id){
-  const db = loadDB();
-  return db.brands.find(b=>b.id===id)?.name || id;
-}
-
-function branchName(brandId, branchId){
-  const db = loadDB();
-  const b = db.brands.find(x=>x.id===brandId);
-  return b?.branches?.find(br=>br.id===branchId)?.name || branchId;
-}
-
-function computeDashboard(){
-  const db = loadDB();
-  const openIssues = db.issues.filter(i=>i.status!=="مغلق");
-  const overdueIssues = db.issues.filter(i=>i.status==="متأخر");
-  const critical = db.issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
-  const today = new Date().toISOString().slice(0,10);
-  const todayTasks = db.tasks.filter(t=> (t.dueDate||"").slice(0,10)===today );
-  const doneToday = todayTasks.filter(t=>t.status==="منجز").length;
-
-  return { openIssues: openIssues.length, overdueIssues: overdueIssues.length, critical: critical.length, todayTasks: todayTasks.length, doneToday };
-}
-
-function downloadJSON(){
-  const db = loadDB();
-  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download = "naseq_ops_export.json";
-  a.click();
-  URL.revokeObjectURL(url);
-}
-
-function importJSON(file){
-  const reader = new FileReader();
-  reader.onload = () => {
-    try{
-      const obj = JSON.parse(reader.result);
-      localStorage.setItem(DB_KEY, JSON.stringify(obj));
-      alert("تم الاستيراد بنجاح ✅");
-      location.reload();
-    }catch(e){
-      alert("ملف غير صالح");
+<script>
+  // ========= Language-ready foundation (Arabic now, English later) =========
+  const I18N = {
+    ar: {
+      noData: "لا توجد بيانات كافية",
+      allBrands: "كل البراندات",
+      openIssues: "الملاحظات المفتوحة",
+      overdue: "المتأخرة",
+      cleaning: "التزام النظافة",
+      tasksToday: "مهام اليوم",
+      alert: "تنبيه",
+      ok: "ممتاز",
+      needsAttention: "يحتاج تدخل",
+      type_issue: "ملاحظة / CAPA",
+      type_cleaning: "نظافة",
+      type_task: "مهمة"
     }
+    // en: {...} // later
   };
-  reader.readAsText(file);
-}
-</script>
-  <script>
-    setActiveNav();
-    
-const k = computeDashboard();
-document.getElementById("kpiCritical").textContent = k.critical;
-document.getElementById("kpiOverdue").textContent = k.overdueIssues;
-document.getElementById("kpiToday").textContent = k.todayTasks;
-document.getElementById("kpiDone").textContent = k.doneToday;
-document.getElementById("kpiOpen").textContent = k.openIssues;
+  const LANG = "ar";
+  const t = (k)=> (I18N[LANG] && I18N[LANG][k]) ? I18N[LANG][k] : k;
 
-  </script>
+  // ========= DB helpers =========
+  const DB_KEY = "naseq_ops_db_v1";
+
+  const now = () => new Date();
+  const nowISO = () => new Date().toISOString();
+
+  function seed(){
+    // This seed is safe; only runs if DB not found.
+    const db = {
+      brands:[
+        {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+        {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
+        {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
+      ],
+      cleaningLogs:[],
+      issues:[],
+      tasks:[],
+      visits:[]
+    };
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
+    return db;
+  }
+
+  function loadDB(){
+    const raw = localStorage.getItem(DB_KEY);
+    if(!raw) return seed();
+    try { return JSON.parse(raw) || seed(); } catch(e){ return seed(); }
+  }
+
+  // ========= Date range =========
+  function startOfToday(){
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    return d;
+  }
+
+  function startOfWeek(){
+    // Week starts on Saturday in KSA context? We'll use Monday-neutral simple:
+    // Set to last 7 days window (practical for MVP).
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    d.setDate(d.getDate() - 6);
+    return d;
+  }
+
+  function withinRange(iso, range){
+    if(!iso) return false;
+    const d = new Date(iso);
+    if(range === "all") return true;
+    const from = (range === "today") ? startOfToday() : startOfWeek();
+    return d >= from;
+  }
+
+  function ageLabel(iso){
+    if(!iso) return "—";
+    const ms = now() - new Date(iso);
+    const mins = Math.floor(ms/60000);
+    if(mins < 60) return `${mins} د`;
+    const hrs = Math.floor(mins/60);
+    if(hrs < 24) return `${hrs} س`;
+    const days = Math.floor(hrs/24);
+    return `${days} يوم`;
+  }
+
+  // ========= Nav active =========
+  function setActiveNav(){
+    const path = location.pathname.split("/").pop() || "index.html";
+    document.querySelectorAll("[data-nav]").forEach(a=>{
+      if(a.getAttribute("href") === path) a.classList.add("active");
+    });
+  }
+
+  // ========= Filters =========
+  let RANGE = "today";
+  let BRAND = "";
+
+  function fillBrandFilter(){
+    const db = loadDB();
+    const sel = document.getElementById("brandFilter");
+    sel.innerHTML = `<option value="">${t("allBrands")}</option>`;
+    (db.brands||[]).forEach(b=>{
+      sel.add(new Option(b.name, b.id));
+    });
+    sel.value = BRAND || "";
+  }
+
+  function brandNameById(id){
+    const db = loadDB();
+    return (db.brands||[]).find(b=>b.id===id)?.name || id || "—";
+  }
+
+  // Best effort: cleaning record stores brand text, not id, in your current cleaning.html.
+  // We'll filter by brandId if exists; else by brand text.
+  function brandMatch(recordBrandId, recordBrandText){
+    if(!BRAND) return true;
+    if(recordBrandId) return recordBrandId === BRAND;
+    const target = brandNameById(BRAND);
+    return (recordBrandText||"") === target;
+  }
+
+  // ========= KPI computation =========
+  function compute(){
+    const db = loadDB();
+
+    const issues = (db.issues||[])
+      .filter(i => brandMatch(i.brandId, i.brand))
+      .filter(i => withinRange(i.createdAt || i.date || i.openedAt, RANGE));
+
+    // We'll treat issue status:
+    // - closed if status is "مغلق" or "منجز" or "Closed"
+    // - overdue if status is "متأخر" or (dueDate passed and not closed)
+    const isClosed = (s)=> ["مغلق","منجز","closed","done"].includes(String(s||"").toLowerCase());
+    const openIssues = issues.filter(i => !isClosed(i.status));
+    const overdueIssues = issues.filter(i => {
+      if(isClosed(i.status)) return false;
+      const st = String(i.status||"");
+      if(st.includes("متأخر")) return true;
+      if(i.dueDate){
+        return new Date(i.dueDate) < now();
+      }
+      return false;
+    });
+
+    // Cleaning: your cleaning.html stores cleaningLogs with createdAt + done ("تم/جزئي/لم يتم") + brand text
+    const cleaning = (db.cleaningLogs||[])
+      .filter(r => brandMatch(r.brandId, r.brand))
+      .filter(r => withinRange(r.createdAt, RANGE));
+
+    const cleaningTotal = cleaning.length;
+    const cleaningDone = cleaning.filter(r => r.done === "تم").length;
+    const cleaningPct = cleaningTotal ? Math.round((cleaningDone/cleaningTotal)*100) : null;
+
+    // Tasks: best effort (some DBs may not have tasks yet)
+    const tasks = (db.tasks||[])
+      .filter(t => brandMatch(t.brandId, t.brand))
+      .filter(t => withinRange(t.createdAt || t.dueDate, RANGE));
+
+    // "today tasks": dueDate is preferred; fallback createdAt
+    const todayISO = new Date().toISOString().slice(0,10);
+    const tasksToday = (db.tasks||[]).filter(t => {
+      if(!brandMatch(t.brandId, t.brand)) return false;
+      const key = (t.dueDate || t.createdAt || "").slice(0,10);
+      return key === todayISO;
+    });
+    const doneToday = tasksToday.filter(t => ["منجز","done","تم"].includes(String(t.status||"").toLowerCase())).length;
+
+    return {
+      db,
+      openIssuesCount: openIssues.length,
+      overdueCount: overdueIssues.length,
+      cleaningTotal,
+      cleaningDone,
+      cleaningPct,
+      tasksTodayCount: tasksToday.length,
+      tasksDoneToday: doneToday,
+      issuesOpen: openIssues,
+      issuesOverdue: overdueIssues,
+      cleaning,
+      tasksToday
+    };
+  }
+
+  function pill(cls, text){
+    return `<span class="pill ${cls}">${text}</span>`;
+  }
+
+  function renderKPIs(state){
+    const kOpen = document.getElementById("kpiOpenIssues");
+    const kOver = document.getElementById("kpiOverdue");
+    const kClean = document.getElementById("kpiCleaningPct");
+    const kTasks = document.getElementById("kpiTasksToday");
+
+    const hOpen = document.getElementById("kpiOpenIssuesHint");
+    const hOver = document.getElementById("kpiOverdueHint");
+    const hClean = document.getElementById("kpiCleaningHint");
+    const hTasks = document.getElementById("kpiTasksHint");
+
+    kOpen.textContent = state.openIssuesCount;
+    hOpen.textContent = RANGE === "today" ? "مفتوحة اليوم" : (RANGE === "week" ? "خلال 7 أيام" : "إجمالي");
+
+    kOver.textContent = state.overdueCount;
+    hOver.textContent = state.overdueCount ? "تحتاج متابعة فورية" : "لا يوجد تأخير";
+
+    if(state.cleaningPct === null){
+      kClean.textContent = "—";
+      hClean.textContent = "لا توجد سجلات ضمن المدى";
+    } else {
+      kClean.textContent = state.cleaningPct + "%";
+      hClean.textContent = `${state.cleaningDone}/${state.cleaningTotal} تم`;
+    }
+
+    kTasks.textContent = state.tasksDoneToday + "/" + state.tasksTodayCount;
+    hTasks.textContent = state.tasksTodayCount ? "إنجاز اليوم" : "لا توجد مهام اليوم";
+  }
+
+  function renderAlerts(state){
+    const box = document.getElementById("alertsBox");
+    const alerts = [];
+
+    // 1) Overdue CAPA
+    if(state.overdueCount > 0){
+      alerts.push({
+        title: `⚠ ${state.overdueCount} CAPA متأخرة`,
+        body: "يوصى بتحديد مسؤول + موعد إغلاق + اعتماد.",
+        cls: "warn"
+      });
+    }
+
+    // 2) Cleaning failures today
+    const fail = state.cleaning.filter(r => r.done !== "تم");
+    if(fail.length > 0){
+      // group by brand name
+      const byBrand = {};
+      fail.forEach(r=>{
+        const b = r.brand || "—";
+        byBrand[b] = (byBrand[b]||0)+1;
+      });
+      const top = Object.entries(byBrand).sort((a,b)=>b[1]-a[1])[0];
+      alerts.push({
+        title: `❗ نظافة غير ملتزمة: ${fail.length} سجل`,
+        body: top ? `الأكثر تأثيرًا: ${top[0]} (${top[1]})` : "راجع السجل للتفاصيل.",
+        cls: "danger"
+      });
+    } else if(state.cleaningTotal > 0){
+      alerts.push({
+        title: `✅ النظافة ضمن المدى ممتازة`,
+        body: `التزام ${state.cleaningPct}% ضمن (${state.cleaningTotal}) سجل.`,
+        cls: "ok"
+      });
+    }
+
+    // 3) Open issues
+    if(state.openIssuesCount > 0){
+      alerts.push({
+        title: `🔴 ${state.openIssuesCount} ملاحظة مفتوحة`,
+        body: "اقتراح: إعطاء أولوية (عالي/متوسط/منخفض) وربطها بخطة CAPA.",
+        cls: "danger"
+      });
+    } else {
+      alerts.push({
+        title: `✅ لا توجد ملاحظات مفتوحة ضمن المدى`,
+        body: "استمر على نفس مستوى المتابعة.",
+        cls: "ok"
+      });
+    }
+
+    box.innerHTML = alerts.slice(0,4).map(a=>`
+      <div class="alertItem">
+        <div class="alertTitle">${a.title} ${pill(a.cls, a.cls==="ok"?"OK":a.cls==="warn"?"تنبيه":"حرج")}</div>
+        <div class="small muted">${a.body}</div>
+      </div>
+    `).join("") || `
+      <div class="alertItem">
+        <div class="alertTitle">${t("noData")}</div>
+        <div class="small muted">ابدأ بتسجيل النظافة/المهام/الملاحظات ليظهر التحليل.</div>
+      </div>
+    `;
+  }
+
+  function topItems(state){
+    const items = [];
+
+    // Issues: prioritize overdue then open
+    (state.issuesOverdue||[]).forEach(i=>{
+      items.push({
+        type: t("type_issue"),
+        brand: i.brand || brandNameById(i.brandId) || "—",
+        desc: i.title || i.note || i.description || (i.id ? `رقم: ${i.id}` : "—"),
+        status: pill("warn","متأخر"),
+        age: ageLabel(i.createdAt || i.date || i.openedAt)
+      });
+    });
+
+    (state.issuesOpen||[]).slice(0,20).forEach(i=>{
+      // avoid duplicating overdue items if already included
+      if(String(i.status||"").includes("متأخر")) return;
+      items.push({
+        type: t("type_issue"),
+        brand: i.brand || brandNameById(i.brandId) || "—",
+        desc: i.title || i.note || i.description || (i.id ? `رقم: ${i.id}` : "—"),
+        status: pill("danger","مفتوح"),
+        age: ageLabel(i.createdAt || i.date || i.openedAt)
+      });
+    });
+
+    // Cleaning: failures first
+    state.cleaning.filter(r=>r.done!=="تم").forEach(r=>{
+      items.push({
+        type: t("type_cleaning"),
+        brand: r.brand || "—",
+        desc: `${r.task} — ${r.slot} — ${r.by || "—"}`,
+        status: r.done==="جزئي" ? pill("warn","جزئي") : pill("danger","لم يتم"),
+        age: ageLabel(r.createdAt)
+      });
+    });
+
+    // Tasks: if tasks exist, show not done today
+    (state.tasksToday||[]).filter(t=>{
+      const st = String(t.status||"").toLowerCase();
+      return !["منجز","done","تم"].includes(st);
+    }).forEach(t=>{
+      items.push({
+        type: t("type_task"),
+        brand: t.brand || brandNameById(t.brandId) || "—",
+        desc: t.title || t.task || t.description || "مهمة",
+        status: pill("warn","غير منجز"),
+        age: ageLabel(t.createdAt || t.dueDate)
+      });
+    });
+
+    // Sort: danger first, then warn, then others
+    const score = (s)=>{
+      if((s||"").includes("danger")) return 3;
+      if((s||"").includes("warn")) return 2;
+      return 1;
+    };
+    items.sort((a,b)=> score(b.status)-score(a.status));
+
+    return items.slice(0,5);
+  }
+
+  function renderTop(state){
+    const tbody = document.getElementById("topTbody");
+    const list = topItems(state);
+
+    tbody.innerHTML = list.map(x=>`
+      <tr>
+        <td>${x.type}</td>
+        <td>${x.brand}</td>
+        <td>${x.desc}</td>
+        <td>${x.status}</td>
+        <td class="muted">${x.age}</td>
+      </tr>
+    `).join("") || `<tr><td colspan="5" class="muted">${t("noData")}</td></tr>`;
+  }
+
+  function renderAll(){
+    fillBrandFilter();
+    const state = compute();
+    renderKPIs(state);
+    renderAlerts(state);
+    renderTop(state);
+  }
+
+  function bindControls(){
+    document.querySelectorAll("[data-range]").forEach(chip=>{
+      chip.addEventListener("click", ()=>{
+        document.querySelectorAll("[data-range]").forEach(c=>c.classList.remove("active"));
+        chip.classList.add("active");
+        RANGE = chip.getAttribute("data-range");
+        renderAll();
+      });
+    });
+
+    document.getElementById("brandFilter").addEventListener("change", (e)=>{
+      BRAND = e.target.value || "";
+      renderAll();
+    });
+
+    document.getElementById("refreshBtn").addEventListener("click", renderAll);
+  }
+
+  (function init(){
+    setActiveNav();
+    bindControls();
+    renderAll();
+  })();
+</script>
 </body>
 </html>
