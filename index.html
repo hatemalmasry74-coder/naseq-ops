@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>منصة نَسَق – لوحة CEO</title>
 
+  <!-- NASAQ Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 
@@ -32,6 +33,8 @@
 </head>
 
 <body>
+
+<!-- ===== Topbar ===== -->
 <div class="topbar">
   <div class="brand">
     <div class="logo">ن</div>
@@ -43,6 +46,7 @@
   <div class="badge">MVP محلي</div>
 </div>
 
+<!-- ===== Content ===== -->
 <div class="container">
   <div class="nav">
     <a data-nav href="index.html">لوحة التحكم</a>
@@ -55,10 +59,11 @@
   </div>
 
   <div class="grid">
+
     <!-- KPIs -->
     <div class="card" style="grid-column:span 12">
       <h3>لوحة CEO – مؤشرات سريعة</h3>
-      <div class="muted mini">تلقائيًا من بيانات (LocalStorage) — قاعدة: naseq_ops_db_v1</div>
+      <div class="muted mini">تلقائيًا من بيانات LocalStorage</div>
 
       <div class="grid" style="margin-top:12px">
         <div class="card" style="grid-column:span 3">
@@ -73,7 +78,6 @@
           <div class="kpi">
             <div class="n" id="kOverdue">—</div>
             <div class="t">CAPA متأخرة</div>
-            <div class="s" id="kOverdueSub">حسب تاريخ الاستحقاق</div>
           </div>
         </div>
 
@@ -81,23 +85,6 @@
           <div class="kpi">
             <div class="n" id="kHigh">—</div>
             <div class="t">حرِجة (عالي)</div>
-            <div class="s">غير مغلقة</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kTodayTasks">—</div>
-            <div class="t">مهام اليوم</div>
-            <div class="s" id="kTodayDone">—</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kVisits7">—</div>
-            <div class="t">زيارات آخر 7 أيام</div>
-            <div class="s" id="kVisits7Sub">تشغيلية/مالية/نظافة/إدارية</div>
           </div>
         </div>
 
@@ -116,9 +103,6 @@
             <button class="btn ghost" id="goVisits">فتح الزيارات</button>
             <button class="btn ghost" id="exportDb">تصدير JSON</button>
           </div>
-          <div class="muted mini" style="margin-top:10px">
-            نصيحة: اجعل CAPA تتكامل مع المهام (لكل CAPA مهمة تصحيح + تاريخ).
-          </div>
         </div>
       </div>
     </div>
@@ -126,207 +110,97 @@
     <!-- Alerts -->
     <div class="card" style="grid-column:span 7">
       <h3>تنبيهات عاجلة</h3>
-      <div class="muted mini">أعلى 8 عناصر (متأخر/عالي) — اضغط لفتح CAPA</div>
       <div id="alertsList" class="list"></div>
     </div>
 
     <!-- Activity -->
     <div class="card" style="grid-column:span 5">
-      <h3>ملخص النشاط</h3>
-      <div class="muted mini">آخر إدخالات (زيارات/نظافة/مهام)</div>
+      <h3>آخر النشاط</h3>
       <div id="activityList" class="list"></div>
     </div>
+
   </div>
 
   <div class="footer">
-    لوحة CEO — نسخة MVP محلية. الخطوة القادمة: مكتبة SOP + صلاحيات + قاعدة بيانات.
+    لوحة CEO — نسخة MVP محلية • الخطوة القادمة: صلاحيات + Backend
   </div>
 </div>
 
+<!-- ===== Scripts ===== -->
+<script src="auth.js"></script>
 <script>
-/* ===== DB ===== */
-const DB_KEY="naseq_ops_db_v1";
-const nowISO=()=>new Date().toISOString();
-const todayISO=()=>new Date().toISOString().slice(0,10);
+  requireAuth();
+</script>
 
-function seedDB(){
-  const db={
-    meta:{createdAt:nowISO(), language:"ar", pilot:true},
-    brands:[
-      {id:"tuba",name:"طوبى",branches:[{id:"tuba-main",name:"طوبى – الفرع الرئيسي"}]},
-      {id:"sdf",name:"سدف",branches:[{id:"sdf-main",name:"سدف – الفرع الرئيسي"}]},
-      {id:"dbb",name:"دبل بي",branches:[{id:"dbb-main",name:"دبل بي – الفرع الرئيسي"}]}
-    ],
-    visits:[], tasks:[], cleaningLogs:[], issues:[], sops:[]
-  };
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-  return db;
-}
-function loadDB(){
-  const raw=localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try{ return JSON.parse(raw);}catch(e){ return seedDB(); }
-}
-function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-
+<script>
 /* ===== Helpers ===== */
-const $=id=>document.getElementById(id);
-const $$=sel=>Array.from(document.querySelectorAll(sel));
+const DB_KEY="naseq_ops_db_v1";
+const todayISO=()=>new Date().toISOString().slice(0,10);
+const loadDB=()=>JSON.parse(localStorage.getItem(DB_KEY)||"{}");
+
 function setActiveNav(){
   const p=location.pathname.split("/").pop()||"index.html";
-  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p&&a.classList.add("active"));
-}
-function fmtDT(iso){
-  try{ return new Date(iso).toLocaleString("ar-SA"); }catch(e){ return iso||"—"; }
-}
-function statusPill(status){
-  if(status==="مغلق") return `<span class="pill ok">مغلق</span>`;
-  if(status==="متأخر") return `<span class="pill danger">متأخر</span>`;
-  if(status==="قيد التنفيذ") return `<span class="pill warn">قيد التنفيذ</span>`;
-  return `<span class="pill">مفتوح</span>`;
-}
-function severityPill(sev){
-  if(sev==="عالي") return `<span class="pill danger">عالي</span>`;
-  if(sev==="متوسط") return `<span class="pill warn">متوسط</span>`;
-  return `<span class="pill ok">منخفض</span>`;
-}
-function computeAutoStatus(issue){
-  if(issue.status==="مغلق") return "مغلق";
-  if(issue.dueDate && issue.dueDate < todayISO()) return "متأخر";
-  return issue.status || "مفتوح";
-}
-function exportDB(){
-  const db=loadDB();
-  const blob=new Blob([JSON.stringify(db,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url; a.download="naseq_ops_export.json"; a.click();
-  URL.revokeObjectURL(url);
+  document.querySelectorAll("[data-nav]").forEach(a=>{
+    if(a.getAttribute("href")===p) a.classList.add("active");
+  });
 }
 
-/* ===== Compute KPIs ===== */
-function computeKPIs(){
-  const db=loadDB();
-
-  const issues=(db.issues||[]).map(i=>({...i,_auto:computeAutoStatus(i)}));
-  const open = issues.filter(i=>i._auto!=="مغلق");
-  const overdue = issues.filter(i=>i._auto==="متأخر");
-  const high = issues.filter(i=>(i.severity==="عالي") && i._auto!=="مغلق");
-
-  const today = todayISO();
-  const tasks = db.tasks||[];
-  const todayTasks = tasks.filter(t=>(t.dueDate||"").slice(0,10)===today);
-  const doneToday = todayTasks.filter(t=>t.status==="منجزة").length;
-
-  const visits = db.visits||[];
-  const days7 = new Date(Date.now()-7*24*60*60*1000).toISOString();
-  const visits7 = visits.filter(v=> (v.createdAt||"") >= days7);
-
-  const cleaning = db.cleaningLogs||[];
-  const cleanToday = cleaning.filter(c=>(c.createdAt||"").slice(0,10)===today);
-  const cleanBad = cleanToday.filter(c=>c.done!=="تم").length;
-
-  return {open, overdue, high, todayTasks, doneToday, visits7, cleanToday, cleanBad, issues, tasks, visits, cleaning};
-}
-
-/* ===== Render ===== */
 function renderDashboard(){
-  const k=computeKPIs();
+  const db=loadDB();
+  const issues=db.issues||[];
+  const cleaning=db.cleaningLogs||[];
 
-  $("kOpen").textContent = k.open.length;
-  $("kOpenSub").textContent = `إجمالي CAPA: ${(k.issues||[]).length}`;
+  const open=issues.filter(i=>i.status!=="مغلق");
+  const overdue=issues.filter(i=>i.dueDate && i.dueDate<todayISO() && i.status!=="مغلق");
+  const high=issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
 
-  $("kOverdue").textContent = k.overdue.length;
-  $("kHigh").textContent = k.high.length;
+  const cleanToday=cleaning.filter(c=>(c.createdAt||"").slice(0,10)===todayISO());
+  const cleanBad=cleanToday.filter(c=>c.done!=="تم").length;
 
-  $("kTodayTasks").textContent = k.todayTasks.length;
-  $("kTodayDone").textContent = `منجزة اليوم: ${k.doneToday}`;
+  document.getElementById("kOpen").textContent=open.length;
+  document.getElementById("kOverdue").textContent=overdue.length;
+  document.getElementById("kHigh").textContent=high.length;
+  document.getElementById("kCleanToday").textContent=cleanToday.length;
+  document.getElementById("kCleanBad").textContent=`غير مطابق: ${cleanBad}`;
 
-  $("kVisits7").textContent = k.visits7.length;
-  $("kCleanToday").textContent = k.cleanToday.length;
-  $("kCleanBad").textContent = `غير مطابق اليوم: ${k.cleanBad}`;
+  document.getElementById("alertsList").innerHTML =
+    overdue.slice(0,5).map(i=>`
+      <div class="item">
+        <div>
+          <b>${i.id}</b>
+          <div class="muted2 mini">${i.title||""}</div>
+        </div>
+        <span class="pill warn link" onclick="location.href='issues.html?edit=${i.id}'">فتح</span>
+      </div>
+    `).join("") || `<div class="muted2 mini">لا توجد تنبيهات</div>`;
 
-  // Alerts: متأخر أولاً ثم عالي
-  const alerts = [
-    ...k.overdue.map(x=>({...x,_rank:1})),
-    ...k.high.filter(x=>!k.overdue.some(o=>o.id===x.id)).map(x=>({...x,_rank:2}))
-  ].slice(0,8);
-
-  $("alertsList").innerHTML = alerts.map(i=>`
-    <div class="item">
-      <div>
-        <b>${i.id} — ${(i.title||"—")}</b>
-        <div class="muted2 mini">${i.note||"—"}</div>
-        <div class="muted2 mini" style="margin-top:6px">
-          ${statusPill(i._auto)} ${severityPill(i.severity||"متوسط")}
-          <span class="chip">الاستحقاق: ${i.dueDate||"—"}</span>
-          <span class="chip">المسؤول: ${i.owner||"—"}</span>
+  document.getElementById("activityList").innerHTML =
+    cleanToday.slice(-5).reverse().map(c=>`
+      <div class="item">
+        <div>
+          <b>نظافة – ${c.task}</b>
+          <div class="muted2 mini">${c.by||""} • ${c.done}</div>
         </div>
       </div>
-      <div class="no-print" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <span class="pill warn link" onclick="openCapa('${i.id}')">فتح CAPA</span>
-      </div>
-    </div>
-  `).join("") || `<div class="muted2 mini">لا يوجد تنبيهات الآن ✅</div>`;
-
-  // Activity (آخر 6 عناصر)
-  const lastVisits = (k.visits||[]).slice(-3).reverse().map(v=>({
-    type:"زيارة",
-    when:v.createdAt,
-    title:`${v.type||"زيارة"} — ${v.brandName||v.brandId||""}`,
-    sub:(v.notes||"").slice(0,120) || "—",
-    link:"visits.html"
-  }));
-
-  const lastCleaning = (k.cleaning||[]).slice(-3).reverse().map(c=>({
-    type:"نظافة",
-    when:c.createdAt,
-    title:`${c.task||"مهمة"} — ${c.done||""}`,
-    sub:`${(c.by||"—")} • ${(c.slot||"")}`,
-    link: c.capaId ? `cleaning.html?capa=${encodeURIComponent(c.capaId)}` : "cleaning.html"
-  }));
-
-  const lastTasks = (k.tasks||[]).slice(-3).reverse().map(t=>({
-    type:"مهمة",
-    when:t.createdAt,
-    title:`${t.title||"—"} — ${t.status||""}`,
-    sub:`${t.owner||"—"} • استحقاق: ${t.dueDate||"—"}`,
-    link:"tasks.html"
-  }));
-
-  const activity = [...lastVisits, ...lastCleaning, ...lastTasks]
-    .filter(x=>x.when)
-    .sort((a,b)=> (a.when<b.when?1:-1))
-    .slice(0,8);
-
-  $("activityList").innerHTML = activity.map(a=>`
-    <div class="item">
-      <div>
-        <b>${a.type}: ${a.title}</b>
-        <div class="muted2 mini">${a.sub}</div>
-        <div class="muted2 mini" style="margin-top:6px">${fmtDT(a.when)}</div>
-      </div>
-      <div class="no-print" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <a class="pill link" href="${a.link}" style="text-decoration:none">فتح</a>
-      </div>
-    </div>
-  `).join("") || `<div class="muted2 mini">لا يوجد نشاط بعد.</div>`;
+    `).join("") || `<div class="muted2 mini">لا يوجد نشاط بعد</div>`;
 }
 
-function openCapa(id){
-  location.href = `issues.html?edit=${encodeURIComponent(id)}`;
-}
-
-/* ===== Init ===== */
 (function init(){
   setActiveNav();
   renderDashboard();
 
-  $("goIssues").onclick = ()=> location.href="issues.html";
-  $("goTasks").onclick  = ()=> location.href="tasks.html";
-  $("goVisits").onclick = ()=> location.href="visits.html";
-  $("exportDb").onclick = exportDB;
+  document.getElementById("goIssues").onclick=()=>location.href="issues.html";
+  document.getElementById("goTasks").onclick=()=>location.href="tasks.html";
+  document.getElementById("goVisits").onclick=()=>location.href="visits.html";
+  document.getElementById("exportDb").onclick=()=>{
+    const blob=new Blob([JSON.stringify(loadDB(),null,2)],{type:"application/json"});
+    const a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="naseq_ops_export.json";
+    a.click();
+  };
 })();
 </script>
+
 </body>
 </html>
