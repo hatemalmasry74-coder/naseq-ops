@@ -3,79 +3,255 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>تسجيل الدخول – منصة نَسَق</title>
+  <title>منصة نَسَق – تسجيل الدخول</title>
 
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
-    body{
+    /* نفس روح ستايل نسق (داكن + زجاجي) */
+    .auth-wrap{
       min-height:100vh;
+      display:grid;
+      place-items:center;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* خلفية مشابهة لنسق */
+    .auth-wrap:before{
+      content:"";
+      position:absolute; inset:-40%;
+      background:
+        radial-gradient(900px 600px at 20% 10%, rgba(193,33,38,.22), transparent 55%),
+        radial-gradient(700px 500px at 85% 30%, rgba(59,130,246,.20), transparent 55%),
+        radial-gradient(700px 500px at 50% 85%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(180deg, rgba(10,16,28,1), rgba(6,10,18,1));
+      filter: blur(0px);
+      z-index:0;
+    }
+
+    .panel{
+      width:min(520px, 100%);
+      position:relative;
+      z-index:1;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.05);
+      box-shadow: 0 20px 80px rgba(0,0,0,.35);
+      padding:22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .brand-head{
       display:flex;
       align-items:center;
-      justify-content:center;
+      gap:12px;
+      margin-bottom:12px;
     }
-    .login-card{
+    .brand-logo{
+      width:48px;height:48px;border-radius:16px;
+      display:grid;place-items:center;
+      background:rgba(193,33,38,.22);
+      border:1px solid rgba(193,33,38,.50);
+      font-weight:900;
+      color:#ffecec;
+    }
+    .title{
+      font-size:20px;
+      font-weight:900;
+      margin:0;
+      color:rgba(234,240,255,.95);
+    }
+    .subtitle{
+      margin:4px 0 0;
+      color:rgba(234,240,255,.70);
+      font-size:12px;
+    }
+
+    .divider{
+      height:1px;
+      background:rgba(255,255,255,.10);
+      margin:14px 0;
+    }
+
+    .grid{
+      display:grid;
+      gap:10px;
+    }
+
+    .label{
+      font-size:12px;
+      color:rgba(234,240,255,.72);
+      margin-top:8px;
+    }
+
+    .input{
       width:100%;
-      max-width:420px;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
       background:rgba(255,255,255,.04);
-      border:1px solid var(--border-light);
-      border-radius:18px;
-      padding:24px;
+      color:rgba(234,240,255,.92);
+      outline:none;
     }
-    .login-card h2{
-      margin-bottom:6px;
+    .input::placeholder{ color:rgba(234,240,255,.55); }
+    .input:focus{
+      border-color:rgba(59,130,246,.45);
+      box-shadow:0 0 0 4px rgba(59,130,246,.12);
     }
-    .login-card .muted{
-      margin-bottom:18px;
+
+    .row{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .btn{
+      width:100%;
+      padding:12px 14px;
+      border-radius:14px;
+      cursor:pointer;
+      border:1px solid rgba(59,130,246,.45);
+      background:rgba(59,130,246,.22);
+      color:rgba(234,240,255,.95);
+      font-weight:800;
+    }
+    .btn:hover{ filter:brightness(1.05); }
+
+    .hint{
+      font-size:12px;
+      color:rgba(234,240,255,.65);
+      margin-top:10px;
+      line-height:1.8;
+    }
+
+    .error{
+      margin-top:10px;
+      font-size:12px;
+      color:#ffb4b4;
+      border:1px solid rgba(193,33,38,.45);
+      background:rgba(193,33,38,.12);
+      padding:10px 12px;
+      border-radius:14px;
+      display:none;
+    }
+
+    .mini{
+      font-size:12px;
+      color:rgba(234,240,255,.72);
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.04);
+      color:rgba(234,240,255,.85);
+    }
+
+    .footer{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .link{
+      color:rgba(234,240,255,.75);
+      text-decoration:none;
+      border-bottom:1px dashed rgba(255,255,255,.20);
+    }
+    .link:hover{ color:rgba(234,240,255,.95); }
+
+    @media (max-width:520px){
+      .panel{ padding:18px; border-radius:18px; }
     }
   </style>
 </head>
 
 <body>
+  <div class="auth-wrap">
+    <div class="panel">
+      <div class="brand-head">
+        <div class="brand-logo">ن</div>
+        <div>
+          <h1 class="title">غرفة عمليات نَسَق</h1>
+          <div class="subtitle">تسجيل الدخول (MVP محلي) — Pilot: طوبى • سدف • دبل بي</div>
+        </div>
+      </div>
 
-  <div class="login-card">
-    <div class="row" style="justify-content:center;margin-bottom:14px">
-      <div class="logo">ن</div>
-    </div>
+      <div class="divider"></div>
 
-    <h2>غرفة عمليات نَسَق</h2>
-    <div class="muted">تسجيل الدخول (MVP محلي)</div>
+      <form id="loginForm" class="grid" autocomplete="on">
+        <div>
+          <div class="label">البريد الإلكتروني</div>
+          <input id="email" class="input" type="email" placeholder="admin@nasaq.local" required>
+        </div>
 
-    <label class="small muted">البريد الإلكتروني</label>
-    <input id="email" class="input" placeholder="admin@nasaq.local">
+        <div>
+          <div class="label">كلمة المرور</div>
+          <input id="password" class="input" type="password" placeholder="••••••••" required>
+        </div>
 
-    <label class="small muted" style="margin-top:10px">كلمة المرور</label>
-    <input id="password" type="password" class="input" placeholder="••••••••">
+        <button class="btn" type="submit">دخول</button>
 
-    <button class="btn" style="width:100%;margin-top:16px" id="loginBtn">
-      دخول
-    </button>
+        <div id="err" class="error">بيانات الدخول غير صحيحة</div>
 
-    <div id="error" class="muted" style="margin-top:10px;color:#ff8a80;display:none">
-      بيانات الدخول غير صحيحة
-    </div>
+        <div class="footer">
+          <span class="pill">حساب تجريبي: <span class="mini">admin@nasaq.local / admin123</span></span>
+          <a class="link" href="index.html" onclick="return false;">(محمية) لوحة التحكم</a>
+        </div>
 
-    <div class="muted small" style="margin-top:18px">
-      حساب تجريبي:<br>
-      admin@nasaq.local / admin123
+        <div class="hint">
+          ملاحظة: هذه نسخة MVP محلية. التحقق يتم عبر LocalStorage (auth.js). عند الانتقال للإنتاج سنربطها بقاعدة بيانات وصلاحيات.
+        </div>
+      </form>
     </div>
   </div>
 
-<script src="auth.js"></script>
-<script>
-  document.getElementById("loginBtn").addEventListener("click", ()=>{
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+  <script src="auth.js"></script>
+  <script>
+    // لو المستخدم مسجل دخول بالفعل
+    try{
+      if (typeof isAuthed === "function" && isAuthed()) {
+        window.location.href = "index.html";
+      }
+    }catch(e){}
 
-    const ok = login(email, password);
-    if(ok){
-      window.location.href = "index.html";
-    }else{
-      document.getElementById("error").style.display = "block";
-    }
-  });
-</script>
+    const form = document.getElementById("loginForm");
+    const err  = document.getElementById("err");
 
+    form.addEventListener("submit", (e)=>{
+      e.preventDefault();
+      err.style.display = "none";
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+
+      try{
+        // يعتمد على auth.js
+        const ok = (typeof login === "function") ? login(email, password) : false;
+
+        if(ok){
+          window.location.href = "index.html";
+        }else{
+          err.style.display = "block";
+        }
+      }catch(ex){
+        err.style.display = "block";
+      }
+    });
+  </script>
 </body>
 </html>
