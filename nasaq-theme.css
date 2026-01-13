@@ -231,3 +231,60 @@ textarea{ min-height: 92px; resize: vertical; }
   text-align: center;
   padding-bottom: 8px;
 }
+/* ===== Nasaq Light Theme (Default Override) ===== */
+:root{
+  --primary:#b3202a;      /* أحمر نسق */
+  --accent:#b3202a;
+  --bg:#f6efe6;           /* بيج فاتح */
+  --panel:#ffffff;        /* كروت بيضاء */
+  --card:#ffffff;
+  --border:rgba(179,32,42,.18);
+  --text:#1d1d1f;
+  --muted:rgba(29,29,31,.72);
+}
+
+/* خلفية عامة */
+body{
+  background: radial-gradient(900px 520px at 20% 0%, rgba(179,32,42,.10), transparent 60%),
+              radial-gradient(900px 520px at 80% 0%, rgba(179,32,42,.08), transparent 60%),
+              var(--bg) !important;
+  color:var(--text) !important;
+}
+
+/* الكروت / الحاويات */
+.card, .topbar, .nav, .table, .footer{
+  background: rgba(255,255,255,.92) !important;
+  border:1px solid var(--border) !important;
+  color:var(--text) !important;
+}
+
+/* شريط التنقل */
+.nav a{
+  color:var(--text) !important;
+  background:rgba(255,255,255,.60) !important;
+  border:1px solid var(--border) !important;
+}
+.nav a.active{
+  background:rgba(179,32,42,.10) !important;
+  border-color:rgba(179,32,42,.35) !important;
+}
+
+/* الحقول */
+.input, textarea, select{
+  background:#fff !important;
+  color:var(--text) !important;
+  border:1px solid rgba(179,32,42,.22) !important;
+}
+.muted{ color:var(--muted) !important; }
+
+/* الأزرار */
+.btn.primary{
+  background:var(--primary) !important;
+  border-color:var(--primary) !important;
+  color:#fff !important;
+}
+.btn.ghost{
+  background:transparent !important;
+  border:1px solid rgba(179,32,42,.35) !important;
+  color:var(--text) !important;
+}
