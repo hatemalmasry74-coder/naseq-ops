@@ -9,234 +9,184 @@
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
 
   <style>
-    .mini{font-size:12px}
-    .row .input{flex:1;min-width:180px}
-    @media print{
-      .topbar,.nav,.no-print{display:none!important}
-      body{background:#fff!important;color:#000!important}
+    /* ===== Theme Tokens ===== */
+    :root{
+      --primary:#b3202a;
+      --radius:16px;
     }
+
+    body.theme-dark{
+      --bg1:#070b14;
+      --bg2:#0b1222;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.08);
+      --border:rgba(255,255,255,.10);
+      --text:#f3f5f7;
+      --muted:rgba(243,245,247,.70);
+    }
+
+    body.theme-light{
+      --bg1:#f6efe6;
+      --bg2:#ffffff;
+      --panel:rgba(255,255,255,.92);
+      --panel2:rgba(255,255,255,.96);
+      --border:rgba(179,32,42,.18);
+      --text:#1d1d1f;
+      --muted:rgba(29,29,31,.70);
+    }
+
+    body{
+      font-family:'Almarai',sans-serif;
+      background:
+        radial-gradient(900px 520px at 20% 0%, rgba(179,32,42,.10), transparent 60%),
+        radial-gradient(900px 520px at 80% 0%, rgba(77,163,255,.10), transparent 60%),
+        linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      margin:0;
+    }
+
+    .topbar,.nav,.card,.footer{
+      background:var(--panel);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:14px;
+    }
+
+    .container{padding:20px}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{padding:16px}
+    .muted{color:var(--muted)}
+    .mini{font-size:12px}
+
+    .nav a{
+      display:inline-block;
+      padding:8px 14px;
+      margin:4px;
+      border-radius:12px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      color:var(--text);
+      text-decoration:none;
+    }
+    .nav a.active{background:rgba(179,32,42,.15)}
+
+    .input,textarea,select{
+      width:100%;
+      padding:10px;
+      border-radius:10px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      color:var(--text);
+    }
+
+    .btn{
+      padding:10px 16px;
+      border-radius:12px;
+      background:var(--panel2);
+      border:1px solid var(--border);
+      color:var(--text);
+      cursor:pointer;
+    }
+    .btn.primary{
+      background:var(--primary);
+      border-color:var(--primary);
+      color:#fff;
+    }
+
     .upload-box{
       display:block;
       padding:18px;
-      border:2px dashed var(--primary);
+      border:2px dashed var(--border);
       border-radius:12px;
       text-align:center;
       cursor:pointer;
-      background:#fff;
+      background:var(--panel2);
     }
-    .file-name{
-      margin-top:8px;
-      font-size:14px;
-      color:#666;
-    }
+
+    table{width:100%;border-collapse:collapse}
+    th,td{padding:10px;border-bottom:1px solid var(--border)}
   </style>
 </head>
 
-<body>
+<body class="theme-dark">
 
 <div class="topbar">
-  <div class="brand">
-    <div class="logo">ن</div>
-    <div>
-      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
-      <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
-    </div>
-  </div>
-  <div class="badge">MVP محلي</div>
+  <strong>غرفة عمليات نَسَق</strong>
+  <button class="btn" id="themeToggle" style="float:left">🌓 الوضع: داكن</button>
 </div>
 
 <div class="container">
+
   <div class="nav">
-    <a data-nav href="index.html">لوحة التحكم</a>
-    <a data-nav href="visits.html">الزيارات</a>
-    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
-    <a data-nav href="tasks.html">المهام</a>
-    <a data-nav href="cleaning.html">النظافة اليومية</a>
-    <a data-nav href="sop.html">مكتبة SOP</a>
-    <a data-nav href="settings.html">الإعدادات</a>
+    <a class="active">الزيارات</a>
+    <a>CAPA</a>
+    <a>المهام</a>
+    <a>النظافة</a>
+    <a>SOP</a>
+    <a>الإعدادات</a>
   </div>
 
-  <!-- رفع تقرير زيارة -->
-  <div class="card" style="grid-column:span 12;margin-bottom:14px">
-    <h3 style="margin:0 0 8px;color:var(--primary)">
-      📎 إرفاق تقرير زيارة (PDF / Word)
-    </h3>
-    <div class="muted mini" style="margin-bottom:10px">
-      رفع ملف التقرير للزيارة الحالية (عرض الاسم فقط – الحفظ الفعلي مرحلة لاحقة)
-    </div>
-
+  <!-- رفع تقرير -->
+  <div class="card">
+    <h3>📎 إرفاق تقرير زيارة (PDF / Word)</h3>
+    <div class="muted mini">عرض اسم الملف فقط – الحفظ الفعلي لاحقًا</div>
     <label class="upload-box">
-      <input type="file" id="visitFile" accept=".pdf,.doc,.docx" hidden>
-      <span>اضغط لاختيار الملف</span>
+      <input type="file" id="visitFile" hidden accept=".pdf,.doc,.docx">
+      اضغط لاختيار الملف
     </label>
-
-    <div id="fileName" class="file-name">لم يتم اختيار ملف</div>
+    <div id="fileName" class="muted mini">لم يتم اختيار ملف</div>
   </div>
 
   <div class="grid">
-    <!-- CREATE VISIT -->
     <div class="card" style="grid-column:span 5">
       <h3>إنشاء زيارة</h3>
-      <div class="muted mini">
-        أي زيارة غير مطابقة يتم تحويلها تلقائيًا إلى CAPA.
-      </div>
-
-      <label class="small">البراند</label>
-      <select id="vBrand" class="input"></select>
-
-      <label class="small">الفرع</label>
-      <select id="vBranch" class="input"></select>
-
-      <label class="small">نوع الزيارة</label>
-      <select id="vType" class="input">
-        <option>تشغيلية</option>
-        <option>مالية</option>
-        <option>نظافة</option>
-        <option>إدارية</option>
-      </select>
-
-      <label class="small">التقييم</label>
-      <select id="vResult" class="input">
-        <option value="مطابق">مطابق</option>
-        <option value="غير مطابق">غير مطابق</option>
-      </select>
-
-      <label class="small">ملاحظات الزيارة</label>
-      <textarea id="vNotes" class="input" style="min-height:90px"
-        placeholder="اكتب ملخص الزيارة..."></textarea>
-
-      <div class="row" style="margin-top:12px">
-        <button class="btn primary" id="addVisit">حفظ الزيارة</button>
-        <button class="btn ghost" id="resetVisit" type="button">تفريغ</button>
-      </div>
+      <label>البراند</label>
+      <select class="input"><option>سدف</option></select>
+      <label>الفرع</label>
+      <select class="input"><option>الفرع الرئيسي</option></select>
+      <label>نوع الزيارة</label>
+      <select class="input"><option>تشغيلية</option></select>
+      <label>التقييم</label>
+      <select class="input"><option>مطابق</option><option>غير مطابق</option></select>
+      <label>ملاحظات</label>
+      <textarea class="input"></textarea>
+      <button class="btn primary">حفظ الزيارة</button>
     </div>
 
-    <!-- VISITS TABLE -->
     <div class="card" style="grid-column:span 7">
       <h3>سجل الزيارات</h3>
-
-      <div class="row no-print" style="margin:10px 0">
-        <select id="fType" class="input" style="max-width:220px">
-          <option value="">كل الأنواع</option>
-          <option>تشغيلية</option>
-          <option>مالية</option>
-          <option>نظافة</option>
-          <option>إدارية</option>
-        </select>
-
-        <select id="fResult" class="input" style="max-width:220px">
-          <option value="">كل النتائج</option>
-          <option>مطابق</option>
-          <option>غير مطابق</option>
-        </select>
-
-        <input id="fSearch" class="input" placeholder="بحث">
-        <button class="btn" onclick="window.print()">PDF</button>
-      </div>
-
-      <table class="table">
+      <table>
         <thead>
-          <tr>
-            <th>التاريخ</th>
-            <th>البراند</th>
-            <th>الفرع</th>
-            <th>النوع</th>
-            <th>النتيجة</th>
-            <th>CAPA</th>
-            <th>ملاحظات</th>
-          </tr>
+          <tr><th>التاريخ</th><th>البراند</th><th>النوع</th><th>النتيجة</th></tr>
         </thead>
-        <tbody id="visitTbody"></tbody>
+        <tbody>
+          <tr><td colspan="4" class="muted">لا توجد زيارات</td></tr>
+        </tbody>
       </table>
     </div>
   </div>
 
-  <div class="footer">
-    نموذج أولي — منصة نَسَق.
-  </div>
+  <div class="footer muted mini">نموذج MVP – منصة نَسَق</div>
 </div>
 
 <script>
-/* ===== Helpers ===== */
-const $ = id => document.getElementById(id);
-const DB_KEY = "naseq_ops_db_v1";
-const nowISO = () => new Date().toISOString();
+/* Theme Toggle */
+(function(){
+  const KEY="nasaq_theme";
+  const btn=document.getElementById("themeToggle");
+  function apply(m){
+    document.body.className=m;
+    btn.innerText = m==="theme-dark" ? "🌓 الوضع: داكن" : "☀️ الوضع: فاتح";
+    localStorage.setItem(KEY,m);
+  }
+  apply(localStorage.getItem(KEY)||"theme-dark");
+  btn.onclick=()=>apply(document.body.classList.contains("theme-dark")?"theme-light":"theme-dark");
+})();
 
-/* ===== File Upload UI ===== */
-$("visitFile").addEventListener("change", function(){
-  const f = this.files[0];
-  $("fileName").innerText = f ? ("📄 " + f.name) : "لم يتم اختيار ملف";
-});
-
-/* ===== Local DB ===== */
-function load(){
-  return JSON.parse(localStorage.getItem(DB_KEY)) || seed();
-}
-function save(db){
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-}
-function seed(){
-  const db={
-    brands:[
-      {id:"tuba",name:"طوبى",branches:[{id:"main",name:"الفرع الرئيسي"}]},
-      {id:"sdf",name:"سدف",branches:[{id:"main",name:"الفرع الرئيسي"}]},
-      {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
-    ],
-    visits:[],
-    issues:[]
-  };
-  save(db); return db;
-}
-
-/* ===== Init ===== */
-function initSelectors(){
-  const db = load();
-  $("vBrand").innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  $("vBrand").onchange = ()=>{
-    const b = db.brands.find(x=>x.id===$("vBrand").value);
-    $("vBranch").innerHTML = b.branches.map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-  };
-  $("vBrand").dispatchEvent(new Event("change"));
-}
-
-/* ===== Render Visits ===== */
-function renderVisits(){
-  const db = load();
-  $("visitTbody").innerHTML = db.visits.reverse().map(v=>`
-    <tr>
-      <td>${new Date(v.createdAt).toLocaleString("ar-SA")}</td>
-      <td>${v.brandName}</td>
-      <td>${v.branchName}</td>
-      <td>${v.type}</td>
-      <td>${v.result}</td>
-      <td>${v.capaId || "—"}</td>
-      <td>${v.notes || "—"}</td>
-    </tr>
-  `).join("") || `<tr><td colspan="7" class="muted">لا توجد زيارات</td></tr>`;
-}
-
-/* ===== Add Visit ===== */
-$("addVisit").onclick = ()=>{
-  const db = load();
-  db.visits.push({
-    brandId:$("vBrand").value,
-    brandName:$("vBrand").selectedOptions[0].text,
-    branchId:$("vBranch").value,
-    branchName:$("vBranch").selectedOptions[0].text,
-    type:$("vType").value,
-    result:$("vResult").value,
-    notes:$("vNotes").value,
-    createdAt:nowISO(),
-    capaId: $("vResult").value==="غير مطابق" ? "CAPA-"+Math.random().toString(16).slice(2,6) : null
-  });
-  save(db);
-  alert("تم حفظ الزيارة");
-  $("vNotes").value="";
-  renderVisits();
+/* File UI */
+document.getElementById("visitFile").onchange=function(){
+  document.getElementById("fileName").innerText=this.files[0]?"📄 "+this.files[0].name:"لم يتم اختيار ملف";
 };
-
-initSelectors();
-renderVisits();
 </script>
 
 </body>
