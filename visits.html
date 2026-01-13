@@ -10,18 +10,30 @@
 
   <style>
     .mini{font-size:12px}
-    .hl{outline:2px solid rgba(77,163,255,.6);border-radius:12px}
-    .tag-link{cursor:pointer;text-decoration:underline}
-    .pill.link{cursor:pointer}
     .row .input{flex:1;min-width:180px}
     @media print{
       .topbar,.nav,.no-print{display:none!important}
       body{background:#fff!important;color:#000!important}
     }
+    .upload-box{
+      display:block;
+      padding:18px;
+      border:2px dashed var(--primary);
+      border-radius:12px;
+      text-align:center;
+      cursor:pointer;
+      background:#fff;
+    }
+    .file-name{
+      margin-top:8px;
+      font-size:14px;
+      color:#666;
+    }
   </style>
 </head>
 
 <body>
+
 <div class="topbar">
   <div class="brand">
     <div class="logo">ن</div>
@@ -44,12 +56,29 @@
     <a data-nav href="settings.html">الإعدادات</a>
   </div>
 
+  <!-- رفع تقرير زيارة -->
+  <div class="card" style="grid-column:span 12;margin-bottom:14px">
+    <h3 style="margin:0 0 8px;color:var(--primary)">
+      📎 إرفاق تقرير زيارة (PDF / Word)
+    </h3>
+    <div class="muted mini" style="margin-bottom:10px">
+      رفع ملف التقرير للزيارة الحالية (عرض الاسم فقط – الحفظ الفعلي مرحلة لاحقة)
+    </div>
+
+    <label class="upload-box">
+      <input type="file" id="visitFile" accept=".pdf,.doc,.docx" hidden>
+      <span>اضغط لاختيار الملف</span>
+    </label>
+
+    <div id="fileName" class="file-name">لم يتم اختيار ملف</div>
+  </div>
+
   <div class="grid">
     <!-- CREATE VISIT -->
     <div class="card" style="grid-column:span 5">
       <h3>إنشاء زيارة</h3>
       <div class="muted mini">
-        أي زيارة (غير مطابقة) يمكن تحويلها مباشرة إلى CAPA.
+        أي زيارة غير مطابقة يتم تحويلها تلقائيًا إلى CAPA.
       </div>
 
       <label class="small">البراند</label>
@@ -89,14 +118,19 @@
       <div class="row no-print" style="margin:10px 0">
         <select id="fType" class="input" style="max-width:220px">
           <option value="">كل الأنواع</option>
-          <option>تشغيلية</option><option>مالية</option>
-          <option>نظافة</option><option>إدارية</option>
+          <option>تشغيلية</option>
+          <option>مالية</option>
+          <option>نظافة</option>
+          <option>إدارية</option>
         </select>
+
         <select id="fResult" class="input" style="max-width:220px">
           <option value="">كل النتائج</option>
-          <option>مطابق</option><option>غير مطابق</option>
+          <option>مطابق</option>
+          <option>غير مطابق</option>
         </select>
-        <input id="fSearch" class="input" placeholder="بحث (براند/فرع/ملاحظة/CAPA)">
+
+        <input id="fSearch" class="input" placeholder="بحث">
         <button class="btn" onclick="window.print()">PDF</button>
       </div>
 
@@ -118,17 +152,29 @@
   </div>
 
   <div class="footer">
-    نموذج أولي — أي زيارة غير مطابقة يمكن متابعتها عبر CAPA.
+    نموذج أولي — منصة نَسَق.
   </div>
 </div>
 
 <script>
-/* ===== DB ===== */
-const DB_KEY="naseq_ops_db_v1";
-const nowISO=()=>new Date().toISOString();
-const load=()=>JSON.parse(localStorage.getItem(DB_KEY)||"null")||seed();
-const save=db=>localStorage.setItem(DB_KEY,JSON.stringify(db));
+/* ===== Helpers ===== */
+const $ = id => document.getElementById(id);
+const DB_KEY = "naseq_ops_db_v1";
+const nowISO = () => new Date().toISOString();
 
+/* ===== File Upload UI ===== */
+$("visitFile").addEventListener("change", function(){
+  const f = this.files[0];
+  $("fileName").innerText = f ? ("📄 " + f.name) : "لم يتم اختيار ملف";
+});
+
+/* ===== Local DB ===== */
+function load(){
+  return JSON.parse(localStorage.getItem(DB_KEY)) || seed();
+}
+function save(db){
+  localStorage.setItem(DB_KEY, JSON.stringify(db));
+}
 function seed(){
   const db={
     brands:[
@@ -137,68 +183,42 @@ function seed(){
       {id:"dbb",name:"دبل بي",branches:[{id:"main",name:"الفرع الرئيسي"}]}
     ],
     visits:[],
-    issues:[],
-    cleaningLogs:[],
-    tasks:[]
+    issues:[]
   };
-  save(db);return db;
+  save(db); return db;
 }
 
-/* ===== Helpers ===== */
-const $=id=>document.getElementById(id);
-const $$=sel=>Array.from(document.querySelectorAll(sel));
-function setActiveNav(){
-  const p=location.pathname.split("/").pop();
-  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p&&a.classList.add("active"));
-}
-function genCapa(){return "CAPA-"+Math.random().toString(16).slice(2,6).toUpperCase();}
-
-/* ===== Init brand/branch ===== */
+/* ===== Init ===== */
 function initSelectors(){
-  const db=load();
-  $("vBrand").innerHTML=db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-  $("vBrand").onchange=()=>{
-    const b=db.brands.find(x=>x.id===$("vBrand").value);
-    $("vBranch").innerHTML=b.branches.map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
+  const db = load();
+  $("vBrand").innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
+  $("vBrand").onchange = ()=>{
+    const b = db.brands.find(x=>x.id===$("vBrand").value);
+    $("vBranch").innerHTML = b.branches.map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
   };
   $("vBrand").dispatchEvent(new Event("change"));
 }
 
-/* ===== Render ===== */
+/* ===== Render Visits ===== */
 function renderVisits(){
-  const db=load();
-  let rows=db.visits.slice();
-  if($("fType").value) rows=rows.filter(r=>r.type===$("fType").value);
-  if($("fResult").value) rows=rows.filter(r=>r.result===$("fResult").value);
-  if($("fSearch").value){
-    const q=$("fSearch").value.toLowerCase();
-    rows=rows.filter(r=>JSON.stringify(r).toLowerCase().includes(q));
-  }
-
-  $("visitTbody").innerHTML=rows.reverse().map(r=>`
+  const db = load();
+  $("visitTbody").innerHTML = db.visits.reverse().map(v=>`
     <tr>
-      <td>${new Date(r.createdAt).toLocaleString("ar-SA")}</td>
-      <td>${r.brandName}</td>
-      <td>${r.branchName}</td>
-      <td>${r.type}</td>
-      <td>
-        <span class="pill ${r.result==="مطابق"?"ok":"danger"}">${r.result}</span>
-      </td>
-      <td>
-        ${r.capaId
-          ? `<span class="pill warn link" onclick="openCapa('${r.capaId}')">${r.capaId}</span>`
-          : "—"}
-      </td>
-      <td class="muted">${r.notes||"—"}</td>
+      <td>${new Date(v.createdAt).toLocaleString("ar-SA")}</td>
+      <td>${v.brandName}</td>
+      <td>${v.branchName}</td>
+      <td>${v.type}</td>
+      <td>${v.result}</td>
+      <td>${v.capaId || "—"}</td>
+      <td>${v.notes || "—"}</td>
     </tr>
-  `).join("") || `<tr><td colspan="7" class="muted">لا توجد زيارات.</td></tr>`;
+  `).join("") || `<tr><td colspan="7" class="muted">لا توجد زيارات</td></tr>`;
 }
 
-/* ===== Add visit ===== */
-function addVisit(){
-  const db=load();
-  const rec={
-    id:"v_"+Math.random().toString(16).slice(2),
+/* ===== Add Visit ===== */
+$("addVisit").onclick = ()=>{
+  const db = load();
+  db.visits.push({
     brandId:$("vBrand").value,
     brandName:$("vBrand").selectedOptions[0].text,
     branchId:$("vBranch").value,
@@ -207,50 +227,17 @@ function addVisit(){
     result:$("vResult").value,
     notes:$("vNotes").value,
     createdAt:nowISO(),
-    capaId:null
-  };
-
-  if(rec.result==="غير مطابق"){
-    rec.capaId=genCapa();
-    db.issues.push({
-      id:rec.capaId,
-      source:"visit",
-      status:"مفتوح",
-      severity:"متوسط",
-      title:`زيارة ${rec.type} غير مطابقة`,
-      note:rec.notes,
-      brandId:rec.brandId,
-      branchId:rec.branchId,
-      createdAt:nowISO()
-    });
-  }
-
-  db.visits.push(rec);
+    capaId: $("vResult").value==="غير مطابق" ? "CAPA-"+Math.random().toString(16).slice(2,6) : null
+  });
   save(db);
-  alert(rec.capaId ? `تم الحفظ وإنشاء CAPA ${rec.capaId}` : "تم حفظ الزيارة");
-  resetVisit();
-  renderVisits();
-}
-
-function resetVisit(){
-  $("vType").value="تشغيلية";
-  $("vResult").value="مطابق";
+  alert("تم حفظ الزيارة");
   $("vNotes").value="";
-}
-
-function openCapa(id){
-  location.href=`issues.html?edit=${id}`;
-}
-
-/* ===== Init ===== */
-(function(){
-  setActiveNav();
-  initSelectors();
   renderVisits();
-  $("addVisit").onclick=addVisit;
-  $("resetVisit").onclick=resetVisit;
-  ["fType","fResult","fSearch"].forEach(id=>$(id).onchange=$(id).oninput=renderVisits);
-})();
+};
+
+initSelectors();
+renderVisits();
 </script>
+
 </body>
 </html>
