@@ -1,290 +1,259 @@
-/* =========================
-   NASAQ BRAND THEME (RTL)
-   File: nasaq-theme.css
-   ========================= */
+/* =========================================================
+   Nasaq Operations Platform – Main Theme
+   Author: Nasaq Ops
+   RTL / Arabic / High Contrast / No Opacity
+========================================================= */
 
-:root{
-  /* Brand */
-  --nasaq-primary:#C12126;
-  --nasaq-cream:#FDF0D6;
-  --nasaq-ink:#2B2B2B;
+/* =======================
+   Root Variables
+======================= */
+:root {
+  --nasaq-bg-main: linear-gradient(135deg, #f6efe9, #efe4db);
+  --nasaq-card-bg: #ffffff;
+  --nasaq-text-main: #111827;
+  --nasaq-text-muted: #4b5563;
+  --nasaq-border: rgba(0, 0, 0, 0.12);
 
-  /* Dark UI */
-  --bg: #0b1220;
-  --bg-2:#0e172a;
-  --card:#0f1b2e;
-  --card-2:#0f213a;
+  --nasaq-primary: #b91c1c;
+  --nasaq-primary-hover: #991b1b;
 
-  --text:#eaf0ff;
-  --text-muted: rgba(234,240,255,.70);
-  --border: rgba(234,240,255,.10);
-  --border-2: rgba(234,240,255,.14);
+  --nasaq-secondary: #374151;
+  --nasaq-success: #16a34a;
+  --nasaq-warning: #f59e0b;
+  --nasaq-danger: #dc2626;
 
-  --shadow: 0 14px 40px rgba(0,0,0,.35);
-  --radius: 16px;
-  --radius-sm: 12px;
+  --radius-lg: 18px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
 }
 
-*{ box-sizing:border-box; }
+/* =======================
+   Reset & Base
+======================= */
+* {
+  box-sizing: border-box;
+  opacity: 1 !important;
+}
 
-html,body{
-  margin:0;
-  padding:0;
-  font-family: "Almarai", system-ui, -apple-system, "Segoe UI", Tahoma, Arial, sans-serif;
-  background: radial-gradient(1200px 700px at 70% 10%, rgba(44,114,255,.12), transparent 55%),
-              radial-gradient(900px 600px at 15% 15%, rgba(193,33,38,.12), transparent 55%),
-              linear-gradient(180deg, var(--bg), #070b14);
-  color: var(--text);
+html, body {
+  margin: 0;
+  padding: 0;
   direction: rtl;
+  font-family: "Almarai", sans-serif;
+  background: var(--nasaq-bg-main);
+  color: var(--nasaq-text-main);
 }
 
-a{ color:inherit; text-decoration:none; }
-
-.container{
-  max-width: 1180px;
-  margin: 0 auto;
-  padding: 18px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding: 14px 18px;
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(8,12,22,.55);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,.06);
-}
-
-.brand{
-  display:flex;
-  gap:12px;
-  align-items:center;
-}
-
-.logo{
-  width:42px;height:42px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(193,33,38,1), rgba(193,33,38,.65));
-  display:grid; place-items:center;
-  font-weight:900;
-  color:#fff;
-  box-shadow: 0 10px 26px rgba(193,33,38,.25);
-}
-
-.badge{
-  padding: 7px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,.05);
-  color: var(--text);
-  font-size: 12px;
-}
-
-.muted{ color: var(--text-muted); }
-.small{ font-size: 12px; color: var(--text-muted); }
-
-.nav{
-  display:flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content:center;
-  margin: 18px 0 18px;
-}
-
-.nav a{
-  padding: 10px 14px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,.03);
-  transition: 140ms ease;
-}
-
-.nav a:hover{
-  background: rgba(255,255,255,.06);
-  border-color: rgba(255,255,255,.14);
-}
-
-.nav a.active{
-  background: rgba(44,114,255,.16);
-  border-color: rgba(44,114,255,.35);
-  color: #fff;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 14px;
-}
-
-.card{
-  background: linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.02));
-  border: 1px solid rgba(255,255,255,.07);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-}
-
-.card h3{
+/* =======================
+   Typography
+======================= */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--nasaq-text-main);
+  font-weight: 800;
   margin: 0 0 10px;
-  font-size: 18px;
 }
 
-.row{
-  display:flex;
-  gap: 10px;
-  align-items:center;
+p, span, label, small, li, td, th {
+  color: var(--nasaq-text-main);
+  font-size: 14px;
+}
+
+.muted,
+.sub,
+.hint,
+.desc,
+.mini {
+  color: var(--nasaq-text-muted);
+}
+
+/* =======================
+   Layout Containers
+======================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+main, section {
+  width: 100%;
+}
+
+/* =======================
+   Cards / Panels
+======================= */
+.card,
+.panel,
+.box,
+.widget {
+  background: var(--nasaq-card-bg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--nasaq-border);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* =======================
+   Navigation / Tabs
+======================= */
+nav,
+.tabs {
+  display: flex;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.input, select, textarea{
+nav a,
+nav button,
+.tabs a,
+.tabs button {
+  padding: 8px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--nasaq-border);
+  background: #ffffff;
+  color: var(--nasaq-text-main);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+nav a.active,
+.tabs .active {
+  background: var(--nasaq-primary);
+  color: #ffffff;
+  border-color: var(--nasaq-primary);
+}
+
+/* =======================
+   Buttons
+======================= */
+button,
+.btn {
+  border-radius: var(--radius-md);
+  border: none;
+  padding: 10px 16px;
+  font-weight: 800;
+  cursor: pointer;
+  background: var(--nasaq-primary);
+  color: #ffffff;
+}
+
+button:hover,
+.btn:hover {
+  background: var(--nasaq-primary-hover);
+}
+
+.btn.secondary {
+  background: var(--nasaq-secondary);
+}
+
+.btn.success {
+  background: var(--nasaq-success);
+}
+
+.btn.warning {
+  background: var(--nasaq-warning);
+}
+
+.btn.danger {
+  background: var(--nasaq-danger);
+}
+
+/* =======================
+   Forms
+======================= */
+input,
+select,
+textarea {
   width: 100%;
   padding: 10px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(0,0,0,.18);
-  color: var(--text);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: #ffffff;
+  color: var(--nasaq-text-main);
+  font-size: 14px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #6b7280;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
   outline: none;
+  border-color: var(--nasaq-primary);
 }
 
-textarea{ min-height: 92px; resize: vertical; }
+/* =======================
+   Tables
+======================= */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
 
-.btn{
-  cursor:pointer;
-  border:none;
-  border-radius: 14px;
-  padding: 10px 14px;
+th {
+  background: #f9fafb;
   font-weight: 800;
-}
-
-.btn.primary{
-  background: rgba(44,114,255,.22);
-  border: 1px solid rgba(44,114,255,.35);
-  color:#fff;
-}
-
-.btn.primary:hover{ filter: brightness(1.07); }
-
-.btn.danger{
-  background: rgba(193,33,38,.18);
-  border: 1px solid rgba(193,33,38,.35);
-  color:#fff;
-}
-
-.btn.ghost{
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.12);
-  color:#fff;
-}
-
-.table{
-  width:100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-.table th{
-  font-size: 12px;
-  color: var(--text-muted);
-  text-align: right;
-  padding: 0 10px;
-  white-space: nowrap;
-}
-
-.table td{
-  background: rgba(255,255,255,.04);
-  border: 1px solid rgba(255,255,255,.08);
+  border-bottom: 2px solid var(--nasaq-border);
   padding: 10px;
 }
 
-.table tr td:first-child{
-  border-right: 1px solid rgba(255,255,255,.10);
-  border-top-right-radius: 14px;
-  border-bottom-right-radius: 14px;
+td {
+  padding: 10px;
+  border-bottom: 1px solid var(--nasaq-border);
 }
 
-.table tr td:last-child{
-  border-left: 1px solid rgba(255,255,255,.10);
-  border-top-left-radius: 14px;
-  border-bottom-left-radius: 14px;
-}
-
-.pill{
-  display:inline-block;
+/* =======================
+   Status Badges
+======================= */
+.badge {
   padding: 6px 10px;
   border-radius: 999px;
   font-size: 12px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.04);
-}
-.pill.ok{ background: rgba(46,125,50,.14); border-color: rgba(46,125,50,.35); }
-.pill.warn{ background: rgba(237,108,2,.14); border-color: rgba(237,108,2,.35); }
-.pill.danger{ background: rgba(193,33,38,.14); border-color: rgba(193,33,38,.45); }
-
-.footer{
-  margin-top: 18px;
-  color: var(--text-muted);
-  font-size: 12px;
-  text-align: center;
-  padding-bottom: 8px;
-}
-/* ===== Nasaq Light Theme (Default Override) ===== */
-:root{
-  --primary:#b3202a;      /* أحمر نسق */
-  --accent:#b3202a;
-  --bg:#f6efe6;           /* بيج فاتح */
-  --panel:#ffffff;        /* كروت بيضاء */
-  --card:#ffffff;
-  --border:rgba(179,32,42,.18);
-  --text:#1d1d1f;
-  --muted:rgba(29,29,31,.72);
+  font-weight: 700;
+  display: inline-block;
 }
 
-/* خلفية عامة */
-body{
-  background: radial-gradient(900px 520px at 20% 0%, rgba(179,32,42,.10), transparent 60%),
-              radial-gradient(900px 520px at 80% 0%, rgba(179,32,42,.08), transparent 60%),
-              var(--bg) !important;
-  color:var(--text) !important;
+.badge.success {
+  background: #dcfce7;
+  color: #166534;
 }
 
-/* الكروت / الحاويات */
-.card, .topbar, .nav, .table, .footer{
-  background: rgba(255,255,255,.92) !important;
-  border:1px solid var(--border) !important;
-  color:var(--text) !important;
+.badge.warning {
+  background: #fef3c7;
+  color: #92400e;
 }
 
-/* شريط التنقل */
-.nav a{
-  color:var(--text) !important;
-  background:rgba(255,255,255,.60) !important;
-  border:1px solid var(--border) !important;
-}
-.nav a.active{
-  background:rgba(179,32,42,.10) !important;
-  border-color:rgba(179,32,42,.35) !important;
+.badge.danger {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
-/* الحقول */
-.input, textarea, select{
-  background:#fff !important;
-  color:var(--text) !important;
-  border:1px solid rgba(179,32,42,.22) !important;
-}
-.muted{ color:var(--muted) !important; }
+/* =======================
+   Utilities
+======================= */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-left { text-align: left; }
 
-/* الأزرار */
-.btn.primary{
-  background:var(--primary) !important;
-  border-color:var(--primary) !important;
-  color:#fff !important;
-}
-.btn.ghost{
-  background:transparent !important;
-  border:1px solid rgba(179,32,42,.35) !important;
-  color:var(--text) !important;
+.mt-1 { margin-top: 8px; }
+.mt-2 { margin-top: 16px; }
+.mt-3 { margin-top: 24px; }
+
+.mb-1 { margin-bottom: 8px; }
+.mb-2 { margin-bottom: 16px; }
+.mb-3 { margin-bottom: 24px; }
+
+/* =======================
+   Remove Glass / Blur
+======================= */
+.glass,
+.blur,
+.overlay {
+  background: var(--nasaq-card-bg) !important;
+  backdrop-filter: none !important;
 }
