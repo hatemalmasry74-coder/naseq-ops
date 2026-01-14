@@ -5,201 +5,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>منصة نَسَق – لوحة CEO</title>
 
-  <!-- NASAQ Theme -->
   <link rel="stylesheet" href="nasaq-theme.css">
-  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    .kpi{display:flex;flex-direction:column;gap:6px}
-    .kpi .n{font-size:26px;font-weight:900}
-    .kpi .t{font-size:12px;color:rgba(234,240,255,.72)}
-    .kpi .s{font-size:12px;color:rgba(234,240,255,.62)}
-    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);font-size:12px}
-    .split{display:flex;gap:10px;flex-wrap:wrap}
-    .mini{font-size:12px}
-    .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-    .item{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      border-radius:14px;padding:12px;
-      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+    body{font-family:"Almarai",sans-serif}
+    .topbar{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+    .brandTitle{font-size:22px;font-weight:900;margin:0}
+    .muted{color:#6b7280}
+    .cardx{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 12px 26px rgba(0,0,0,.08);padding:16px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    @media(max-width:1100px){.grid4{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:650px){.grid4{grid-template-columns:1fr}}
+    .kpi{border:1px solid rgba(0,0,0,.08);border-radius:18px;padding:14px;min-height:110px;display:flex;flex-direction:column;justify-content:space-between}
+    .kpi .label{font-weight:900}
+    .kpi .num{font-size:34px;font-weight:900}
+    .kpi .sub{font-size:12px;color:#6b7280}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{border:none;border-radius:14px;padding:10px 14px;font-weight:900;cursor:pointer}
+    .btn-primary{background:var(--nasaq-primary,#b91c1c);color:#fff}
+    .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
+    .table{width:100%;border-collapse:collapse;margin-top:10px}
+    .table th,.table td{border-bottom:1px solid rgba(0,0,0,.08);padding:10px;text-align:right;font-size:13px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,.12);font-weight:900;font-size:12px;background:#fff}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot-red{background:#ef4444}
+    .dot-orange{background:#f59e0b}
+    .dot-green{background:#22c55e}
+
+    /* ===== Unified Top Nav ===== */
+    .nasaq-topnav{
+      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
+      padding:14px; margin:14px auto;
+      border-radius:18px; background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
-    .item b{display:block}
-    .muted2{color:rgba(234,240,255,.72)}
-    .pill.link{cursor:pointer}
-    @media print{ .topbar,.nav,.no-print{display:none!important} }
+    .nasaq-topnav .tab{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff; color:#111827; font-weight:900;
+      text-decoration:none; transition:.15s ease;
+    }
+    .nasaq-topnav .tab:hover{transform:translateY(-1px)}
+    .nasaq-topnav .tab-active{
+      background: var(--nasaq-primary, #b91c1c);
+      color:#fff;
+      border-color: var(--nasaq-primary, #b91c1c);
+    }
   </style>
 </head>
 
 <body>
+<main class="container">
 
-<!-- ===== Topbar ===== -->
-<div class="topbar">
-  <div class="brand">
-    <div class="logo">ن</div>
-    <div>
-      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
-      <div class="muted">Pilot: طوبى • سدف • دبل بي — (CEO Dashboard)</div>
+  <!-- NAV الموحد -->
+  <div class="nasaq-topnav" id="topnav">
+    <a href="index.html" class="tab" data-page="index.html">الرئيسية</a>
+    <a href="visits.html" class="tab" data-page="visits.html">الزيارات</a>
+    <a href="tasks.html" class="tab" data-page="tasks.html">المهام</a>
+    <a href="cleaning.html" class="tab" data-page="cleaning.html">النظافة</a>
+    <a href="sop.html" class="tab" data-page="sop.html">SOP</a>
+    <a href="settings.html" class="tab" data-page="settings.html">الإعدادات</a>
+    <a href="plans.html" class="tab" data-page="plans.html">الخطط</a>
+  </div>
+
+  <div class="cardx">
+    <div class="topbar">
+      <div>
+        <h1 class="brandTitle">غرفة عمليات نَسَق – لوحة CEO</h1>
+        <div class="muted">تلقائيًا من بيانات <b>LocalStorage</b> (زيارات + خطط + مهام).</div>
+      </div>
+      <span class="pill"><span class="dot dot-green"></span> MVP محلي</span>
     </div>
   </div>
-  <div class="badge">MVP محلي</div>
-</div>
 
-<!-- ===== Content ===== -->
-<div class="container">
-  <div class="nav">
-    <a data-nav href="index.html">لوحة التحكم</a>
-    <a data-nav href="visits.html">الزيارات</a>
-    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
-    <a data-nav href="tasks.html">المهام</a>
-    <a data-nav href="cleaning.html">النظافة اليومية</a>
-    <a data-nav href="sop.html">مكتبة SOP</a>
-    <a data-nav href="settings.html">الإعدادات</a>
-  </div>
-
-  <div class="grid">
-
-    <!-- KPIs -->
-    <div class="card" style="grid-column:span 12">
-      <h3>لوحة CEO – مؤشرات سريعة</h3>
-      <div class="muted mini">تلقائيًا من بيانات LocalStorage</div>
-
-      <div class="grid" style="margin-top:12px">
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kOpen">—</div>
-            <div class="t">CAPA مفتوحة</div>
-            <div class="s" id="kOpenSub">—</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kOverdue">—</div>
-            <div class="t">CAPA متأخرة</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kHigh">—</div>
-            <div class="t">حرِجة (عالي)</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 3">
-          <div class="kpi">
-            <div class="n" id="kCleanToday">—</div>
-            <div class="t">نظافة اليوم</div>
-            <div class="s" id="kCleanBad">—</div>
-          </div>
-        </div>
-
-        <div class="card" style="grid-column:span 6">
-          <div class="split no-print">
-            <button class="btn primary" id="goIssues">فتح CAPA</button>
-            <button class="btn" id="goTasks">فتح المهام</button>
-            <button class="btn ghost" id="goVisits">فتح الزيارات</button>
-            <button class="btn ghost" id="exportDb">تصدير JSON</button>
-          </div>
-        </div>
+  <div class="cardx" style="margin-top:14px">
+    <h2 style="margin:0 0 10px;font-weight:900">مؤشرات سريعة</h2>
+    <div class="grid4">
+      <div class="kpi">
+        <div class="label">عدد الزيارات المسجلة</div>
+        <div class="num" id="k_visits">0</div>
+        <div class="sub">مصدر البيانات: visits_v1</div>
+      </div>
+      <div class="kpi">
+        <div class="label">زيارات هذا الأسبوع</div>
+        <div class="num" id="k_week">0</div>
+        <div class="sub">آخر 7 أيام</div>
+      </div>
+      <div class="kpi">
+        <div class="label">عدد الخطط المتاحة</div>
+        <div class="num" id="k_plans">2</div>
+        <div class="sub">مصدرها: plans.html (ثابت)</div>
+      </div>
+      <div class="kpi">
+        <div class="label">آخر زيارة</div>
+        <div class="num" style="font-size:20px" id="k_last">—</div>
+        <div class="sub" id="k_last_sub">لا توجد بيانات بعد</div>
       </div>
     </div>
 
-    <!-- Alerts -->
-    <div class="card" style="grid-column:span 7">
-      <h3>تنبيهات عاجلة</h3>
-      <div id="alertsList" class="list"></div>
+    <div class="btnrow">
+      <a class="btn btn-primary" href="visits.html" style="text-decoration:none">فتح الزيارات</a>
+      <a class="btn btn-outline" href="plans.html" style="text-decoration:none">فتح الخطط</a>
+      <button class="btn btn-outline" onclick="resetDemo()">تصفير البيانات (LocalStorage)</button>
     </div>
-
-    <!-- Activity -->
-    <div class="card" style="grid-column:span 5">
-      <h3>آخر النشاط</h3>
-      <div id="activityList" class="list"></div>
-    </div>
-
   </div>
 
-  <div class="footer">
-    لوحة CEO — نسخة MVP محلية • الخطوة القادمة: صلاحيات + Backend
+  <div class="cardx" style="margin-top:14px">
+    <h2 style="margin:0 0 10px;font-weight:900">آخر 10 زيارات</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>التاريخ</th>
+          <th>البراند</th>
+          <th>الفرع</th>
+          <th>النوع</th>
+          <th>التقييم</th>
+          <th>ملاحظات</th>
+        </tr>
+      </thead>
+      <tbody id="last10">
+        <tr><td colspan="6" class="muted">لا توجد زيارات مسجلة بعد.</td></tr>
+      </tbody>
+    </table>
   </div>
-</div>
 
-<!-- ===== Scripts ===== -->
-<script src="auth.js"></script>
-<script>
-  requireAuth();
-</script>
+</main>
 
 <script>
-/* ===== Helpers ===== */
-const DB_KEY="naseq_ops_db_v1";
-const todayISO=()=>new Date().toISOString().slice(0,10);
-const loadDB=()=>JSON.parse(localStorage.getItem(DB_KEY)||"{}");
+  // ===== Active tab تلقائي =====
+  (function activateTab(){
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("#topnav .tab").forEach(a=>{
+      const p = (a.getAttribute("data-page")||"").toLowerCase();
+      if(p === file) a.classList.add("tab-active");
+    });
+  })();
 
-function setActiveNav(){
-  const p=location.pathname.split("/").pop()||"index.html";
-  document.querySelectorAll("[data-nav]").forEach(a=>{
-    if(a.getAttribute("href")===p) a.classList.add("active");
-  });
-}
+  // ===== Data =====
+  const LS_KEY = "visits_v1";
 
-function renderDashboard(){
-  const db=loadDB();
-  const issues=db.issues||[];
-  const cleaning=db.cleaningLogs||[];
+  function loadVisits(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+    catch(e){ return []; }
+  }
 
-  const open=issues.filter(i=>i.status!=="مغلق");
-  const overdue=issues.filter(i=>i.dueDate && i.dueDate<todayISO() && i.status!=="مغلق");
-  const high=issues.filter(i=>i.severity==="عالي" && i.status!=="مغلق");
+  function isWithinLastDays(dateStr, days){
+    const d = new Date(dateStr);
+    if(String(d) === "Invalid Date") return false;
+    const now = new Date();
+    const ms = days * 24 * 60 * 60 * 1000;
+    return (now - d) <= ms;
+  }
 
-  const cleanToday=cleaning.filter(c=>(c.createdAt||"").slice(0,10)===todayISO());
-  const cleanBad=cleanToday.filter(c=>c.done!=="تم").length;
+  function refreshCEO(){
+    const visits = loadVisits().sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+    document.getElementById("k_visits").textContent = visits.length;
 
-  document.getElementById("kOpen").textContent=open.length;
-  document.getElementById("kOverdue").textContent=overdue.length;
-  document.getElementById("kHigh").textContent=high.length;
-  document.getElementById("kCleanToday").textContent=cleanToday.length;
-  document.getElementById("kCleanBad").textContent=`غير مطابق: ${cleanBad}`;
+    const weekCount = visits.filter(v=> isWithinLastDays(v.date, 7)).length;
+    document.getElementById("k_week").textContent = weekCount;
 
-  document.getElementById("alertsList").innerHTML =
-    overdue.slice(0,5).map(i=>`
-      <div class="item">
-        <div>
-          <b>${i.id}</b>
-          <div class="muted2 mini">${i.title||""}</div>
-        </div>
-        <span class="pill warn link" onclick="location.href='issues.html?edit=${i.id}'">فتح</span>
-      </div>
-    `).join("") || `<div class="muted2 mini">لا توجد تنبيهات</div>`;
+    if(visits.length){
+      const last = visits[0];
+      document.getElementById("k_last").textContent = `${last.brand || "—"} / ${last.branch || "—"}`;
+      document.getElementById("k_last_sub").textContent = `${last.date || ""} • ${last.type || ""} • ${last.rating || ""}`;
+    }else{
+      document.getElementById("k_last").textContent = "—";
+      document.getElementById("k_last_sub").textContent = "لا توجد بيانات بعد";
+    }
 
-  document.getElementById("activityList").innerHTML =
-    cleanToday.slice(-5).reverse().map(c=>`
-      <div class="item">
-        <div>
-          <b>نظافة – ${c.task}</b>
-          <div class="muted2 mini">${c.by||""} • ${c.done}</div>
-        </div>
-      </div>
-    `).join("") || `<div class="muted2 mini">لا يوجد نشاط بعد</div>`;
-}
+    const tbody = document.getElementById("last10");
+    if(!visits.length){
+      tbody.innerHTML = `<tr><td colspan="6" class="muted">لا توجد زيارات مسجلة بعد.</td></tr>`;
+      return;
+    }
 
-(function init(){
-  setActiveNav();
-  renderDashboard();
+    const top10 = visits.slice(0,10);
+    tbody.innerHTML = top10.map(v=>`
+      <tr>
+        <td>${v.date||""}</td>
+        <td>${v.brand||""}</td>
+        <td>${v.branch||""}</td>
+        <td>${v.type||""}</td>
+        <td>${v.rating||""}</td>
+        <td>${(v.notes||"").replace(/</g,"&lt;")}</td>
+      </tr>
+    `).join("");
+  }
 
-  document.getElementById("goIssues").onclick=()=>location.href="issues.html";
-  document.getElementById("goTasks").onclick=()=>location.href="tasks.html";
-  document.getElementById("goVisits").onclick=()=>location.href="visits.html";
-  document.getElementById("exportDb").onclick=()=>{
-    const blob=new Blob([JSON.stringify(loadDB(),null,2)],{type:"application/json"});
-    const a=document.createElement("a");
-    a.href=URL.createObjectURL(blob);
-    a.download="naseq_ops_export.json";
-    a.click();
-  };
-})();
+  function resetDemo(){
+    if(!confirm("هل أنت متأكد؟ سيتم حذف بيانات الزيارات المخزنة محليًا.")) return;
+    localStorage.removeItem(LS_KEY);
+    refreshCEO();
+    alert("تم التصفير ✅");
+  }
+
+  refreshCEO();
 </script>
 
 </body>
