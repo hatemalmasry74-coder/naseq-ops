@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>نَسَق – نموذج خطة تنفيذ عاجلة (7 أيام) | Flavor Town</title>
+
+  <!-- ثيم نَسَق (تأكد أنه موجود بنفس المسار في مشروعك) -->
+  <link rel="stylesheet" href="nasaq-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --card: rgba(255,255,255,.06);
+      --border: rgba(255,255,255,.10);
+      --muted: rgba(255,255,255,.65);
+      --ok: #22c55e;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --info:#60a5fa;
+      --bg: rgba(0,0,0,.12);
+    }
+    body{font-family:"Almarai",system-ui,-apple-system,Segoe UI,Roboto; background: var(--bg); }
+    .wrap{max-width:1200px;margin:0 auto;padding:18px}
+    .page-title{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 16px}
+    .page-title h1{margin:0;font-size:22px}
+    .page-title .sub{color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    @media (max-width: 980px){.grid{grid-template-columns:1fr}}
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      backdrop-filter: blur(6px);
+    }
+    .card h2{margin:0 0 10px;font-size:16px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .field{display:flex;flex-direction:column;gap:6px;min-width:180px;flex:1}
+    label{font-size:12px;color:var(--muted)}
+    input, select, textarea{
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color: inherit;
+      padding: 10px 12px;
+      outline: none;
+      font-size: 14px;
+    }
+    textarea{min-height:86px;resize:vertical}
+
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    @media (max-width: 980px){.kpis{grid-template-columns:repeat(2,1fr)}}
+    .kpi{
+      padding:12px;border-radius:14px;border:1px solid var(--border);
+      background: rgba(0,0,0,.16);
+    }
+    .kpi .n{font-size:22px;font-weight:900;margin-top:6px}
+    .kpi .t{font-size:12px;color:var(--muted)}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding: 6px 10px;border-radius: 999px;border:1px solid var(--border);
+      font-size: 12px;color: var(--muted);
+      background: rgba(0,0,0,.14);
+    }
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--info)}
+    .dot.ok{background:var(--ok)} .dot.warn{background:var(--warn)} .dot.bad{background:var(--bad)}
+
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.18);
+      color: inherit;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .btn.primary{border-color: rgba(239,68,68,.35)}
+    .btn:hover{filter: brightness(1.08)}
+
+    .progress{
+      height: 12px;border-radius: 999px;border:1px solid var(--border);
+      background: rgba(0,0,0,.18); overflow:hidden;
+    }
+    .progress > div{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, rgba(239,68,68,.9), rgba(245,158,11,.9), rgba(34,197,94,.9));
+    }
+
+    .section{margin-top:12px}
+    .section-head{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      padding-bottom:10px;border-bottom:1px dashed var(--border);margin-bottom:10px
+    }
+    .section-head h3{margin:0;font-size:15px}
+    .mini{color:var(--muted);font-size:12px}
+    table{width:100%;border-collapse:collapse}
+    th, td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
+    th{font-size:12px;color:var(--muted);text-align:right}
+    td{font-size:13px}
+    .task-title{font-weight:800}
+    .req{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:12px;color:var(--muted)
+    }
+    .req input{width:16px;height:16px}
+    .status-pill{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:6px 10px;border-radius:999px;border:1px solid var(--border);
+      background: rgba(0,0,0,.14);font-size:12px
+    }
+    .pill-ok{border-color: rgba(34,197,94,.35)}
+    .pill-warn{border-color: rgba(245,158,11,.35)}
+    .pill-bad{border-color: rgba(239,68,68,.35)}
+    .hint{color:var(--muted);font-size:12px;line-height:1.6}
+    .divider{height:1px;background:var(--border);margin:12px 0}
+
+    /* للطباعة */
+    @media print{
+      .no-print{display:none !important}
+      body{background:#fff;color:#111}
+      .card{background:#fff;border-color:#ddd;box-shadow:none}
+      input,select,textarea{border-color:#ddd;background:#fff;color:#111}
+      th{color:#444}
+      .badge{background:#fff}
+      .progress{border-color:#ddd;background:#f3f3f3}
+    }
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <div class="page-title">
+    <div>
+      <h1>نموذج خطة تنفيذ عاجلة (7 أيام) – Flavor Town</h1>
+      <div class="sub">نَسَق | نموذج متابعة الافتتاح – مع حفظ تلقائي وتصدير</div>
+    </div>
+    <div class="row no-print">
+      <span class="badge" id="lateBadge"><span class="dot" id="lateDot"></span><span id="lateText">—</span></span>
+      <span class="badge"><span class="dot" id="saveDot"></span><span id="saveText">جاهز</span></span>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- يمين: بيانات أساسية + فلاتر -->
+    <div class="card">
+      <h2>بيانات النموذج</h2>
+      <div class="row">
+        <div class="field">
+          <label>البراند</label>
+          <input id="brand" value="Flavor Town" />
+        </div>
+        <div class="field">
+          <label>تاريخ البدء</label>
+          <input id="startDate" type="date"/>
+        </div>
+        <div class="field">
+          <label>تاريخ الإقفال الإلزامي (بعد 7 أيام)</label>
+          <input id="dueDate" type="date"/>
+        </div>
+        <div class="field">
+          <label>حالة النموذج</label>
+          <select id="formStatus">
+            <option value="جاري">جاري</option>
+            <option value="مكتمل">مكتمل</option>
+            <option value="متأخر">متأخر</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div class="field">
+          <label>الجهة المنفذة</label>
+          <input id="executor" value="شركة نَسَق"/>
+        </div>
+        <div class="field">
+          <label>المسؤول المباشر</label>
+          <input id="owner" placeholder="مثال: حاتم عطية"/>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>فلاتر العرض</h2>
+      <div class="row no-print">
+        <div class="field">
+          <label>فلتر الحالة</label>
+          <select id="filterStatus">
+            <option value="الكل">الكل</option>
+            <option value="غير_منجز">غير منجز</option>
+            <option value="قيد_التنفيذ">قيد التنفيذ</option>
+            <option value="مكتمل">مكتمل</option>
+            <option value="متأخر">متأخر</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>فلتر المسؤول</label>
+          <select id="filterOwner">
+            <option value="الكل">الكل</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>بحث</label>
+          <input id="filterText" placeholder="ابحث باسم مهمة / ملاحظة..."/>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="actions no-print">
+        <button class="btn primary" id="btnSave">حفظ الآن</button>
+        <button class="btn" id="btnReset">إعادة ضبط (مسح الحفظ)</button>
+        <button class="btn" id="btnExport">تصدير JSON</button>
+        <button class="btn" id="btnPrint">طباعة</button>
+      </div>
+
+      <div class="hint" style="margin-top:10px">
+        <b>قواعد نَسَق:</b> لا تُعتبر المهمة “مكتملة” إلا عند تفعيل <b>مرفق/إثبات</b> أو وضع رابط/ملاحظة تؤكد التنفيذ.
+        وأي تجاوز لمدة 7 أيام يظهر <b>تنبيه متأخر</b>.
+      </div>
+
+    </div>
+
+    <!-- يسار: مؤشرات -->
+    <div class="card">
+      <h2>مؤشرات التنفيذ</h2>
+
+      <div class="kpis" style="margin-top:8px">
+        <div class="kpi">
+          <div class="t">نسبة الإنجاز الكلية</div>
+          <div class="n" id="kpiOverall">0%</div>
+        </div>
+        <div class="kpi">
+          <div class="t">مهام مكتملة</div>
+          <div class="n" id="kpiDone">0</div>
+        </div>
+        <div class="kpi">
+          <div class="t">مهام متأخرة</div>
+          <div class="n" id="kpiLate">0</div>
+        </div>
+        <div class="kpi">
+          <div class="t">إجمالي المهام</div>
+          <div class="n" id="kpiTotal">0</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <div class="mini">شريط التقدم</div>
+        <div class="progress" aria-label="progress"><div id="progressBar"></div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h2>اعتمادات الإقفال</h2>
+      <div class="row">
+        <div class="field">
+          <label>اعتماد مدير التشغيل</label>
+          <select id="signOps">
+            <option value="غير معتمد">غير معتمد</option>
+            <option value="معتمد">معتمد</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>اعتماد الإدارة</label>
+          <select id="signAdmin">
+            <option value="غير معتمد">غير معتمد</option>
+            <option value="معتمد">معتمد</option>
+          </select>
+        </div>
+      </div>
+      <div class="hint" style="margin-top:8px">
+        عند اكتمال جميع المهام + اعتماد الطرفين يمكنك تغيير “حالة النموذج” إلى <b>مكتمل</b>.
+      </div>
+    </div>
+  </div>
+
+  <!-- الأقسام والمهام -->
+  <div class="card" style="margin-top:14px">
+    <h2>المهام (7 أيام)</h2>
+    <div id="sections"></div>
+  </div>
+
+</div>
+
+<script>
+/** =========================
+ *  بيانات النموذج الأساسية
+ *  ========================= */
+const STORAGE_KEY = "nasaq_flavortown_7days_v1";
+
+const RESPONSIBLES = [
+  "نَسَق","الإدارة","التشغيل","المشتريات","التسويق","الموارد البشرية","مدير الجودة","التصميم","شركة عصف"
+];
+
+const STATUS_OPTIONS = [
+  {v:"غير_منجز", t:"غير منجز"},
+  {v:"قيد_التنفيذ", t:"قيد التنفيذ"},
+  {v:"مكتمل", t:"مكتمل"},
+  {v:"متأخر", t:"متأخر"},
+];
+
+const SECTIONS = [
+  {
+    id:"sec_uniform",
+    title:"1) الهوية والزي",
+    deadlineDay: 2,
+    closeRule:"إرسال إثبات الطلب + صورة العينة",
+    tasks:[
+      {id:"t_uniform_1", title:"اعتماد تصميم الزي النهائي", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_uniform_2", title:"إرسال طلبية الزي (تركيا)", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_uniform_3", title:"طلب زي الشيفات من مورد محلي", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_uniform_4", title:"تأكيد المقاسات (الفريق)", owner:"التشغيل", evidenceRequired:false},
+    ]
+  },
+  {
+    id:"sec_menu",
+    title:"2) المنيو والمنتجات",
+    deadlineDay: 4,
+    closeRule:"منيو PDF معتمد + توقيع إلكتروني",
+    tasks:[
+      {id:"t_menu_1", title:"اختبار المنتجات المبتكرة (شاين)", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_menu_2", title:"اختيار مورد الحلويات الخارجي", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_menu_3", title:"اعتماد قوالب تقديم الحلويات", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_menu_4", title:"تحديد منتج ثابت أمام الكاشير", owner:"التسويق", evidenceRequired:true},
+      {id:"t_menu_5", title:"إضافة خيار حلويات صحي", owner:"التشغيل", evidenceRequired:false},
+      {id:"t_menu_6", title:"تعميد المنيو النهائي", owner:"الإدارة", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_coffee",
+    title:"3) القهوة والمشروبات",
+    deadlineDay: 3,
+    closeRule:"تقرير تذوق + اعتماد مكتوب",
+    tasks:[
+      {id:"t_cof_1", title:"تغيير مورد القهوة الحالي", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_cof_2", title:"اعتماد مزيج القهوة", owner:"مدير الجودة", evidenceRequired:true},
+      {id:"t_cof_3", title:"تثبيت مدير جودة القهوة (عمار)", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_cof_4", title:"اعتماد 4 أنواع حليب", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_cof_5", title:"اعتماد مشروبات رمضان (ماتشا/كركديه)", owner:"التشغيل", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_staff",
+    title:"4) التوظيف والتشغيل",
+    deadlineDay: 5,
+    closeRule:"جدول دوام + توقيع استلام مهام",
+    tasks:[
+      {id:"t_staff_1", title:"تعيين مدير الفرع", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_staff_2", title:"تعيين كاشير", owner:"الموارد البشرية", evidenceRequired:true},
+      {id:"t_staff_3", title:"تعيين أمين مستودع (Part Time)", owner:"الموارد البشرية", evidenceRequired:true},
+      {id:"t_staff_4", title:"جدولة الشفتات (7ص-2م / 2م-4م)", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_staff_5", title:"تدريب الخدمة (ويتر/بيجر)", owner:"نَسَق", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_b2b",
+    title:"5) B2B والمعمل",
+    deadlineDay: 4,
+    closeRule:"إشعار رسمي + صور المعمل الجديد",
+    tasks:[
+      {id:"t_b2b_1", title:"تجهيز نماذج تسليم B2B", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_b2b_2", title:"نقل المعمل خلال الأسبوع", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_b2b_3", title:"إشعار عملاء B2B", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_b2b_4", title:"تحديد آلية التوصيل (تعاقد/سيارة)", owner:"الإدارة", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_fitout",
+    title:"6) التجهيزات والتصميم",
+    deadlineDay: 5,
+    closeRule:"صور فعلية + فواتير",
+    tasks:[
+      {id:"t_fit_1", title:"زيارة RAK والتأكد من الحجر المركب", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_fit_2", title:"اعتماد لون الأرضيات (بيج معتمد)", owner:"التصميم", evidenceRequired:true},
+      {id:"t_fit_3", title:"شراء طاولات وكراسي للجلسات الخارجية", owner:"المشتريات", evidenceRequired:true},
+      {id:"t_fit_4", title:"اعتماد حركة الدخول والخروج", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_fit_5", title:"اعتماد/استلام الأكواب (5/7/9 OZ) + عرض سعر", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_fit_6", title:"اعتماد أكواب الفخار للتقديم", owner:"المشتريات", evidenceRequired:true},
+      {id:"t_fit_7", title:"توفير أدوات جابي", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_fit_8", title:"توفير صواني تقديم خشب", owner:"المشتريات", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_launch",
+    title:"7) التسويق والافتتاح",
+    deadlineDay: 7,
+    closeRule:"جدول الافتتاح + خطة تشغيل اليوم الأول",
+    tasks:[
+      {id:"t_launch_1", title:"التعاقد مع شركة افتتاح ودعوات", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_launch_2", title:"اعتماد فكرة الافتتاح (كرواسون داخل كرواسون... إلخ)", owner:"التسويق", evidenceRequired:true},
+      {id:"t_launch_3", title:"تجهيز ضيافة الافتتاح (مقدمات ضيافة)", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_launch_4", title:"تفعيل برنامج نقاط الولاء (بونات)", owner:"نَسَق", evidenceRequired:true},
+      {id:"t_launch_5", title:"إطلاق حسابات السوشيال (شركة عصف)", owner:"شركة عصف", evidenceRequired:true},
+      {id:"t_launch_6", title:"تجهيز دكان Flavor Town (مخبوزات/زبدة/صوصات/خميرة)", owner:"التشغيل", evidenceRequired:true},
+    ]
+  },
+  {
+    id:"sec_ramadan",
+    title:"8) منيو رمضان (ضمن نفس الأسبوع)",
+    deadlineDay: 7,
+    closeRule:"تصميم وتسعير معتمد + جاهزية إنتاج",
+    tasks:[
+      {id:"t_ram_1", title:"اعتماد استراتيجية رمضان دون الخروج عن الكونسيبت", owner:"الإدارة", evidenceRequired:true},
+      {id:"t_ram_2", title:"إضافة قهوة عربي / مشروب تمر", owner:"التشغيل", evidenceRequired:true},
+      {id:"t_ram_3", title:"تصميم بوكس رمضان (مبتكر/متنوع)", owner:"التسويق", evidenceRequired:true},
+      {id:"t_ram_4", title:"تسعير واعتماد منيو رمضان", owner:"نَسَق", evidenceRequired:true},
+    ]
+  }
+];
+
+/** =========================
+ *  حالة النموذج (State)
+ *  ========================= */
+function makeDefaultState(){
+  const today = new Date();
+  const toISO = d => new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
+  const start = toISO(today);
+  const due = toISO(new Date(today.getTime() + 7*24*60*60*1000));
+
+  const tasks = {};
+  SECTIONS.forEach(sec=>{
+    sec.tasks.forEach(t=>{
+      tasks[t.id] = {
+        status: "غير_منجز",
+        owner: t.owner,
+        notes: "",
+        evidence: { checked:false, link:"" },
+        updatedAt: null
+      };
+    });
+  });
+
+  return {
+    meta:{
+      brand:"Flavor Town",
+      startDate: start,
+      dueDate: due,
+      formStatus:"جاري",
+      executor:"شركة نَسَق",
+      owner:"",
+      signOps:"غير معتمد",
+      signAdmin:"غير معتمد",
+      updatedAt: null
+    },
+    tasks
+  };
+}
+
+let STATE = makeDefaultState();
+
+/** =========================
+ *  عناصر DOM
+ *  ========================= */
+const el = (id)=>document.getElementById(id);
+
+const brand = el("brand");
+const startDate = el("startDate");
+const dueDate = el("dueDate");
+const formStatus = el("formStatus");
+const executor = el("executor");
+const owner = el("owner");
+
+const filterStatus = el("filterStatus");
+const filterOwner = el("filterOwner");
+const filterText = el("filterText");
+
+const signOps = el("signOps");
+const signAdmin = el("signAdmin");
+
+const sectionsHost = el("sections");
+
+const kpiOverall = el("kpiOverall");
+const kpiDone = el("kpiDone");
+const kpiLate = el("kpiLate");
+const kpiTotal = el("kpiTotal");
+const progressBar = el("progressBar");
+
+const saveDot = el("saveDot");
+const saveText = el("saveText");
+
+const lateBadge = el("lateBadge");
+const lateDot = el("lateDot");
+const lateText = el("lateText");
+
+/** =========================
+ *  حفظ / تحميل
+ *  ========================= */
+function load(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if(!raw) return;
+    const obj = JSON.parse(raw);
+    // دمج آمن (لو حصل تعديل مستقبلاً)
+    STATE = makeDefaultState();
+    if(obj.meta) STATE.meta = {...STATE.meta, ...obj.meta};
+    if(obj.tasks) STATE.tasks = {...STATE.tasks, ...obj.tasks};
+  }catch(e){
+    console.warn("Load failed", e);
+  }
+}
+
+function markSaved(ok=true){
+  if(ok){
+    saveDot.className = "dot ok";
+    saveText.textContent = "تم الحفظ";
+    setTimeout(()=>{
+      saveDot.className = "dot";
+      saveText.textContent = "جاهز";
+    }, 800);
+  }else{
+    saveDot.className = "dot bad";
+    saveText.textContent = "تعذر الحفظ";
+  }
+}
+
+function save(){
+  try{
+    STATE.meta.updatedAt = new Date().toISOString();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(STATE));
+    markSaved(true);
+  }catch(e){
+    markSaved(false);
+    console.warn("Save failed", e);
+  }
+}
+
+/** =========================
+ *  أدوات
+ *  ========================= */
+function daysBetween(dateISO1, dateISO2){
+  const a = new Date(dateISO1 + "T00:00:00");
+  const b = new Date(dateISO2 + "T00:00:00");
+  const ms = b - a;
+  return Math.round(ms / (24*60*60*1000));
+}
+
+function todayISO(){
+  const d = new Date();
+  return new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
+
+function computeTaskDueISO(sectionDeadlineDay){
+  // due = startDate + (deadlineDay-1) أيام (مثلاً day2 = +1)
+  const start = new Date(STATE.meta.startDate + "T00:00:00");
+  const due = new Date(start.getTime() + (sectionDeadlineDay-1)*24*60*60*1000);
+  return new Date(due.getTime() - due.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
+
+function isLate(taskId, section){
+  const t = STATE.tasks[taskId];
+  if(t.status === "مكتمل") return false;
+  const dueISO = computeTaskDueISO(section.deadlineDay);
+  return todayISO() > dueISO;
+}
+
+function normalizeStatus(taskId, section){
+  const t = STATE.tasks[taskId];
+  if(t.status !== "مكتمل" && isLate(taskId, section)){
+    t.status = "متأخر";
+  }else if(t.status === "متأخر" && !isLate(taskId, section)){
+    // لا نرجعها تلقائيًا لغير منجز، نخليها كما هي إلا إذا المستخدم غيّرها
+  }
+}
+
+function getOwnersSet(){
+  const s = new Set();
+  Object.values(STATE.tasks).forEach(t=>s.add(t.owner || "غير محدد"));
+  return Array.from(s);
+}
+
+function isTaskComplete(task){
+  // شرط نَسَق: إذا evidenceRequired لازم checkbox أو link أو ملاحظة (نطبق الأشد: checkbox OR link)
+  // هنا نعتمد: مكتمل + (إذا evidenceChecked أو link موجود) وإلا يعتبر “مكتمل ناقص إثبات” ونحوله قيد التنفيذ
+  if(task.status !== "مكتمل") return false;
+  const hasEvidence = !!task.evidence?.checked || (task.evidence?.link||"").trim().length>0;
+  return hasEvidence;
+}
+
+/** =========================
+ *  Render
+ *  ========================= */
+function renderFilters(){
+  // owners
+  const owners = ["الكل", ...getOwnersSet()];
+  filterOwner.innerHTML = owners.map(o=>`<option value="${o}">${o}</option>`).join("");
+}
+
+function taskRowHTML(taskDef, section){
+  const t = STATE.tasks[taskDef.id];
+  normalizeStatus(taskDef.id, section);
+
+  const dueISO = computeTaskDueISO(section.deadlineDay);
+  const lateNow = isLate(taskDef.id, section);
+
+  const statusLabel = STATUS_OPTIONS.find(x=>x.v===t.status)?.t || t.status;
+  const pillClass =
+    (t.status==="مكتمل") ? "pill-ok" :
+    (t.status==="متأخر" || lateNow) ? "pill-bad" : "pill-warn";
+
+  // فلترة
+  const fs = filterStatus.value;
+  const fo = filterOwner.value;
+  const ft = (filterText.value||"").trim().toLowerCase();
+
+  const matchesStatus = (fs==="الكل") ? true : (t.status===fs);
+  const matchesOwner = (fo==="الكل") ? true : ((t.owner||"غير محدد")===fo);
+  const hay = (taskDef.title + " " + (t.notes||"") + " " + (t.evidence?.link||"")).toLowerCase();
+  const matchesText = ft ? hay.includes(ft) : true;
+
+  const visible = matchesStatus && matchesOwner && matchesText;
+  if(!visible) return "";
+
+  return `
+    <tr data-task="${taskDef.id}">
+      <td style="width:34%">
+        <div class="task-title">${taskDef.title}</div>
+        <div class="mini">موعد الإقفال لهذه المهمة: <b>${dueISO}</b></div>
+        <div class="mini">آخر تحديث: ${t.updatedAt ? new Date(t.updatedAt).toLocaleString("ar-SA") : "—"}</div>
+      </td>
+
+      <td style="width:14%">
+        <select class="task-owner">
+          ${RESPONSIBLES.map(o=>`<option value="${o}" ${o===t.owner?"selected":""}>${o}</option>`).join("")}
+        </select>
+      </td>
+
+      <td style="width:16%">
+        <select class="task-status">
+          ${STATUS_OPTIONS.map(s=>`<option value="${s.v}" ${s.v===t.status?"selected":""}>${s.t}</option>`).join("")}
+        </select>
+        <div style="margin-top:8px">
+          <span class="status-pill ${pillClass}"><span class="dot ${t.status==="مكتمل"?"ok":(lateNow||t.status==="متأخر"?"bad":"warn")}"></span>${statusLabel}</span>
+        </div>
+      </td>
+
+      <td style="width:22%">
+        <textarea class="task-notes" placeholder="ملاحظات / تفاصيل تنفيذ...">${escapeHTML(t.notes||"")}</textarea>
+      </td>
+
+      <td style="width:14%">
+        <div class="req">
+          <input class="task-evidence-check" type="checkbox" ${t.evidence?.checked?"checked":""}/>
+          <span>مرفق/إثبات</span>
+        </div>
+        <input class="task-evidence-link" style="margin-top:8px" placeholder="رابط مرفق (اختياري)" value="${escapeAttr(t.evidence?.link||"")}" />
+        <div class="mini" style="margin-top:8px;color:${taskDef.evidenceRequired?'#f59e0b':'rgba(255,255,255,.55)'}">
+          ${taskDef.evidenceRequired ? "إثبات مطلوب لهذه المهمة" : "إثبات اختياري"}
+        </div>
+      </td>
+    </tr>
+  `;
+}
+
+function sectionHTML(section){
+  const rows = section.tasks.map(t=>taskRowHTML(t, section)).join("");
+  if(!rows) return ""; // لو الفلاتر مخفية كل شيء
+  const dueISO = computeTaskDueISO(section.deadlineDay);
+
+  // حساب تقدم القسم
+  const ids = section.tasks.map(t=>t.id);
+  const done = ids.filter(id=> isTaskComplete(STATE.tasks[id]) ).length;
+  const total = ids.length;
+  const pct = total ? Math.round((done/total)*100) : 0;
+
+  return `
+    <div class="section" id="${section.id}">
+      <div class="section-head">
+        <div>
+          <h3>${section.title}</h3>
+          <div class="mini">Deadline: اليوم ${section.deadlineDay} (${dueISO}) • شرط الإقفال: ${section.closeRule}</div>
+        </div>
+        <div style="min-width:220px">
+          <div class="mini">إنجاز القسم: <b>${pct}%</b></div>
+          <div class="progress"><div style="width:${pct}%"></div></div>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>المهمة</th>
+            <th>المسؤول</th>
+            <th>الحالة</th>
+            <th>ملاحظات</th>
+            <th>الإثبات</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function renderMeta(){
+  brand.value = STATE.meta.brand || "Flavor Town";
+  startDate.value = STATE.meta.startDate || todayISO();
+  dueDate.value = STATE.meta.dueDate || "";
+  formStatus.value = STATE.meta.formStatus || "جاري";
+  executor.value = STATE.meta.executor || "شركة نَسَق";
+  owner.value = STATE.meta.owner || "";
+  signOps.value = STATE.meta.signOps || "غير معتمد";
+  signAdmin.value = STATE.meta.signAdmin || "غير معتمد";
+}
+
+function renderSections(){
+  sectionsHost.innerHTML = SECTIONS.map(sectionHTML).join("") || `
+    <div class="hint">لا توجد مهام مطابقة للفلاتر الحالية.</div>
+  `;
+}
+
+function computeKPIs(){
+  // إجمالي المهام
+  const allIds = Object.keys(STATE.tasks);
+  let total = allIds.length;
+
+  // تحديث المتأخر تلقائيًا وفق المهلة الخاصة بكل قسم
+  SECTIONS.forEach(sec=>{
+    sec.tasks.forEach(td=>{
+      normalizeStatus(td.id, sec);
+    });
+  });
+
+  // مكتمل مع إثبات
+  let done = 0;
+  let late = 0;
+
+  // late counts = status متأخر أو lateNow
+  const sectionByTaskId = {};
+  SECTIONS.forEach(sec=>sec.tasks.forEach(t=>sectionByTaskId[t.id]=sec));
+
+  allIds.forEach(id=>{
+    const t = STATE.tasks[id];
+    const sec = sectionByTaskId[id];
+    const lateNow = isLate(id, sec);
+    if(isTaskComplete(t)) done++;
+    if(t.status==="متأخر" || lateNow) late++;
+  });
+
+  const pct = total ? Math.round((done/total)*100) : 0;
+
+  kpiOverall.textContent = pct + "%";
+  kpiDone.textContent = done;
+  kpiLate.textContent = late;
+  kpiTotal.textContent = total;
+  progressBar.style.width = pct + "%";
+
+  // تنبيه متأخر على مستوى النموذج
+  const formLate = todayISO() > (STATE.meta.dueDate || todayISO());
+  if(formLate && formStatus.value !== "مكتمل"){
+    lateDot.className = "dot bad";
+    lateText.textContent = "تنبيه: تجاوز مهلة 7 أيام";
+  }else{
+    lateDot.className = "dot ok";
+    lateText.textContent = "ضمن المهلة";
+  }
+
+  // مزامنة حالة النموذج المقترحة
+  if(formLate && STATE.meta.formStatus !== "مكتمل"){
+    STATE.meta.formStatus = "متأخر";
+    formStatus.value = "متأخر";
+  }
+  // لو كل شيء مكتمل واعتمادات موجودة -> اقترح مكتمل
+  const canClose = (done===total) && (signOps.value==="معتمد") && (signAdmin.value==="معتمد");
+  if(canClose){
+    // لا نغير تلقائيًا حتى لا “نفاجئ” المستخدم، لكن نقدر نتركها كإشارة
+    // هنا فقط نلمّح في الشارة
+    lateDot.className = "dot ok";
+    lateText.textContent = "جاهز للإقفال (كل المهام مكتملة + اعتمادات)";
+  }
+}
+
+function renderAll(){
+  renderMeta();
+  renderFilters();
+  renderSections();
+  computeKPIs();
+}
+
+/** =========================
+ *  Handlers
+ *  ========================= */
+function bindMetaInputs(){
+  const sync = ()=>{
+    STATE.meta.brand = brand.value.trim();
+    STATE.meta.startDate = startDate.value || todayISO();
+    STATE.meta.dueDate = dueDate.value || STATE.meta.dueDate;
+    STATE.meta.formStatus = formStatus.value;
+    STATE.meta.executor = executor.value.trim();
+    STATE.meta.owner = owner.value.trim();
+    STATE.meta.signOps = signOps.value;
+    STATE.meta.signAdmin = signAdmin.value;
+  };
+
+  [brand,startDate,dueDate,formStatus,executor,owner,signOps,signAdmin].forEach(inp=>{
+    inp.addEventListener("change", ()=>{
+      sync();
+      // إذا تغير startDate -> نحدّث dueDate تلقائيًا إلى +7 أيام إن لم يُعدل يدويًا
+      if(inp === startDate){
+        const s = new Date(startDate.value + "T00:00:00");
+        const d = new Date(s.getTime() + 7*24*60*60*1000);
+        const iso = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+        dueDate.value = iso;
+        STATE.meta.dueDate = iso;
+      }
+      save();
+      renderAll();
+    });
+    inp.addEventListener("input", ()=>{
+      sync();
+      // حفظ خفيف (debounce)
+      debounceSave();
+    });
+  });
+}
+
+let debounceTimer = null;
+function debounceSave(){
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(()=>{
+    save();
+    computeKPIs();
+  }, 450);
+}
+
+function bindTableEvents(){
+  sectionsHost.addEventListener("change", (e)=>{
+    const tr = e.target.closest("tr[data-task]");
+    if(!tr) return;
+    const id = tr.getAttribute("data-task");
+    const task = STATE.tasks[id];
+
+    if(e.target.classList.contains("task-owner")){
+      task.owner = e.target.value;
+    }
+    if(e.target.classList.contains("task-status")){
+      task.status = e.target.value;
+
+      // شرط نَسَق: "مكتمل" بدون إثبات => ننزله قيد التنفيذ
+      if(task.status==="مكتمل"){
+        const hasEvidence = !!task.evidence?.checked || (task.evidence?.link||"").trim().length>0;
+        if(!hasEvidence){
+          task.status = "قيد_التنفيذ";
+          e.target.value = "قيد_التنفيذ";
+          alert("تنبيه نَسَق: لا يمكن اعتبار المهمة مكتملة بدون إثبات (فعّل مرفق/إثبات أو ضع رابط).");
+        }
+      }
+    }
+    if(e.target.classList.contains("task-evidence-check")){
+      task.evidence.checked = e.target.checked;
+    }
+    task.updatedAt = new Date().toISOString();
+    save();
+    renderAll();
+  });
+
+  sectionsHost.addEventListener("input", (e)=>{
+    const tr = e.target.closest("tr[data-task]");
+    if(!tr) return;
+    const id = tr.getAttribute("data-task");
+    const task = STATE.tasks[id];
+
+    if(e.target.classList.contains("task-notes")){
+      task.notes = e.target.value;
+    }
+    if(e.target.classList.contains("task-evidence-link")){
+      task.evidence.link = e.target.value;
+    }
+    task.updatedAt = new Date().toISOString();
+    debounceSave();
+  });
+}
+
+function bindFilterEvents(){
+  [filterStatus, filterOwner].forEach(x=>x.addEventListener("change", renderAll));
+  filterText.addEventListener("input", ()=>{
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(renderAll, 250);
+  });
+}
+
+function bindActions(){
+  el("btnSave").addEventListener("click", ()=>{
+    save();
+    renderAll();
+  });
+
+  el("btnReset").addEventListener("click", ()=>{
+    const ok = confirm("سيتم مسح الحفظ المحلي وإعادة النموذج للوضع الافتراضي. هل تريد المتابعة؟");
+    if(!ok) return;
+    localStorage.removeItem(STORAGE_KEY);
+    STATE = makeDefaultState();
+    renderAll();
+    save();
+  });
+
+  el("btnExport").addEventListener("click", ()=>{
+    save();
+    const blob = new Blob([JSON.stringify(STATE, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `nasaq_flavortown_7days_${STATE.meta.startDate || "start"}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  el("btnPrint").addEventListener("click", ()=>{
+    window.print();
+  });
+}
+
+/** =========================
+ *  Helpers: Escape
+ *  ========================= */
+function escapeHTML(s){
+  return (s||"")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+function escapeAttr(s){
+  return escapeHTML(s).replaceAll("'","&#39;");
+}
+
+/** =========================
+ *  Init
+ *  ========================= */
+load();
+renderAll();
+bindMetaInputs();
+bindTableEvents();
+bindFilterEvents();
+bindActions();
+
+// ضبط افتراضي للتواريخ إن كانت فاضية
+if(!STATE.meta.startDate){
+  STATE.meta.startDate = todayISO();
+}
+if(!STATE.meta.dueDate){
+  const s = new Date((STATE.meta.startDate||todayISO()) + "T00:00:00");
+  const d = new Date(s.getTime() + 7*24*60*60*1000);
+  STATE.meta.dueDate = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+}
+renderAll();
+save();
+</script>
+</body>
+</html>
