@@ -3,76 +3,83 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>خطة تصحيح سكن موظفي سدف – 7 أيام</title>
+  <title>خطة تصحيح عاجلة – سكن موظفي سدف (7 أيام)</title>
 
-  <!-- ثيم نَسَق الرئيسي -->
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* تخصيص سدف */
-    body {
-      font-family: "Almarai", sans-serif;
+    body{font-family:"Almarai",sans-serif}
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;font-weight:900;font-size:12px;border:1px solid rgba(0,0,0,.12);background:#fff}
+    .pill .dot{width:10px;height:10px;border-radius:50%}
+    .dot.red{background:#dc2626}
+    .dot.orange{background:#f59e0b}
+    .dot.green{background:#16a34a}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .kpi{padding:14px;border-radius:16px;border:1px solid rgba(0,0,0,.10);background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08)}
+    .kpi .t{font-weight:800;color:#374151;font-size:12px}
+    .kpi .n{font-weight:900;font-size:26px;margin-top:6px}
+    .kpi .s{font-weight:900;font-size:14px;margin-top:4px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .muted{color:#6b7280}
+    .controls{display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:10px;align-items:center}
+    @media (max-width: 980px){
+      .kpis{grid-template-columns:repeat(2,1fr)}
+      .grid4{grid-template-columns:repeat(2,1fr)}
+      .controls{grid-template-columns:1fr;gap:8px}
     }
 
-    .brand-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
+    .sectionHead{
+      display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      margin-bottom:10px
     }
+    .sectionHead h2{margin:0}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid rgba(0,0,0,.12);
+      background:#fff
+    }
+    .badge.red{background:#fee2e2;color:#991b1b;border-color:rgba(153,27,27,.18)}
+    .badge.orange{background:#ffedd5;color:#9a3412;border-color:rgba(154,52,18,.18)}
+    .badge.yellow{background:#fef3c7;color:#92400e;border-color:rgba(146,64,14,.18)}
+    .badge.blue{background:#dbeafe;color:#1e40af;border-color:rgba(30,64,175,.18)}
+    .badge.gray{background:#f3f4f6;color:#374151;border-color:rgba(55,65,81,.18)}
 
-    .brand-badge {
-      background: #fee2e2;
-      color: #991b1b;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-weight: 800;
-      font-size: 12px;
-    }
+    .tasksTable{width:100%;border-collapse:collapse}
+    .tasksTable th{background:#f9fafb;border-bottom:2px solid rgba(0,0,0,.10);padding:10px;font-weight:900}
+    .tasksTable td{border-bottom:1px solid rgba(0,0,0,.08);padding:10px;vertical-align:top}
+    .taskTitle{font-weight:900}
+    .taskMeta{margin-top:4px;font-size:12px;color:#6b7280}
+    .nowrap{white-space:nowrap}
 
-    .section-title {
-      margin: 24px 0 8px;
-      font-weight: 900;
+    .task-status{
+      width:100%;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.18);
+      font-weight:900;
+      background:#fff;
     }
+    .task-status.pending{background:#fef3c7;border-color:rgba(245,158,11,.35);color:#92400e}
+    .task-status.done{background:#dcfce7;border-color:rgba(22,163,74,.35);color:#166534}
 
-    .task {
-      display: grid;
-      grid-template-columns: 1fr 180px 140px 160px;
-      gap: 10px;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid rgba(0,0,0,.08);
+    .evidence{
+      display:flex;flex-direction:column;gap:8px
     }
+    .evidence label{display:flex;align-items:center;gap:8px;font-weight:800}
+    .evidence input[type="checkbox"]{width:18px;height:18px}
+    .evidence input[type="text"]{padding:9px 10px;border-radius:12px;border:1px solid rgba(0,0,0,.18)}
 
-    .task:last-child {
-      border-bottom: none;
-    }
+    .footerActions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btnx{border-radius:12px;border:none;padding:10px 14px;font-weight:900;cursor:pointer}
+    .btn-primary{background:#b91c1c;color:#fff}
+    .btn-dark{background:#374151;color:#fff}
+    .btn-light{background:#e5e7eb;color:#111827}
+    .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
 
-    .task small {
-      color: #6b7280;
-      font-size: 12px;
-    }
-
-    .status {
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 800;
-      text-align: center;
-    }
-
-    .status.pending {
-      background: #fef3c7;
-      color: #92400e;
-    }
-
-    .footer-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
+    .hintBox{background:#fff;border:1px solid rgba(0,0,0,.10);border-radius:16px;padding:12px}
+    .small{font-size:12px}
+    .hidden{display:none !important}
   </style>
 </head>
 
@@ -80,128 +87,551 @@
 
 <main class="container">
 
-  <!-- الهيدر -->
-  <div class="card brand-header">
-    <div>
-      <h1>خطة تصحيح عاجلة – سكن موظفي سدف (7 أيام)</h1>
-      <p class="muted">
-        مبنية على تقرير زيارة سكن الموظفين بتاريخ 13 / 01 / 2026
-      </p>
+  <!-- Header -->
+  <div class="card">
+    <div class="topbar">
+      <div>
+        <h1 style="margin:0 0 6px">خطة تصحيح عاجلة – سكن موظفي سدف (7 أيام)</h1>
+        <div class="muted">مبنية على تقرير زيارة سكن الموظفين بتاريخ <strong>2026/01/13</strong></div>
+      </div>
+      <div class="pill" title="حالة الخطة الحالية">
+        <span class="dot red"></span>
+        حالة حرجة
+      </div>
     </div>
-    <span class="brand-badge">حالة حرجة</span>
   </div>
 
-  <!-- بيانات الخطة -->
+  <!-- Plan Info + KPIs -->
   <div class="card">
-    <h2>بيانات الخطة</h2>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
+    <div class="grid4" style="margin-bottom:12px">
       <input value="سدف" disabled>
       <input value="سكن الموظفين" disabled>
       <input value="تصحيح عاجل – صحة وسلامة" disabled>
-      <input value="13 / 01 / 2026" disabled>
+      <input id="startDate" value="2026-01-13" disabled>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi">
+        <div class="t">إجمالي المهام</div>
+        <div class="n" data-kpi="total">0</div>
+        <div class="s muted">كل الأقسام</div>
+      </div>
+      <div class="kpi">
+        <div class="t">المهام المنجزة</div>
+        <div class="n" data-kpi="done">0</div>
+        <div class="s muted">جاهزة للإقفال</div>
+      </div>
+      <div class="kpi">
+        <div class="t">المهام المتأخرة</div>
+        <div class="n" data-kpi="late">0</div>
+        <div class="s muted">تجاوزت الموعد</div>
+      </div>
+      <div class="kpi">
+        <div class="t">نسبة الإنجاز</div>
+        <div class="n" data-kpi="percent">0%</div>
+        <div class="s muted">تقدم الخطة</div>
+      </div>
     </div>
   </div>
 
-  <!-- القسم 1 -->
+  <!-- Filters / Actions -->
   <div class="card">
-    <h2 class="section-title">🔴 إجراءات عاجلة – خلال 24 ساعة</h2>
-
-    <div class="task">
-      <div>
-        تنظيف عميق شامل للشقة بالدور السفلي
-        <small>إثبات: صور بعد التنفيذ + فاتورة</small>
-      </div>
-      <div>الإدارة / مشرف السكن</div>
-      <div>14-01-2026</div>
-      <div class="status pending">غير منجز</div>
+    <div class="controls">
+      <input id="searchBox" placeholder="ابحث باسم مهمة / مسؤول / إثبات...">
+      <select id="filterSection">
+        <option value="الكل" selected>كل الأقسام</option>
+      </select>
+      <select id="filterStatus">
+        <option value="الكل" selected>كل الحالات</option>
+        <option value="غير منجز">غير منجز</option>
+        <option value="منجز">منجز</option>
+      </select>
+      <select id="filterLate">
+        <option value="الكل" selected>الكل</option>
+        <option value="متأخر">المتأخر فقط</option>
+        <option value="غير متأخر">غير المتأخر</option>
+      </select>
     </div>
 
-    <div class="task">
-      <div>
-        تنظيف عميق شامل للشقة بالدور العلوي (حالة حرجة)
-        <small>إثبات: صور تفصيلية</small>
-      </div>
-      <div>الإدارة / مشرف السكن</div>
-      <div>14-01-2026</div>
-      <div class="status pending">غير منجز</div>
+    <div class="footerActions">
+      <button class="btnx btn-primary" id="saveNow">حفظ الآن</button>
+      <button class="btnx btn-outline" id="resetLocal">إعادة ضبط (مسح الحفظ)</button>
+      <button class="btnx btn-dark" id="exportJSON">تصدير JSON</button>
+      <button class="btnx btn-light" id="importJSONBtn">استيراد JSON</button>
+      <button class="btnx btn-outline" id="printBtn">طباعة</button>
     </div>
 
-    <div class="task">
-      <div>
-        تنفيذ مكافحة حشرات فورية
-        <small>إثبات: تقرير شركة + صور</small>
+    <div id="importWrap" class="hintBox hidden" style="margin-top:12px">
+      <div style="font-weight:900;margin-bottom:8px">استيراد JSON</div>
+      <textarea id="importArea" rows="8" style="width:100%;padding:10px;border-radius:12px;border:1px solid rgba(0,0,0,.18)" placeholder="الصق JSON هنا ثم اضغط تطبيق"></textarea>
+      <div class="footerActions">
+        <button class="btnx btn-primary" id="applyImport">تطبيق الاستيراد</button>
+        <button class="btnx btn-outline" id="closeImport">إغلاق</button>
       </div>
-      <div>الإدارة</div>
-      <div>14-01-2026</div>
-      <div class="status pending">غير منجز</div>
+      <div class="small muted">ملاحظة: الاستيراد يستبدل الحالات والإثباتات الحالية.</div>
     </div>
   </div>
 
-  <!-- القسم 2 -->
+  <!-- Sections Container -->
+  <div id="sectionsContainer"></div>
+
+  <!-- Footer Note -->
   <div class="card">
-    <h2 class="section-title">🟠 إجراءات تصحيحية – خلال 48 ساعة</h2>
-
-    <div class="task">
-      <div>
-        تركيب شبك حماية للنوافذ
-        <small>إثبات: صور التركيب</small>
-      </div>
-      <div>الصيانة</div>
-      <div>15-01-2026</div>
-      <div class="status pending">غير منجز</div>
-    </div>
-
-    <div class="task">
-      <div>
-        معالجة سبب انقطاع المياه
-        <small>إثبات: تقرير صيانة</small>
-      </div>
-      <div>الصيانة</div>
-      <div>15-01-2026</div>
-      <div class="status pending">غير منجز</div>
-    </div>
-  </div>
-
-  <!-- القسم 3 -->
-  <div class="card">
-    <h2 class="section-title">🟡 إجراءات تنظيمية – خلال 72 ساعة</h2>
-
-    <div class="task">
-      <div>
-        إصلاح أو استبدال الغسالات
-        <small>إثبات: صور التشغيل</small>
-      </div>
-      <div>الإدارة</div>
-      <div>16-01-2026</div>
-      <div class="status pending">غير منجز</div>
-    </div>
-
-    <div class="task">
-      <div>
-        إعادة تنظيم المطبخ وتحديد مسؤول نظافة
-        <small>إثبات: صور + اسم المسؤول</small>
-      </div>
-      <div>مدير المطبخ</div>
-      <div>16-01-2026</div>
-      <div class="status pending">غير منجز</div>
-    </div>
-  </div>
-
-  <!-- اعتماد وإقفال -->
-  <div class="card">
-    <h2>الاعتماد والإقفال</h2>
-    <p class="muted">
-      لا يتم اعتماد أي مهمة بدون إثبات مصور واعتماد مشرف نَسَق
+    <h2 style="margin:0 0 8px">شرط الإقفال</h2>
+    <p class="muted" style="margin:0">
+      لا يتم اعتماد أي مهمة بدون <strong>إثبات مصوّر (قبل/بعد)</strong> + (إن وجد) <strong>فاتورة/تقرير</strong> واعتماد مشرف نَسَق.
     </p>
-
-    <div class="footer-actions">
-      <button class="btn danger">حفظ الخطة</button>
-      <button class="btn secondary">تصدير PDF</button>
-      <button class="btn secondary">تصدير JSON</button>
-    </div>
   </div>
 
 </main>
+
+<script>
+  // =========================
+  // Data
+  // =========================
+  const STORAGE_KEY = "nasaq_sadaf_housing_7days_v2";
+
+  const planMeta = {
+    plan_name: "خطة تصحيح عاجلة – سكن موظفي مطعم سدف (7 أيام)",
+    brand: "سدف",
+    scope: "سكن الموظفين",
+    plan_type: "تصحيح عاجل – صحة وسلامة",
+    supervisor: "شركة نَسَق – الإشراف والتشغيل",
+    start_date: "2026-01-13",
+    duration_days: 7,
+    status: "جارية",
+    closure_condition: "لا تُقفل أي مهمة بدون إثبات مصوّر (قبل/بعد) واعتماد مشرف نَسَق"
+  };
+
+  // Deadlines كما اتفقنا (24/48/72 + المتابعة)
+  const sections = [
+    {
+      section_id: 1,
+      title: "إجراءات عاجلة – خلال 24 ساعة",
+      badge: {text:"حرج", cls:"red"},
+      tasks: [
+        { id:"SDF-HOUS-01", title:"تنظيف عميق شامل للشقة بالدور السفلي", responsible:"الإدارة / مشرف السكن", dept:"التشغيل", deadline:"2026-01-14", evidence:["صور بعد التنفيذ","فاتورة شركة النظافة"] },
+        { id:"SDF-HOUS-02", title:"تنظيف عميق شامل للشقة بالدور العلوي (حالة حرجة)", responsible:"الإدارة / مشرف السكن", dept:"التشغيل", deadline:"2026-01-14", evidence:["صور تفصيلية بعد التنفيذ"] },
+        { id:"SDF-HOUS-03", title:"تنفيذ مكافحة حشرات فورية للشقتين", responsible:"الإدارة", dept:"الإدارة", deadline:"2026-01-14", evidence:["تقرير شركة المكافحة","صور"] },
+        { id:"SDF-HOUS-04", title:"إزالة جميع المخلفات وبواقي الطعام", responsible:"مشرف السكن", dept:"التشغيل", deadline:"2026-01-14", evidence:["صور قبل وبعد"] },
+        { id:"SDF-HOUS-05", title:"منع التدخين داخل السكن نهائيًا", responsible:"مدير الصالة", dept:"الإدارة", deadline:"2026-01-13", evidence:["تعهدات مكتوبة","صور إزالة المخالفات"] }
+      ]
+    },
+    {
+      section_id: 2,
+      title: "إجراءات تصحيحية – خلال 48 ساعة",
+      badge: {text:"عالي", cls:"orange"},
+      tasks: [
+        { id:"SDF-HOUS-06", title:"تركيب شبك حماية للنوافذ ومعالجة الفتحات", responsible:"الصيانة", dept:"الصيانة", deadline:"2026-01-15", evidence:["صور التركيب"] },
+        { id:"SDF-HOUS-07", title:"معالجة سبب انقطاع المياه بشكل نهائي", responsible:"الصيانة", dept:"الصيانة", deadline:"2026-01-15", evidence:["تقرير صيانة","صور"] },
+        { id:"SDF-HOUS-08", title:"إصلاح جميع الإضاءات المعطلة", responsible:"الصيانة", dept:"الصيانة", deadline:"2026-01-15", evidence:["صور بعد الإصلاح"] }
+      ]
+    },
+    {
+      section_id: 3,
+      title: "إجراءات تنظيمية – خلال 72 ساعة",
+      badge: {text:"متوسط", cls:"yellow"},
+      tasks: [
+        { id:"SDF-HOUS-09", title:"إصلاح أو استبدال الغسالات فورًا", responsible:"الإدارة", dept:"الإدارة", deadline:"2026-01-16", evidence:["صور تشغيل الغسالات"] },
+        { id:"SDF-HOUS-10", title:"إعادة تنظيم المطبخ وتحديد مسؤول نظافة يومي", responsible:"مدير المطبخ", dept:"التشغيل", deadline:"2026-01-16", evidence:["صور بعد التنظيم","اسم المسؤول"] }
+      ]
+    },
+    {
+      section_id: 4,
+      title: "إجراءات انضباطية وإدارية",
+      badge: {text:"انضباط", cls:"blue"},
+      tasks: [
+        { id:"SDF-HOUS-11", title:"توقيع تعهدات خطية من جميع الساكنين", responsible:"مدير الصالة", dept:"الإدارة", deadline:"2026-01-16", evidence:["صور التعهدات"] },
+        { id:"SDF-HOUS-12", title:"تعيين مشرف سكن مسؤول عن المتابعة اليومية", responsible:"الإدارة", dept:"الإدارة", deadline:"2026-01-16", evidence:["قرار تعيين مكتوب"] },
+        { id:"SDF-HOUS-13", title:"تطبيق نظام مخالفات تدريجي (إنذار – إجراء – إخلاء)", responsible:"الإدارة + نَسَق", dept:"الإدارة", deadline:"2026-01-16", evidence:["نسخة اللائحة المعلنة"] },
+        { id:"SDF-HOUS-14", title:"وضع لوحات تعليمات واضحة داخل السكن", responsible:"مشرف السكن", dept:"التشغيل", deadline:"2026-01-16", evidence:["صور اللوحات"] }
+      ]
+    },
+    {
+      section_id: 5,
+      title: "المتابعة والامتثال",
+      badge: {text:"متابعة", cls:"gray"},
+      tasks: [
+        { id:"SDF-HOUS-15", title:"زيارة متابعة بعد 3 أيام", responsible:"نَسَق", dept:"نَسَق", deadline:"2026-01-16", evidence:["تقرير زيارة"] },
+        { id:"SDF-HOUS-16", title:"زيارات أسبوعية لمدة شهر", responsible:"نَسَق", dept:"نَسَق", deadline:"2026-02-13", evidence:["تقارير أسبوعية"] },
+        { id:"SDF-HOUS-17", title:"رفع تقرير امتثال للإدارة بعد كل زيارة", responsible:"نَسَق", dept:"نَسَق", deadline:"مستمر", evidence:["تقرير امتثال"] }
+      ]
+    }
+  ];
+
+  // =========================
+  // State Helpers
+  // =========================
+  function safeParse(json){
+    try { return JSON.parse(json); } catch(e){ return null; }
+  }
+
+  function loadState(){
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const obj = safeParse(raw || "{}");
+    return obj && typeof obj === "object" ? obj : {};
+  }
+
+  function saveState(state){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function todayISO(){
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2,"0");
+    const dd = String(d.getDate()).padStart(2,"0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function isLate(deadline, status){
+    if(!deadline || deadline === "مستمر") return false;
+    if(status === "منجز") return false;
+    return todayISO() > deadline;
+  }
+
+  // =========================
+  // Render
+  // =========================
+  const container = document.getElementById("sectionsContainer");
+
+  function render(){
+    container.innerHTML = "";
+    const state = loadState();
+
+    // Fill filter sections
+    const filterSection = document.getElementById("filterSection");
+    const existing = Array.from(filterSection.options).map(o=>o.value);
+    sections.forEach(s=>{
+      if(!existing.includes(String(s.section_id))){
+        const op = document.createElement("option");
+        op.value = String(s.section_id);
+        op.textContent = s.title;
+        filterSection.appendChild(op);
+      }
+    });
+
+    sections.forEach(sec=>{
+      const card = document.createElement("div");
+      card.className = "card";
+      card.dataset.sectionId = sec.section_id;
+
+      card.innerHTML = `
+        <div class="sectionHead">
+          <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <h2>${sec.title}</h2>
+            <span class="badge ${sec.badge.cls}">${sec.badge.text}</span>
+          </div>
+          <div class="muted small">عدد المهام: <strong>${sec.tasks.length}</strong></div>
+        </div>
+
+        <table class="tasksTable">
+          <thead>
+            <tr>
+              <th style="width:44%">المهمة</th>
+              <th style="width:18%">المسؤول</th>
+              <th style="width:12%">الموعد</th>
+              <th style="width:12%">الحالة</th>
+              <th style="width:14%">الإثبات</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${sec.tasks.map(t=>{
+              const st = state[t.id]?.status || "غير منجز";
+              const evChecks = state[t.id]?.evidence_checks || {};
+              const evLink = state[t.id]?.evidence_link || "";
+              const late = isLate(t.deadline, st);
+
+              return `
+                <tr class="taskRow"
+                    data-task="${t.id}"
+                    data-title="${escapeHtml(t.title)}"
+                    data-resp="${escapeHtml(t.responsible)}"
+                    data-deadline="${t.deadline}"
+                    data-status="${st}"
+                    data-late="${late ? "متأخر":"غير متأخر"}"
+                    data-section="${sec.section_id}">
+                  <td>
+                    <div class="taskTitle">${t.title}${late ? ' <span class="badge red" style="margin-inline-start:8px">متأخر</span>' : ""}</div>
+                    <div class="taskMeta">
+                      <strong>القسم:</strong> ${sec.title} •
+                      <strong>الجهة:</strong> ${t.dept} •
+                      <strong>إثبات:</strong> ${t.evidence.join(" + ")}
+                    </div>
+                  </td>
+                  <td class="nowrap">${t.responsible}</td>
+                  <td class="nowrap">${t.deadline}</td>
+                  <td>
+                    <select class="task-status" data-task="${t.id}">
+                      <option value="غير منجز" ${st==="غير منجز" ? "selected":""}>غير منجز</option>
+                      <option value="منجز" ${st==="منجز" ? "selected":""}>منجز</option>
+                    </select>
+                  </td>
+                  <td>
+                    <div class="evidence">
+                      ${t.evidence.map((e, idx)=>{
+                        const key = `ev_${idx}`;
+                        const checked = evChecks[key] ? "checked" : "";
+                        return `<label class="small"><input type="checkbox" class="ev-check" data-task="${t.id}" data-key="${key}" ${checked}>${e}</label>`;
+                      }).join("")}
+                      <input type="text" class="ev-link" data-task="${t.id}" placeholder="رابط مرفق (اختياري)" value="${escapeAttr(evLink)}">
+                    </div>
+                  </td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+
+      container.appendChild(card);
+    });
+
+    // Apply status styles + wire events
+    wireEvents();
+    applyAllStatusStyles();
+    updateKpisAndFilters();
+  }
+
+  function applyStatusStyle(sel){
+    sel.classList.remove("done","pending");
+    if(sel.value === "منجز") sel.classList.add("done");
+    else sel.classList.add("pending");
+  }
+
+  function applyAllStatusStyles(){
+    document.querySelectorAll(".task-status").forEach(applyStatusStyle);
+  }
+
+  function wireEvents(){
+    // status change
+    document.querySelectorAll(".task-status").forEach(sel=>{
+      sel.addEventListener("change", ()=>{
+        const id = sel.dataset.task;
+        const st = loadState();
+        st[id] = st[id] || {};
+        st[id].status = sel.value;
+        st[id].updated_at = new Date().toISOString();
+        saveState(st);
+
+        // update row dataset
+        const row = document.querySelector(`.taskRow[data-task="${id}"]`);
+        if(row){
+          row.dataset.status = sel.value;
+          row.dataset.late = isLate(row.dataset.deadline, sel.value) ? "متأخر" : "غير متأخر";
+        }
+
+        applyStatusStyle(sel);
+        updateKpisAndFilters();
+      });
+    });
+
+    // evidence checks
+    document.querySelectorAll(".ev-check").forEach(ch=>{
+      ch.addEventListener("change", ()=>{
+        const id = ch.dataset.task;
+        const key = ch.dataset.key;
+        const st = loadState();
+        st[id] = st[id] || {};
+        st[id].evidence_checks = st[id].evidence_checks || {};
+        st[id].evidence_checks[key] = ch.checked;
+        st[id].updated_at = new Date().toISOString();
+        saveState(st);
+      });
+    });
+
+    // evidence link
+    document.querySelectorAll(".ev-link").forEach(inp=>{
+      inp.addEventListener("input", ()=>{
+        const id = inp.dataset.task;
+        const st = loadState();
+        st[id] = st[id] || {};
+        st[id].evidence_link = inp.value;
+        st[id].updated_at = new Date().toISOString();
+        saveState(st);
+      });
+    });
+  }
+
+  // =========================
+  // KPIs + Filters
+  // =========================
+  function updateKpisAndFilters(){
+    const rows = Array.from(document.querySelectorAll(".taskRow"));
+    const total = rows.length;
+    const done = rows.filter(r => r.dataset.status === "منجز").length;
+    const late = rows.filter(r => r.dataset.late === "متأخر").length;
+    const percent = total ? Math.round((done/total)*100) : 0;
+
+    document.querySelector("[data-kpi='total']").textContent = total;
+    document.querySelector("[data-kpi='done']").textContent = done;
+    document.querySelector("[data-kpi='late']").textContent = late;
+    document.querySelector("[data-kpi='percent']").textContent = percent + "%";
+
+    applyFilters();
+  }
+
+  function applyFilters(){
+    const q = (document.getElementById("searchBox").value || "").trim().toLowerCase();
+    const sec = document.getElementById("filterSection").value;
+    const st = document.getElementById("filterStatus").value;
+    const late = document.getElementById("filterLate").value;
+
+    document.querySelectorAll(".taskRow").forEach(row=>{
+      const matchQ =
+        !q ||
+        row.dataset.title.toLowerCase().includes(q) ||
+        row.dataset.resp.toLowerCase().includes(q);
+
+      const matchSec = (sec === "الكل") || (row.dataset.section === sec);
+      const matchSt = (st === "الكل") || (row.dataset.status === st);
+      const matchLate =
+        (late === "الكل") ||
+        (late === "متأخر" && row.dataset.late === "متأخر") ||
+        (late === "غير متأخر" && row.dataset.late === "غير متأخر");
+
+      row.style.display = (matchQ && matchSec && matchSt && matchLate) ? "" : "none";
+    });
+  }
+
+  document.getElementById("searchBox").addEventListener("input", applyFilters);
+  document.getElementById("filterSection").addEventListener("change", applyFilters);
+  document.getElementById("filterStatus").addEventListener("change", applyFilters);
+  document.getElementById("filterLate").addEventListener("change", applyFilters);
+
+  // =========================
+  // Buttons
+  // =========================
+  document.getElementById("saveNow").addEventListener("click", ()=>{
+    // state is already auto-saved, we just add a stamp
+    const st = loadState();
+    st.__last_save__ = new Date().toISOString();
+    saveState(st);
+    alert("تم الحفظ ✅");
+  });
+
+  document.getElementById("resetLocal").addEventListener("click", ()=>{
+    const ok = confirm("تأكيد: سيتم مسح الحفظ المحلي لهذه الخطة فقط.");
+    if(!ok) return;
+    localStorage.removeItem(STORAGE_KEY);
+    render();
+  });
+
+  document.getElementById("exportJSON").addEventListener("click", ()=>{
+    const st = loadState();
+
+    // Build export object
+    const exportObj = {
+      meta: planMeta,
+      state: st,
+      sections: sections
+    };
+
+    const text = JSON.stringify(exportObj, null, 2);
+    downloadText(text, "sadaf-housing-7days-plan.json");
+  });
+
+  document.getElementById("importJSONBtn").addEventListener("click", ()=>{
+    document.getElementById("importWrap").classList.remove("hidden");
+    document.getElementById("importArea").focus();
+  });
+
+  document.getElementById("closeImport").addEventListener("click", ()=>{
+    document.getElementById("importWrap").classList.add("hidden");
+  });
+
+  document.getElementById("applyImport").addEventListener("click", ()=>{
+    const txt = document.getElementById("importArea").value.trim();
+    if(!txt){ alert("الصق JSON أولاً"); return; }
+
+    const obj = safeParse(txt);
+    if(!obj){ alert("JSON غير صالح"); return; }
+
+    // Accept 2 formats:
+    // A) { meta, state, sections } from this page
+    // B) Our earlier plain plan JSON { meta, sections } with task fields
+    if(obj.state && typeof obj.state === "object"){
+      saveState(obj.state);
+      render();
+      alert("تم الاستيراد ✅");
+      document.getElementById("importWrap").classList.add("hidden");
+      return;
+    }
+
+    // If it is plain plan JSON, map to empty states but keep status if exists
+    const mapped = {};
+    if(obj.sections && Array.isArray(obj.sections)){
+      obj.sections.forEach(s=>{
+        (s.tasks || []).forEach(t=>{
+          mapped[t.task_id || t.id] = {
+            status: t.status || "غير منجز",
+            evidence_checks: {},
+            evidence_link: "",
+            updated_at: new Date().toISOString()
+          };
+        });
+      });
+      saveState(mapped);
+      render();
+      alert("تم الاستيراد ✅");
+      document.getElementById("importWrap").classList.add("hidden");
+      return;
+    }
+
+    alert("تنسيق JSON غير مدعوم");
+  });
+
+  document.getElementById("printBtn").addEventListener("click", ()=>{
+    window.print();
+  });
+
+  // =========================
+  // Utils
+  // =========================
+  function downloadText(text, filename){
+    const blob = new Blob([text], {type: "application/json;charset=utf-8"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function escapeHtml(str){
+    return String(str || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+  function escapeAttr(str){
+    return escapeHtml(str).replaceAll("\n"," ");
+  }
+
+  // =========================
+  // Init
+  // =========================
+  function init(){
+    // Ensure all tasks exist in state (keep existing values)
+    const st = loadState();
+    sections.forEach(sec=>{
+      sec.tasks.forEach(t=>{
+        if(!st[t.id]) st[t.id] = { status:"غير منجز", evidence_checks:{}, evidence_link:"", updated_at:null };
+        if(!st[t.id].status) st[t.id].status = "غير منجز";
+        if(!st[t.id].evidence_checks) st[t.id].evidence_checks = {};
+        if(st[t.id].evidence_link === undefined) st[t.id].evidence_link = "";
+      });
+    });
+    saveState(st);
+    render();
+  }
+
+  init();
+</script>
 
 </body>
 </html>
