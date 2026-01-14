@@ -5,194 +5,174 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>منصة نَسَق – الزيارات</title>
 
+  <!-- ثيم نسق -->
   <link rel="stylesheet" href="nasaq-theme.css">
-  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ===== Theme Tokens ===== */
-    :root{
-      --primary:#b3202a;
-      --radius:16px;
+    /* ===============================
+       FIX نهائي لمشكلة اختفاء النصوص
+       صفحة الزيارات فقط
+    =============================== */
+
+    body {
+      font-family: "Almarai", sans-serif;
+      background: linear-gradient(135deg,#f6efe9,#efe4db);
+      color: #111827 !important;
+      opacity: 1 !important;
     }
 
-    body.theme-dark{
-      --bg1:#070b14;
-      --bg2:#0b1222;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.08);
-      --border:rgba(255,255,255,.10);
-      --text:#f3f5f7;
-      --muted:rgba(243,245,247,.70);
+    * {
+      opacity: 1 !important;
     }
 
-    body.theme-light{
-      --bg1:#f6efe6;
-      --bg2:#ffffff;
-      --panel:rgba(255,255,255,.92);
-      --panel2:rgba(255,255,255,.96);
-      --border:rgba(179,32,42,.18);
-      --text:#1d1d1f;
-      --muted:rgba(29,29,31,.70);
+    h1, h2, h3, h4, h5, h6,
+    p, span, label, div, th, td {
+      color: #111827 !important;
     }
 
-    body{
-      font-family:'Almarai',sans-serif;
-      background:
-        radial-gradient(900px 520px at 20% 0%, rgba(179,32,42,.10), transparent 60%),
-        radial-gradient(900px 520px at 80% 0%, rgba(77,163,255,.10), transparent 60%),
-        linear-gradient(180deg,var(--bg1),var(--bg2));
-      color:var(--text);
-      margin:0;
+    /* الحاويات */
+    .container, .wrap, main, section {
+      opacity: 1 !important;
     }
 
-    .topbar,.nav,.card,.footer{
-      background:var(--panel);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:14px;
+    /* البطاقات */
+    .card, .panel, .box {
+      background: #ffffff !important;
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,.08);
+      box-shadow: 0 12px 30px rgba(0,0,0,.12);
+      padding: 16px;
     }
 
-    .container{padding:20px}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
-    .card{padding:16px}
-    .muted{color:var(--muted)}
-    .mini{font-size:12px}
-
-    .nav a{
-      display:inline-block;
-      padding:8px 14px;
-      margin:4px;
-      border-radius:12px;
-      background:var(--panel2);
-      border:1px solid var(--border);
-      color:var(--text);
-      text-decoration:none;
-    }
-    .nav a.active{background:rgba(179,32,42,.15)}
-
-    .input,textarea,select{
-      width:100%;
-      padding:10px;
-      border-radius:10px;
-      background:var(--panel2);
-      border:1px solid var(--border);
-      color:var(--text);
+    /* التبويبات */
+    .tabs a, .tabs button {
+      color: #111827 !important;
+      font-weight: 700;
     }
 
-    .btn{
-      padding:10px 16px;
-      border-radius:12px;
-      background:var(--panel2);
-      border:1px solid var(--border);
-      color:var(--text);
-      cursor:pointer;
-    }
-    .btn.primary{
-      background:var(--primary);
-      border-color:var(--primary);
-      color:#fff;
+    /* الجداول */
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    .upload-box{
-      display:block;
-      padding:18px;
-      border:2px dashed var(--border);
-      border-radius:12px;
-      text-align:center;
-      cursor:pointer;
-      background:var(--panel2);
+    th {
+      font-weight: 800;
+      background: #f9fafb;
+      border-bottom: 2px solid #e5e7eb;
     }
 
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:10px;border-bottom:1px solid var(--border)}
+    td {
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    /* الحقول */
+    input, select, textarea {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border: 1px solid #d1d5db !important;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 14px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #6b7280 !important;
+      opacity: 1 !important;
+    }
+
+    /* الأزرار */
+    button, .btn {
+      background: #b91c1c !important;
+      color: #ffffff !important;
+      border-radius: 12px;
+      border: none;
+      font-weight: 800;
+      padding: 10px 14px;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: #374151 !important;
+    }
+
+    /* منع أي طبقات زجاجية */
+    .glass, .blur, .overlay {
+      background: #ffffff !important;
+      opacity: 1 !important;
+      backdrop-filter: none !important;
+    }
   </style>
 </head>
 
-<body class="theme-dark">
+<body>
 
-<div class="topbar">
-  <strong>غرفة عمليات نَسَق</strong>
-  <button class="btn" id="themeToggle" style="float:left">🌓 الوضع: داكن</button>
-</div>
+  <main class="container" style="max-width:1200px;margin:0 auto;padding:20px">
 
-<div class="container">
+    <!-- العنوان -->
+    <div class="card" style="margin-bottom:16px">
+      <h1>سجل الزيارات – منصة نَسَق</h1>
+      <p>إدارة وتوثيق الزيارات التشغيلية والرقابية</p>
 
-  <div class="nav">
-    <a class="active">الزيارات</a>
-    <a>CAPA</a>
-    <a>المهام</a>
-    <a>النظافة</a>
-    <a>SOP</a>
-    <a>الإعدادات</a>
-  </div>
-
-  <!-- رفع تقرير -->
-  <div class="card">
-    <h3>📎 إرفاق تقرير زيارة (PDF / Word)</h3>
-    <div class="muted mini">عرض اسم الملف فقط – الحفظ الفعلي لاحقًا</div>
-    <label class="upload-box">
-      <input type="file" id="visitFile" hidden accept=".pdf,.doc,.docx">
-      اضغط لاختيار الملف
-    </label>
-    <div id="fileName" class="muted mini">لم يتم اختيار ملف</div>
-  </div>
-
-  <div class="grid">
-    <div class="card" style="grid-column:span 5">
-      <h3>إنشاء زيارة</h3>
-      <label>البراند</label>
-      <select class="input"><option>سدف</option></select>
-      <label>الفرع</label>
-      <select class="input"><option>الفرع الرئيسي</option></select>
-      <label>نوع الزيارة</label>
-      <select class="input"><option>تشغيلية</option></select>
-      <label>التقييم</label>
-      <select class="input"><option>مطابق</option><option>غير مطابق</option></select>
-      <label>ملاحظات</label>
-      <textarea class="input"></textarea>
-      <button class="btn primary">حفظ الزيارة</button>
+      <!-- زر الخطة -->
+      <a href="ft-7days-plan.html" class="btn" style="margin-top:10px;display:inline-block">
+        خطة Flavor Town – 7 أيام
+      </a>
     </div>
 
-    <div class="card" style="grid-column:span 7">
-      <h3>سجل الزيارات</h3>
+    <!-- إنشاء زيارة -->
+    <div class="card" style="margin-bottom:16px">
+      <h2>إنشاء زيارة</h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <input placeholder="البراند">
+        <input placeholder="الفرع">
+        <select>
+          <option>نوع الزيارة</option>
+          <option>تشغيلية</option>
+          <option>مالية</option>
+          <option>جودة</option>
+        </select>
+        <select>
+          <option>التقييم</option>
+          <option>ممتاز</option>
+          <option>جيد</option>
+          <option>يحتاج تحسين</option>
+        </select>
+      </div>
+
+      <textarea placeholder="ملاحظات الزيارة" style="margin-top:12px"></textarea>
+
+      <button style="margin-top:12px">حفظ الزيارة</button>
+    </div>
+
+    <!-- سجل الزيارات -->
+    <div class="card">
+      <h2>سجل الزيارات</h2>
+
       <table>
         <thead>
-          <tr><th>التاريخ</th><th>البراند</th><th>النوع</th><th>النتيجة</th></tr>
+          <tr>
+            <th>التاريخ</th>
+            <th>البراند</th>
+            <th>الفرع</th>
+            <th>النوع</th>
+            <th>النتيجة</th>
+          </tr>
         </thead>
         <tbody>
-          <tr><td colspan="4" class="muted">لا توجد زيارات</td></tr>
+          <tr>
+            <td colspan="5" style="text-align:center;color:#6b7280">
+              لا توجد زيارات مسجلة
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
-  </div>
 
-  <div class="footer muted mini">نموذج MVP – منصة نَسَق</div>
-</div>
-
-<script>
-/* Theme Toggle */
-(function(){
-  const KEY="nasaq_theme";
-  const btn=document.getElementById("themeToggle");
-  function apply(m){
-    document.body.className=m;
-    btn.innerText = m==="theme-dark" ? "🌓 الوضع: داكن" : "☀️ الوضع: فاتح";
-    localStorage.setItem(KEY,m);
-  }
-  apply(localStorage.getItem(KEY)||"theme-dark");
-  btn.onclick=()=>apply(document.body.classList.contains("theme-dark")?"theme-light":"theme-dark");
-})();
-
-/* File UI */
-document.getElementById("visitFile").onchange=function(){
-  document.getElementById("fileName").innerText=this.files[0]?"📄 "+this.files[0].name:"لم يتم اختيار ملف";
-};
-</script>
+  </main>
 
 </body>
 </html>
-<div style="margin:12px 0;display:flex;gap:10px;flex-wrap:wrap">
-  <a href="ft-7days-plan.html" style="padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:800;border:1px solid rgba(0,0,0,.15);background:#b91c1c;color:#fff">
-    خطة Flavor Town – 7 أيام
-  </a>
-</div>
