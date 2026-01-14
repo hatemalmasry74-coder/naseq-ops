@@ -10,62 +10,68 @@
 
   <style>
     body{font-family:"Almarai",sans-serif}
-    .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap}
-    .page-head h1{margin:0}
+    .cardx{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 12px 26px rgba(0,0,0,.08);padding:16px}
     .muted{color:#6b7280}
     .filters{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:10px;margin-top:12px}
     @media(max-width:900px){.filters{grid-template-columns:1fr}}
     .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
     @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:700px){.grid{grid-template-columns:1fr}}
-    .plan-card{border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08);overflow:hidden}
-    .plan-card .top{padding:14px 14px 10px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .plan-card h3{margin:0;font-weight:900;font-size:18px}
+    .plan{border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08);overflow:hidden}
+    .plan .top{padding:14px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+    .plan h3{margin:0;font-weight:900;font-size:18px}
     .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid rgba(0,0,0,.12);white-space:nowrap}
     .b-red{background:#fee2e2;color:#991b1b;border-color:rgba(153,27,27,.18)}
     .b-orange{background:#ffedd5;color:#9a3412;border-color:rgba(154,52,18,.18)}
-    .b-green{background:#dcfce7;color:#166534;border-color:rgba(22,101,52,.18)}
-    .b-gray{background:#f3f4f6;color:#374151;border-color:rgba(55,65,81,.18)}
-    .plan-card .mid{padding:0 14px 12px}
-    .meta{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
+    .meta{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;padding:0 14px 12px}
     .meta .m{border:1px dashed rgba(0,0,0,.14);border-radius:14px;padding:8px 10px;font-size:12px}
     .meta strong{font-weight:900}
-    .plan-card .actions{padding:12px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btnx{border-radius:12px;border:none;padding:10px 12px;font-weight:900;cursor:pointer}
-    .btn-primary{background:#b91c1c;color:#fff}
+    .actions{padding:12px 14px 14px;display:flex;gap:10px;flex-wrap:wrap}
+    .btn{border-radius:14px;border:none;padding:10px 12px;font-weight:900;cursor:pointer}
+    .btn-primary{background:var(--nasaq-primary,#b91c1c);color:#fff}
     .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
-    a{color:inherit;text-decoration:none}
-    .nav-mini{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .nav-mini a{padding:10px 12px;border-radius:999px;border:1px solid rgba(0,0,0,.12);background:#fff;font-weight:900}
-    .nav-mini a.active{background:#b91c1c;color:#fff;border-color:#b91c1c}
+
+    /* ===== Unified Top Nav ===== */
+    .nasaq-topnav{
+      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
+      padding:14px; margin:14px auto;
+      border-radius:18px; background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .nasaq-topnav .tab{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff; color:#111827; font-weight:900;
+      text-decoration:none; transition:.15s ease;
+    }
+    .nasaq-topnav .tab:hover{transform:translateY(-1px)}
+    .nasaq-topnav .tab-active{
+      background: var(--nasaq-primary, #b91c1c);
+      color:#fff;
+      border-color: var(--nasaq-primary, #b91c1c);
+    }
   </style>
 </head>
 
 <body>
-
 <main class="container">
 
-  <!-- شريط تنقل بسيط داخل المنصة -->
-  <div class="card">
-    <div class="nav-mini">
-      <a href="index.html">الرئيسية</a>
-      <a href="visits.html">الزيارات</a>
-      <a href="tasks.html">المهام</a>
-      <a href="cleaning.html">النظافة</a>
-      <a href="sop.html">SOP</a>
-      <a href="settings.html">الإعدادات</a>
-      <a class="active" href="plans.html">الخطط</a>
-    </div>
+  <!-- NAV الموحد -->
+  <div class="nasaq-topnav" id="topnav">
+    <a href="index.html" class="tab" data-page="index.html">الرئيسية</a>
+    <a href="visits.html" class="tab" data-page="visits.html">الزيارات</a>
+    <a href="tasks.html" class="tab" data-page="tasks.html">المهام</a>
+    <a href="cleaning.html" class="tab" data-page="cleaning.html">النظافة</a>
+    <a href="sop.html" class="tab" data-page="sop.html">SOP</a>
+    <a href="settings.html" class="tab" data-page="settings.html">الإعدادات</a>
+    <a href="plans.html" class="tab" data-page="plans.html">الخطط</a>
   </div>
 
-  <div class="card">
-    <div class="page-head">
-      <div>
-        <h1>الخطط التشغيلية</h1>
-        <div class="muted">هنا تجد جميع خطط التصحيح/الافتتاح/التطوير داخل منصة نَسَق.</div>
-      </div>
-      <div class="badge b-gray">الإصدار: MVP</div>
-    </div>
+  <div class="cardx">
+    <h1 style="margin:0;font-weight:900">الخطط التشغيلية</h1>
+    <div class="muted">هنا تجد جميع خطط التصحيح/الافتتاح/التطوير داخل منصة نَسَق.</div>
 
     <div class="filters">
       <input id="q" placeholder="ابحث باسم الخطة / البراند / النوع ...">
@@ -87,6 +93,15 @@
 </main>
 
 <script>
+  // ===== Active tab تلقائي =====
+  (function activateTab(){
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("#topnav .tab").forEach(a=>{
+      const p = (a.getAttribute("data-page")||"").toLowerCase();
+      if(p === file) a.classList.add("tab-active");
+    });
+  })();
+
   const plans = [
     {
       title: "خطة تصحيح عاجلة – سكن موظفي سدف (7 أيام)",
@@ -115,6 +130,11 @@
   const brand = document.getElementById("brand");
   const type = document.getElementById("type");
 
+  function copyLink(path){
+    const base = location.origin + location.pathname.replace(/\/[^\/]*$/, "/");
+    navigator.clipboard.writeText(base + path).then(()=>alert("تم نسخ الرابط ✅"));
+  }
+
   function render(){
     const query = (q.value||"").trim().toLowerCase();
     const b = brand.value;
@@ -127,8 +147,13 @@
       return matchQ && matchB && matchT;
     });
 
+    if(!filtered.length){
+      grid.innerHTML = `<div class="cardx"><b>لا توجد نتائج</b><div class="muted">جرّب تغيير الفلاتر أو البحث.</div></div>`;
+      return;
+    }
+
     grid.innerHTML = filtered.map(p=>`
-      <div class="plan-card" data-brand="${p.brand}" data-type="${p.type}">
+      <div class="plan">
         <div class="top">
           <div>
             <h3>${p.title}</h3>
@@ -137,36 +162,25 @@
           <span class="badge ${p.statusClass}">${p.status}</span>
         </div>
 
-        <div class="mid">
-          <div class="meta">
-            <div class="m"><strong>البراند:</strong> ${p.brand}</div>
-            <div class="m"><strong>النوع:</strong> ${p.type}</div>
-            <div class="m"><strong>تاريخ البداية:</strong> ${p.date}</div>
-            <div class="m"><strong>الملف:</strong> ${p.link}</div>
-          </div>
+        <div class="meta">
+          <div class="m"><strong>البراند:</strong> ${p.brand}</div>
+          <div class="m"><strong>النوع:</strong> ${p.type}</div>
+          <div class="m"><strong>تاريخ البداية:</strong> ${p.date}</div>
+          <div class="m"><strong>الملف:</strong> ${p.link}</div>
         </div>
 
         <div class="actions">
-          <a class="btnx btn-primary" href="${p.link}">فتح الخطة</a>
-          <button class="btnx btn-outline" onclick="copyLink('${p.link}')">نسخ الرابط</button>
+          <a class="btn btn-primary" href="${p.link}" style="text-decoration:none">فتح الخطة</a>
+          <button class="btn btn-outline" onclick="copyLink('${p.link}')">نسخ الرابط</button>
+          <a class="btn btn-outline" href="visits.html" style="text-decoration:none">فتح الزيارات</a>
         </div>
       </div>
     `).join("");
-
-    if(filtered.length===0){
-      grid.innerHTML = `<div class="card"><strong>لا توجد نتائج</strong><div class="muted">جرّب تغيير الفلاتر أو البحث.</div></div>`;
-    }
-  }
-
-  function copyLink(path){
-    const url = location.origin + location.pathname.replace(/\/[^\/]*$/, "/") + path;
-    navigator.clipboard.writeText(url).then(()=>alert("تم نسخ الرابط ✅"));
   }
 
   q.addEventListener("input", render);
   brand.addEventListener("change", render);
   type.addEventListener("change", render);
-
   render();
 </script>
 
