@@ -3,457 +3,234 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>منصة نَسَق – النظافة اليومية</title>
+  <title>منصة نَسَق – النظافة</title>
 
   <link rel="stylesheet" href="nasaq-theme.css">
-  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* الصفحة تعتمد على ثيم نَسَق، وهذه لمسات بسيطة فقط */
-    .mini{font-size:12px}
-    .hint{margin-top:8px}
-    .sticky-tools{position:sticky;top:68px;z-index:2}
-    .table td{vertical-align:top}
-    .tag-link{cursor:pointer;text-decoration:underline}
-    .hl{
-      outline:2px solid rgba(77,163,255,.6);
-      box-shadow: 0 0 0 6px rgba(77,163,255,.08);
-      border-radius:12px;
-    }
-    .pill.link{cursor:pointer}
-    .row .input{flex:1;min-width:180px}
-    .btn{white-space:nowrap}
+    body{font-family:"Almarai",sans-serif}
+    .cardx{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 12px 26px rgba(0,0,0,.08);padding:16px}
+    .muted{color:#6b7280}
+    .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+    @media(max-width:900px){.row{grid-template-columns:1fr}}
+    input,select,textarea{width:100%;padding:12px 12px;border-radius:14px;border:1px solid rgba(0,0,0,.14);font-family:inherit}
+    textarea{min-height:90px;resize:vertical}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{border:none;border-radius:14px;padding:10px 14px;font-weight:900;cursor:pointer}
+    .btn-primary{background:var(--nasaq-primary,#b91c1c);color:#fff}
+    .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
+    .table{width:100%;border-collapse:collapse;margin-top:10px}
+    .table th,.table td{border-bottom:1px solid rgba(0,0,0,.08);padding:10px;text-align:right;font-size:13px}
 
-    @media print{
-      .topbar,.nav,.sticky-tools,.no-print{display:none!important}
-      body{background:#fff!important;color:#000!important}
-      .card{box-shadow:none!important;border:1px solid #ddd!important;background:#fff!important}
-      .table td,.table th{color:#000!important}
+    /* ===== Unified Top Nav ===== */
+    .nasaq-topnav{
+      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
+      padding:14px; margin:14px auto;
+      border-radius:18px; background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+    }
+    .nasaq-topnav .tab{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff; color:#111827; font-weight:900;
+      text-decoration:none; transition:.15s ease;
+    }
+    .nasaq-topnav .tab:hover{transform:translateY(-1px)}
+    .nasaq-topnav .tab-active{
+      background: var(--nasaq-primary, #b91c1c);
+      color:#fff;
+      border-color: var(--nasaq-primary, #b91c1c);
     }
   </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <div class="brand">
-      <div class="logo">ن</div>
+<main class="container">
+
+  <!-- NAV الموحد -->
+  <div class="nasaq-topnav" id="topnav">
+    <a href="index.html" class="tab" data-page="index.html">الرئيسية</a>
+    <a href="visits.html" class="tab" data-page="visits.html">الزيارات</a>
+    <a href="tasks.html" class="tab" data-page="tasks.html">المهام</a>
+    <a href="cleaning.html" class="tab" data-page="cleaning.html">النظافة</a>
+    <a href="sop.html" class="tab" data-page="sop.html">SOP</a>
+    <a href="settings.html" class="tab" data-page="settings.html">الإعدادات</a>
+    <a href="plans.html" class="tab" data-page="plans.html">الخطط</a>
+  </div>
+
+  <div class="cardx">
+    <h1 style="margin:0;font-weight:900">سجل النظافة – MVP</h1>
+    <div class="muted">تسجيل أعمال النظافة اليومية/الأسبوعية بشكل مبسط مع حفظ محلي.</div>
+  </div>
+
+  <div class="cardx" style="margin-top:14px">
+    <h2 style="margin:0 0 10px;font-weight:900">تسجيل بند نظافة</h2>
+
+    <div class="row">
       <div>
-        <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
-        <div class="muted">Pilot: طوبى • سدف • دبل بي — (عربي/RTL)</div>
+        <label class="muted">التاريخ</label>
+        <input id="date" type="date">
+      </div>
+      <div>
+        <label class="muted">البراند</label>
+        <select id="brand">
+          <option value="سدف">سدف</option>
+          <option value="طوبى">طوبى</option>
+          <option value="دبل بي">دبل بي</option>
+          <option value="Flavor Town">Flavor Town</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">الموقع/المنطقة</label>
+        <input id="area" placeholder="مثال: المطبخ / الحمامات / الصالة">
       </div>
     </div>
-    <div class="badge">MVP محلي (Prototype)</div>
-  </div>
 
-  <div class="container">
-    <div class="nav">
-      <a data-nav href="index.html">لوحة التحكم</a>
-      <a data-nav href="visits.html">الزيارات</a>
-      <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
-      <a data-nav href="tasks.html">المهام</a>
-      <a data-nav href="cleaning.html">النظافة اليومية</a>
-      <a data-nav href="sop.html">مكتبة SOP</a>
-      <a data-nav href="settings.html">الإعدادات</a>
+    <div class="row" style="margin-top:10px">
+      <div>
+        <label class="muted">نوع البند</label>
+        <select id="kind">
+          <option value="يومي">يومي</option>
+          <option value="أسبوعي">أسبوعي</option>
+          <option value="تعقيم">تعقيم</option>
+          <option value="مكافحة حشرات">مكافحة حشرات</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">الحالة</label>
+        <select id="status">
+          <option value="منجز" selected>منجز</option>
+          <option value="غير منجز">غير منجز</option>
+          <option value="بحاجة متابعة">بحاجة متابعة</option>
+        </select>
+      </div>
+      <div>
+        <label class="muted">مسؤول التنفيذ</label>
+        <input id="owner" placeholder="اسم المسؤول">
+      </div>
     </div>
 
-    <div class="grid">
-      <!-- FORM -->
-      <div class="card" style="grid-column:span 5">
-        <h3>تسجيل نظافة يومية</h3>
-        <div class="muted mini">أي “جزئي/لم يتم” سيُنشئ CAPA تلقائيًا ويمكن فتحه من السجل.</div>
+    <div style="margin-top:10px">
+      <label class="muted">ملاحظات/إثبات</label>
+      <textarea id="notes" placeholder="مثال: صور قبل/بعد – تم التعقيم – تم تنظيف الثلاجات..."></textarea>
+    </div>
 
-        <label class="small" style="margin-top:12px;display:block">البراند</label>
-        <select id="cBrand" class="input"></select>
-
-        <label class="small" style="margin-top:10px;display:block">الفرع</label>
-        <select id="cBranch" class="input"></select>
-
-        <label class="small" style="margin-top:10px;display:block">الفترة</label>
-        <select id="cSlot" class="input">
-          <option>7:00–7:30</option><option>7:30–8:00</option>
-          <option>8:00–8:30</option><option>8:30–9:00</option>
-          <option>9:00–9:30</option><option>9:30–10:00</option>
-          <option>10:00–10:30</option><option>10:30–11:00</option>
-        </select>
-
-        <label class="small" style="margin-top:10px;display:block">المهمة</label>
-        <select id="cTask" class="input">
-          <option>Floor</option><option>Bathroom</option>
-          <option>Back area</option><option>Store</option>
-          <option>Lights</option><option>Glasses</option><option>Windows</option>
-        </select>
-
-        <label class="small" style="margin-top:10px;display:block">المنفّذ</label>
-        <input id="cBy" class="input" placeholder="اسم الموظف">
-
-        <label class="small" style="margin-top:10px;display:block">الحالة</label>
-        <select id="cDone" class="input">
-          <option>تم</option>
-          <option>جزئي</option>
-          <option>لم يتم</option>
-        </select>
-
-        <label class="small" style="margin-top:10px;display:block">ملاحظات</label>
-        <textarea id="cNotes" class="input" style="min-height:90px" placeholder="اكتب ملاحظة (اختياري)"></textarea>
-
-        <div class="row" style="margin-top:12px">
-          <button class="btn primary" id="addClean">حفظ</button>
-          <button class="btn ghost" id="resetForm" type="button">تفريغ</button>
-        </div>
-
-        <div class="muted mini hint">
-          تلميح: عند وجود CAPA يمكنك فتحه من عمود CAPA في السجل.
-        </div>
-      </div>
-
-      <!-- TABLE -->
-      <div class="card" style="grid-column:span 7">
-        <h3>سجل النظافة</h3>
-
-        <div class="sticky-tools">
-          <div class="row no-print" style="margin:10px 0 12px">
-            <select id="fStatus" class="input" style="max-width:220px">
-              <option value="">كل الحالات</option>
-              <option>تم</option><option>جزئي</option><option>لم يتم</option>
-            </select>
-
-            <input id="fSearch" class="input" placeholder="بحث (منفذ/مهمة/فرع/فترة/ملاحظة/CAPA)">
-
-            <button class="btn ghost" id="clearFilter" type="button">إلغاء فلتر CAPA</button>
-            <button class="btn" id="printPage" type="button">طباعة / PDF</button>
-          </div>
-
-          <div id="capaBanner" class="muted mini" style="display:none;margin-bottom:10px">
-            تم فتح الصفحة عبر CAPA:
-            <span id="capaBannerId" class="tag-link"></span>
-            — السجل تم فلترته وتمييزه.
-          </div>
-        </div>
-
-        <table class="table">
-          <thead>
-            <tr>
-              <th>التاريخ</th>
-              <th>البراند</th>
-              <th>الفرع</th>
-              <th>الفترة</th>
-              <th>المهمة</th>
-              <th>الحالة</th>
-              <th>المنفذ</th>
-              <th>CAPA</th>
-              <th>ملاحظات</th>
-            </tr>
-          </thead>
-          <tbody id="cleanTbody"></tbody>
-        </table>
-
-        <div class="footer">
-          هذا نموذج أولي (LocalStorage). للاستخدام الفعلي: استضافة + قاعدة بيانات + صلاحيات.
-        </div>
-      </div>
+    <div class="btnrow">
+      <button class="btn btn-primary" onclick="add()">حفظ</button>
+      <button class="btn btn-outline" onclick="resetForm()">مسح</button>
+      <button class="btn btn-outline" onclick="clearAll()">حذف الكل</button>
     </div>
   </div>
+
+  <div class="cardx" style="margin-top:14px">
+    <h2 style="margin:0 0 10px;font-weight:900">السجل</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>التاريخ</th>
+          <th>البراند</th>
+          <th>الموقع</th>
+          <th>النوع</th>
+          <th>الحالة</th>
+          <th>المسؤول</th>
+          <th>ملاحظات</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="8" class="muted">لا توجد بيانات بعد.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
 
 <script>
-/* ========== DB CORE ========== */
-const DB_KEY = "naseq_ops_db_v1";
-const nowISO = () => new Date().toISOString();
-const todayISO = () => new Date().toISOString().slice(0,10);
-
-function seedDB(){
-  const db = {
-    meta: { createdAt: nowISO(), language: "ar", pilot: true },
-    brands: [
-      { id: "tuba", name: "طوبى", branches:[{id:"tuba-main", name:"طوبى – الفرع الرئيسي"}]},
-      { id: "sdf",  name: "سدف",  branches:[{id:"sdf-main",  name:"سدف – الفرع الرئيسي"}]},
-      { id: "dbb",  name: "دبل بي", branches:[{id:"dbb-main", name:"دبل بي – الفرع الرئيسي"}]},
-    ],
-    cleaningLogs: [],
-    issues: [],
-    tasks: [],
-    visits: [],
-    sops: []
-  };
-  localStorage.setItem(DB_KEY, JSON.stringify(db));
-  return db;
-}
-function loadDB(){
-  const raw = localStorage.getItem(DB_KEY);
-  if(!raw) return seedDB();
-  try { return JSON.parse(raw); } catch(e){ return seedDB(); }
-}
-function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)); }
-
-/* ========== HELPERS ========== */
-const $id = (id) => document.getElementById(id);
-const $all = (sel) => Array.from(document.querySelectorAll(sel));
-
-function setActiveNav(){
-  const path = location.pathname.split("/").pop() || "index.html";
-  $all("[data-nav]").forEach(a => {
-    if(a.getAttribute("href") === path) a.classList.add("active");
-  });
-}
-
-function fmtDateTime(iso){
-  try { return new Date(iso).toLocaleString("ar-SA"); } catch(e){ return iso || "—"; }
-}
-
-function statusPillCleaning(s){
-  if(s==="تم") return `<span class="pill ok">تم</span>`;
-  if(s==="جزئي") return `<span class="pill warn">جزئي</span>`;
-  return `<span class="pill danger">لم يتم</span>`;
-}
-
-function genCapaId(){
-  return "CAPA-" + Math.random().toString(16).slice(2,6).toUpperCase();
-}
-
-function brandNameById(id){
-  const db = loadDB();
-  return db.brands.find(b=>b.id===id)?.name || id || "—";
-}
-function branchNameById(brandId, branchId){
-  const db = loadDB();
-  const b = db.brands.find(x=>x.id===brandId);
-  return b?.branches?.find(br=>br.id===branchId)?.name || branchId || "—";
-}
-
-function getQueryParam(name){
-  const u = new URL(location.href);
-  return u.searchParams.get(name);
-}
-
-/* ========== CAPA LINKING ========== */
-function ensureCapaForCleaning(rec){
-  // rec: cleaning record
-  // إذا تم => لا CAPA
-  if(rec.done === "تم") return null;
-
-  const db = loadDB();
-
-  // إذا السجل أصلاً مرتبط
-  if(rec.capaId){
-    const exists = db.issues.find(i => i.id === rec.capaId);
-    if(exists) return rec.capaId;
-  }
-
-  const capaId = genCapaId();
-  const title = `نظافة غير مطابقة: ${rec.task} (${rec.slot})`;
-  const note = (rec.notes || "").trim() || `الحالة: ${rec.done}`;
-
-  // due date افتراضي بعد 48 ساعة
-  const due = new Date(Date.now() + 48*60*60*1000).toISOString().slice(0,10);
-
-  db.issues.push({
-    id: capaId,
-    source: "cleaning",
-    severity: (rec.done === "لم يتم") ? "عالي" : "متوسط",
-    status: "مفتوح",
-    title,
-    note,
-    brandId: rec.brandId,
-    branchId: rec.branchId,
-    owner: "",
-    dueDate: due,
-    evidence: "",
-    createdAt: nowISO(),
-    updatedAt: nowISO(),
-    // مرجع للسجل في صفحة النظافة (يساعدنا لاحقًا)
-    ref: { type: "cleaning", cleaningId: rec.id }
-  });
-
-  rec.capaId = capaId;
-  saveDB(db);
-  return capaId;
-}
-
-function openCapa(capaId){
-  if(!capaId) return;
-  location.href = `issues.html?edit=${encodeURIComponent(capaId)}`;
-}
-
-/* ========== UI: BRAND/BRANCH SELECTORS ========== */
-function initBrandBranchSelectors(){
-  const db = loadDB();
-  const brandSel = $id("cBrand");
-  const branchSel = $id("cBranch");
-
-  brandSel.innerHTML = db.brands.map(b=>`<option value="${b.id}">${b.name}</option>`).join("");
-
-  function fillBranches(){
-    const b = db.brands.find(x=>x.id===brandSel.value);
-    branchSel.innerHTML = (b?.branches||[]).map(br=>`<option value="${br.id}">${br.name}</option>`).join("");
-  }
-
-  brandSel.addEventListener("change", fillBranches);
-  fillBranches();
-}
-
-function resetForm(){
-  $id("cSlot").selectedIndex = 0;
-  $id("cTask").selectedIndex = 0;
-  $id("cBy").value = "";
-  $id("cDone").value = "تم";
-  $id("cNotes").value = "";
-}
-
-/* ========== RENDER TABLE ========== */
-let forcedCapaFilter = null; // عندما نفتح cleaning.html?capa=...
-
-function renderCleaning(){
-  const db = loadDB();
-  const tbody = $id("cleanTbody");
-
-  const fs = $id("fStatus").value;
-  const q  = ($id("fSearch").value || "").toLowerCase();
-
-  let rows = db.cleaningLogs.slice();
-
-  // فلتر capa من رابط الصفحة
-  if(forcedCapaFilter){
-    rows = rows.filter(r => r.capaId === forcedCapaFilter);
-  }
-
-  // فلتر حالة
-  if(fs){
-    rows = rows.filter(r => r.done === fs);
-  }
-
-  // فلتر بحث
-  if(q){
-    rows = rows.filter(r => {
-      const blob = JSON.stringify({
-        date:r.createdAt,
-        brand: brandNameById(r.brandId),
-        branch: branchNameById(r.brandId, r.branchId),
-        slot:r.slot, task:r.task, done:r.done, by:r.by, capa:r.capaId, notes:r.notes
-      }).toLowerCase();
-      return blob.includes(q);
+  (function activateTab(){
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("#topnav .tab").forEach(a=>{
+      const p = (a.getAttribute("data-page")||"").toLowerCase();
+      if(p === file) a.classList.add("tab-active");
     });
+  })();
+
+  const LS_KEY="cleaning_v1";
+
+  function todayISO(){
+    const d=new Date();
+    const m=String(d.getMonth()+1).padStart(2,"0");
+    const day=String(d.getDate()).padStart(2,"0");
+    return `${d.getFullYear()}-${m}-${day}`;
+  }
+  document.getElementById("date").value=todayISO();
+
+  function load(){ try{return JSON.parse(localStorage.getItem(LS_KEY)||"[]")}catch(e){return []} }
+  function save(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
+
+  function resetForm(){
+    document.getElementById("area").value="";
+    document.getElementById("owner").value="";
+    document.getElementById("notes").value="";
+    document.getElementById("status").value="منجز";
+    document.getElementById("kind").value="يومي";
+    document.getElementById("date").value=todayISO();
   }
 
-  rows = rows.reverse();
-
-  tbody.innerHTML = rows.map(r => {
-    const capaCell = r.capaId
-      ? `<span class="pill warn link" title="فتح CAPA" data-open-capa="${r.capaId}">${r.capaId}</span>`
-      : `<span class="muted">—</span>`;
-
-    return `
-      <tr data-rowid="${r.id}" data-capa="${r.capaId || ""}">
-        <td class="muted">${fmtDateTime(r.createdAt)}</td>
-        <td>${brandNameById(r.brandId)}</td>
-        <td>${branchNameById(r.brandId, r.branchId)}</td>
-        <td>${r.slot}</td>
-        <td>${r.task}</td>
-        <td>${statusPillCleaning(r.done)}</td>
-        <td class="muted">${r.by || "—"}</td>
-        <td>${capaCell}</td>
-        <td class="muted">${(r.notes || "—")}</td>
-      </tr>
-    `;
-  }).join("") || `<tr><td colspan="9" class="muted">لا يوجد سجلات.</td></tr>`;
-
-  // click handlers for CAPA
-  $all("[data-open-capa]").forEach(el=>{
-    el.addEventListener("click", (e)=>{
-      e.preventDefault();
-      openCapa(el.getAttribute("data-open-capa"));
-    });
-  });
-
-  // Highlight إذا في capa filter
-  if(forcedCapaFilter){
-    const targetRow = $all(`tr[data-capa="${forcedCapaFilter}"]`)[0];
-    if(targetRow){
-      targetRow.classList.add("hl");
-      // Scroll لطيف
-      setTimeout(()=>{
-        targetRow.scrollIntoView({behavior:"smooth", block:"center"});
-      }, 150);
-    }
-  }
-}
-
-/* ========== ADD RECORD ========== */
-function addCleaning(){
-  const db = loadDB();
-
-  const rec = {
-    id: "c_" + Math.random().toString(16).slice(2),
-    brandId: $id("cBrand").value,
-    branchId: $id("cBranch").value,
-    slot: $id("cSlot").value,
-    task: $id("cTask").value,
-    by: ($id("cBy").value || "").trim() || "غير محدد",
-    done: $id("cDone").value,
-    notes: ($id("cNotes").value || "").trim(),
-    createdAt: nowISO(),
-    capaId: null
-  };
-
-  // CAPA creation if needed
-  if(rec.done !== "تم"){
-    // save record first, then create CAPA based on it
-    db.cleaningLogs.push(rec);
-    saveDB(db);
-
-    const capaId = ensureCapaForCleaning(rec);
-
-    // لازم نعيد حفظ سجل النظافة بعد إضافة capaId
-    const db2 = loadDB();
-    const idx = db2.cleaningLogs.findIndex(x => x.id === rec.id);
-    if(idx >= 0){
-      db2.cleaningLogs[idx].capaId = capaId;
-      saveDB(db2);
-    }
-
-    alert(`تم الحفظ ✅ وتم إنشاء CAPA تلقائيًا: ${capaId}`);
-  } else {
-    db.cleaningLogs.push(rec);
-    saveDB(db);
+  function add(){
+    const area=(document.getElementById("area").value||"").trim();
+    if(!area){ alert("اكتب الموقع/المنطقة"); return; }
+    const item={
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      date: document.getElementById("date").value || todayISO(),
+      brand: document.getElementById("brand").value,
+      area,
+      kind: document.getElementById("kind").value,
+      status: document.getElementById("status").value,
+      owner: (document.getElementById("owner").value||"").trim() || "—",
+      notes: (document.getElementById("notes").value||"").trim()
+    };
+    const arr=load(); arr.unshift(item); save(arr);
+    render(); resetForm();
     alert("تم الحفظ ✅");
   }
 
-  resetForm();
-  renderCleaning();
-}
-
-/* ========== INIT ========== */
-(function init(){
-  setActiveNav();
-  initBrandBranchSelectors();
-
-  // CAPA deep link: cleaning.html?capa=CAPA-XXXX
-  const capa = getQueryParam("capa");
-  if(capa){
-    forcedCapaFilter = capa;
-    $id("capaBanner").style.display = "block";
-    $id("capaBannerId").textContent = capa;
-    $id("capaBannerId").addEventListener("click", ()=> openCapa(capa));
+  function removeItem(id){
+    save(load().filter(x=>x.id!==id));
+    render();
   }
 
-  $id("addClean").addEventListener("click", addCleaning);
-  $id("resetForm").addEventListener("click", resetForm);
+  function clearAll(){
+    if(!confirm("حذف كل السجل؟")) return;
+    localStorage.removeItem(LS_KEY);
+    render();
+  }
 
-  $id("fStatus").addEventListener("change", renderCleaning);
-  $id("fSearch").addEventListener("input", renderCleaning);
+  function render(){
+    const arr=load();
+    const rows=document.getElementById("rows");
+    if(!arr.length){
+      rows.innerHTML=`<tr><td colspan="8" class="muted">لا توجد بيانات بعد.</td></tr>`;
+      return;
+    }
+    rows.innerHTML=arr.map(x=>`
+      <tr>
+        <td>${x.date||""}</td>
+        <td>${x.brand||""}</td>
+        <td>${x.area||""}</td>
+        <td>${x.kind||""}</td>
+        <td><b>${x.status||""}</b></td>
+        <td>${x.owner||""}</td>
+        <td>${(x.notes||"").replace(/</g,"&lt;")}</td>
+        <td><button class="btn btn-outline" onclick="removeItem('${x.id}')">حذف</button></td>
+      </tr>
+    `).join("");
+  }
 
-  $id("clearFilter").addEventListener("click", ()=>{
-    forcedCapaFilter = null;
-    $id("capaBanner").style.display = "none";
-    // تنظيف querystring بدون ريفرش
-    const u = new URL(location.href);
-    u.searchParams.delete("capa");
-    history.replaceState({}, "", u.toString());
-    renderCleaning();
-  });
-
-  $id("printPage").addEventListener("click", ()=> window.print());
-
-  renderCleaning();
-})();
+  render();
 </script>
+
 </body>
 </html>
