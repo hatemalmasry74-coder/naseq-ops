@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>منصة نَسَق – أرشيف التقفيلات</title>
+
+  <link rel="stylesheet" href="nasaq-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body{font-family:"Almarai",system-ui,-apple-system,Segoe UI,Roboto,Arial; background: var(--bg,#0b0b0c); color:var(--text,#f3f4f6);}
+    .wrap{max-width:1100px; margin:18px auto; padding:14px;}
+    .top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:12px}
+    .title h1{margin:0; font-size:20px; font-weight:900}
+    .title .sub{margin-top:6px; font-size:12px; color:rgba(255,255,255,.65)}
+
+    .card{background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:14px; box-shadow:0 14px 35px rgba(0,0,0,.25)}
+    .filters{display:grid; gap:10px; margin-bottom:12px}
+    @media(min-width:820px){ .filters{grid-template-columns: 1.2fr .6fr .6fr .6fr} }
+    label{display:block; font-size:12px; color:rgba(255,255,255,.85); margin:0 0 6px}
+    input, select{
+      width:100%; padding:10px 10px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color:#fff; outline:none;
+    }
+
+    .btns{display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    button{
+      border:0; cursor:pointer; padding:10px 12px; border-radius:14px;
+      color:#fff; background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14); font-weight:800;
+    }
+    button.primary{background: linear-gradient(135deg, var(--primary,#b91c1c), #f59e0b); border:0}
+    button.danger{background: rgba(239,68,68,.18); border:1px solid rgba(239,68,68,.35)}
+    .hint{font-size:11px; color:rgba(255,255,255,.65); margin-top:10px}
+
+    table{width:100%; border-collapse:separate; border-spacing:0 10px}
+    th{font-size:12px; text-align:right; color:rgba(255,255,255,.7); padding:0 10px}
+    td{padding:10px}
+    .row{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+    }
+    .row td:first-child{border-top-right-radius:16px;border-bottom-right-radius:16px}
+    .row td:last-child{border-top-left-radius:16px;border-bottom-left-radius:16px}
+
+    .badge{font-size:11px; padding:4px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.18)}
+    .badge.ok{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12)}
+    .badge.bad{border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10)}
+    .badge.neu{border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.06)}
+
+    .actions{display:flex; gap:8px; flex-wrap:wrap}
+    .actions button{padding:8px 10px; border-radius:12px; font-size:12px}
+    .mono{font-variant-numeric: tabular-nums}
+    .empty{padding:18px; text-align:center; color:rgba(255,255,255,.65)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="title">
+      <h1>أرشيف التقفيلات اليومية</h1>
+      <div class="sub">بحث + فلترة + فتح/تعديل + تصدير — يعمل محليًا على GitHub Pages</div>
+    </div>
+    <div class="btns">
+      <button class="primary" id="btnNew">+ تقفيل جديد</button>
+      <button id="btnRefresh">تحديث القائمة</button>
+      <button id="btnExportAll">تصدير الكل JSON</button>
+      <button class="danger" id="btnWipe">مسح الأرشيف (هذا الجهاز)</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="filters">
+      <div>
+        <label>بحث عام (فرع/كاشير/مشرف/ملاحظات)</label>
+        <input id="q" placeholder="ابحث هنا...">
+      </div>
+      <div>
+        <label>البراند</label>
+        <select id="fBrand">
+          <option value="">الكل</option>
+          <option>سدف</option><option>طوبى</option><option>دبل بي</option><option>شاين</option><option>أخرى</option>
+        </select>
+      </div>
+      <div>
+        <label>الحالة</label>
+        <select id="fStatus">
+          <option value="">الكل</option>
+          <option value="APPROVED">معتمد</option>
+          <option value="DRAFT">مسودة</option>
+        </select>
+      </div>
+      <div>
+        <label>التاريخ</label>
+        <input id="fDate" type="date">
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>التاريخ</th>
+          <th>البراند</th>
+          <th>الفرع</th>
+          <th>الوردية</th>
+          <th>الكاشير</th>
+          <th>الحالة</th>
+          <th>فرق الإيداع</th>
+          <th>الإجراءات</th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+
+    <div class="hint">
+      ⚠️ الأرشيف محلي على هذا الجهاز/المتصفح. لاحقًا نربطه بتخزين مركزي (Firebase/Sheet/Drive) حسب رغبتك.
+    </div>
+  </div>
+</div>
+
+<script>
+  // تخزين متعدد (بدل "آخر حفظ" فقط)
+  const LIST_KEY = "nasaq_daily_closing_list_v1";
+  const LAST_KEY = "nasaq_daily_closing_last";
+  const FORM_URL = "daily-closing.html";
+
+  const $ = (id)=>document.getElementById(id);
+
+  function loadList(){
+    try{
+      return JSON.parse(localStorage.getItem(LIST_KEY) || "[]");
+    }catch(e){ return []; }
+  }
+
+  function saveList(list){
+    localStorage.setItem(LIST_KEY, JSON.stringify(list));
+  }
+
+  function norm(s){ return (s||"").toString().trim().toLowerCase(); }
+
+  function statusBadge(status){
+    if(status==="APPROVED") return `<span class="badge ok">معتمد</span>`;
+    if(status==="DRAFT") return `<span class="badge neu">مسودة</span>`;
+    return `<span class="badge bad">غير معروف</span>`;
+  }
+
+  function fmt(n){
+    const v = Number(n);
+    if(!isFinite(v)) return "0.00";
+    return v.toFixed(2);
+  }
+
+  function rowMatches(item){
+    const q = norm($("q").value);
+    const b = $("fBrand").value;
+    const s = $("fStatus").value;
+    const d = $("fDate").value;
+
+    if(b && item?.header?.brand !== b) return false;
+    if(s && item?.meta?.status !== s) return false;
+    if(d && item?.header?.date !== d) return false;
+
+    if(q){
+      const hay = [
+        item?.header?.branch,
+        item?.header?.cashier,
+        item?.header?.supervisor,
+        item?.notes?.cashier,
+        item?.notes?.supervisor,
+        item?.sales?.diffReason
+      ].map(norm).join(" | ");
+      return hay.includes(q);
+    }
+    return true;
+  }
+
+  function render(){
+    const list = loadList()
+      .sort((a,b)=> (b?.header?.date||"").localeCompare(a?.header?.date||"") || (b?.meta?.savedAt||"").localeCompare(a?.meta?.savedAt||""));
+
+    const filtered = list.filter(rowMatches);
+    const tb = $("tbody");
+    tb.innerHTML = "";
+
+    if(filtered.length===0){
+      tb.innerHTML = `<tr><td colspan="8" class="empty">لا توجد تقفيلات مطابقة للبحث/الفلاتر.</td></tr>`;
+      return;
+    }
+
+    filtered.forEach(item=>{
+      const id = item?.meta?.id;
+      const date = item?.header?.date || "—";
+      const brand = item?.header?.brand || "—";
+      const branch = item?.header?.branch || "—";
+      const shift = item?.header?.shift || "—";
+      const cashier = item?.header?.cashier || "—";
+      const st = item?.meta?.status || "—";
+      const depDiff = item?.sales?.depositDiff ?? 0;
+
+      const tr = document.createElement("tr");
+      tr.className = "row";
+      tr.innerHTML = `
+        <td class="mono">${date}</td>
+        <td>${brand}</td>
+        <td>${branch}</td>
+        <td>${shift}</td>
+        <td>${cashier}</td>
+        <td>${statusBadge(st)}</td>
+        <td class="mono">${fmt(depDiff)}</td>
+        <td>
+          <div class="actions">
+            <button data-open="${id}">فتح/تعديل</button>
+            <button data-export="${id}">تصدير</button>
+            <button class="danger" data-del="${id}">حذف</button>
+          </div>
+        </td>
+      `;
+      tb.appendChild(tr);
+    });
+
+    // actions
+    tb.querySelectorAll("[data-open]").forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.getAttribute("data-open");
+        openItem(id);
+      };
+    });
+    tb.querySelectorAll("[data-export]").forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.getAttribute("data-export");
+        exportOne(id);
+      };
+    });
+    tb.querySelectorAll("[data-del]").forEach(btn=>{
+      btn.onclick = ()=>{
+        const id = btn.getAttribute("data-del");
+        delOne(id);
+      };
+    });
+  }
+
+  function openItem(id){
+    const list = loadList();
+    const item = list.find(x=> x?.meta?.id === id);
+    if(!item){ alert("لم يتم العثور على العنصر."); return; }
+    // نخزن العنصر في LAST_KEY ليتم فتحه تلقائيًا من صفحة الفورم
+    localStorage.setItem(LAST_KEY, JSON.stringify(item));
+    // نرسل param بسيط
+    location.href = FORM_URL + "?mode=edit";
+  }
+
+  function exportOne(id){
+    const list = loadList();
+    const item = list.find(x=> x?.meta?.id === id);
+    if(!item){ alert("لم يتم العثور على العنصر."); return; }
+    const blob = new Blob([JSON.stringify(item,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const safeDate = (item?.header?.date||"").replaceAll("-","");
+    a.href = url;
+    a.download = `daily-closing_${item?.header?.brand||"brand"}_${safeDate||"date"}_${item?.header?.branch||"branch"}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 1500);
+  }
+
+  function delOne(id){
+    if(!confirm("تأكيد حذف هذا التقفيل من الأرشيف على هذا الجهاز؟")) return;
+    const list = loadList().filter(x=> x?.meta?.id !== id);
+    saveList(list);
+    render();
+  }
+
+  $("btnNew").onclick = ()=> { location.href = FORM_URL; };
+  $("btnRefresh").onclick = render;
+
+  $("btnExportAll").onclick = ()=>{
+    const list = loadList();
+    const blob = new Blob([JSON.stringify(list,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = "daily-closings_all.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 1500);
+  };
+
+  $("btnWipe").onclick = ()=>{
+    if(!confirm("تحذير: سيتم مسح أرشيف التقفيلات من هذا الجهاز فقط. هل أنت متأكد؟")) return;
+    localStorage.removeItem(LIST_KEY);
+    render();
+  };
+
+  // live filters
+  ["q","fBrand","fStatus","fDate"].forEach(id=>{
+    $(id).addEventListener("input", render);
+    $(id).addEventListener("change", render);
+  });
+
+  render();
+</script>
+</body>
+</html>
