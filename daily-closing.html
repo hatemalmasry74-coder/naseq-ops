@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>منصة نَسَق – التقفيل اليومي</title>
+
+  <!-- ثيم نسق -->
+  <link rel="stylesheet" href="nasaq-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --card:#ffffff; --txt:#111; --muted:#6b7280; --border:#e5e7eb;
+      --danger:#b91c1c; --ok:#065f46;
+    }
+    body{font-family:"Almarai",system-ui,-apple-system,Segoe UI,Roboto,Arial; background: var(--bg,#0b0b0c); color:var(--text,#f3f4f6);}
+    .wrap{max-width:1100px; margin:18px auto; padding:14px;}
+    .topbar{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px}
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{width:44px; height:44px; border-radius:14px; background: linear-gradient(135deg, var(--primary,#b91c1c), #f59e0b); box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    h1{margin:0; font-size:20px; font-weight:900}
+    .sub{color:var(--muted,#a3a3a3); font-size:12px}
+
+    .grid{display:grid; gap:12px}
+    @media(min-width:980px){ .grid{grid-template-columns: 1.2fr .8fr} }
+
+    .card{background: rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.10); border-radius:18px; padding:14px; box-shadow:0 14px 35px rgba(0,0,0,.25)}
+    .card h2{margin:0 0 10px; font-size:15px; font-weight:900}
+    .row{display:grid; gap:10px}
+    @media(min-width:720px){ .row.two{grid-template-columns:1fr 1fr} .row.three{grid-template-columns:1fr 1fr 1fr} }
+
+    label{display:block; font-size:12px; color:rgba(255,255,255,.85); margin:0 0 6px}
+    input, select, textarea{
+      width:100%;
+      padding:10px 10px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: #fff;
+      outline:none;
+    }
+    input::placeholder, textarea::placeholder{color:rgba(255,255,255,.45)}
+    textarea{min-height:90px; resize:vertical}
+    .hint{font-size:11px; color:rgba(255,255,255,.65); margin-top:6px}
+    .req{color:#ffb4b4; font-weight:900; margin-inline-start:6px}
+
+    .kpis{display:grid; gap:10px}
+    @media(min-width:720px){ .kpis{grid-template-columns:1fr 1fr 1fr} }
+    .kpi{
+      border:1px dashed rgba(255,255,255,.18);
+      border-radius:16px; padding:12px;
+      background: rgba(255,255,255,.04);
+    }
+    .kpi .t{font-size:12px; color:rgba(255,255,255,.75)}
+    .kpi .v{font-size:22px; font-weight:900; margin-top:6px}
+    .kpi.ok{border-color:rgba(34,197,94,.35)}
+    .kpi.bad{border-color:rgba(239,68,68,.45)}
+    .kpi .small{font-size:11px; color:rgba(255,255,255,.6); margin-top:4px}
+
+    .btns{display:flex; flex-wrap:wrap; gap:10px; justify-content:flex-end}
+    button{
+      border:0; cursor:pointer;
+      padding:10px 12px;
+      border-radius:14px;
+      color:#fff;
+      background: rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:800;
+    }
+    button.primary{background: linear-gradient(135deg, var(--primary,#b91c1c), #f59e0b); border:0}
+    button.danger{background: rgba(239,68,68,.18); border:1px solid rgba(239,68,68,.35)}
+    button.ok{background: rgba(34,197,94,.18); border:1px solid rgba(34,197,94,.35)}
+    button:disabled{opacity:.5; cursor:not-allowed}
+
+    .table{width:100%; border-collapse:separate; border-spacing:0 8px}
+    .table th{font-size:12px; text-align:right; color:rgba(255,255,255,.75); padding:0 8px}
+    .table td{padding:6px 8px}
+    .table .tr{
+      background: rgba(255,255,255,.04);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:14px;
+    }
+    .table .tr td:first-child{border-top-right-radius:14px;border-bottom-right-radius:14px}
+    .table .tr td:last-child{border-top-left-radius:14px;border-bottom-left-radius:14px}
+    .mini{width:100%}
+    .mini input{padding:8px;border-radius:12px}
+
+    .uploads{display:grid; gap:10px}
+    .uploadBox{border:1px dashed rgba(255,255,255,.18); border-radius:16px; padding:12px; background: rgba(0,0,0,.14)}
+    .uploadHead{display:flex; gap:8px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+    .tag{font-size:11px; padding:4px 8px; border-radius:999px; background: rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12)}
+    .thumbs{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+    .thumbs img{width:110px; height:110px; object-fit:cover; border-radius:12px; border:1px solid rgba(255,255,255,.14)}
+
+    .status{font-size:12px; padding:8px 10px; border-radius:14px; border:1px solid rgba(255,255,255,.14); background: rgba(0,0,0,.18)}
+    .status.ok{border-color: rgba(34,197,94,.35); background: rgba(34,197,94,.12)}
+    .status.bad{border-color: rgba(239,68,68,.35); background: rgba(239,68,68,.10)}
+    .status.neu{border-color: rgba(255,255,255,.14); background: rgba(255,255,255,.06)}
+
+    .printOnly{display:none}
+    @media print{
+      body{background:#fff;color:#111}
+      .wrap{max-width:100%; margin:0; padding:0}
+      .card{background:#fff; color:#111; border:1px solid #e5e7eb; box-shadow:none}
+      input,select,textarea{color:#111; background:#fff; border:1px solid #e5e7eb}
+      .topbar,.btns,.hint{display:none!important}
+      .printOnly{display:block}
+      .thumbs img{border:1px solid #e5e7eb}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>نموذج التقفيل اليومي</h1>
+          <div class="sub">نسخة رقمية للتوثيق + المرفقات + الاعتماد</div>
+        </div>
+      </div>
+
+      <div class="btns">
+        <button id="btnLoad" title="استرجاع آخر حفظ">استرجاع آخر حفظ</button>
+        <button id="btnDraft" class="primary">حفظ مسودة</button>
+        <button id="btnApprove" class="ok">اعتماد</button>
+        <button id="btnExport">تصدير JSON</button>
+        <button id="btnPrint">طباعة</button>
+        <button id="btnClear" class="danger">مسح النموذج</button>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- العمود الأيسر -->
+      <div class="card">
+        <h2>1) البيانات الأساسية</h2>
+        <div class="row three">
+          <div>
+            <label>البراند <span class="req">*</span></label>
+            <select id="brand" required>
+              <option value="">اختر</option>
+              <option>سدف</option>
+              <option>طوبى</option>
+              <option>دبل بي</option>
+              <option>شاين</option>
+              <option>أخرى</option>
+            </select>
+          </div>
+          <div>
+            <label>اسم الفرع <span class="req">*</span></label>
+            <input id="branch" placeholder="مثال: أبها – المحالة" required>
+          </div>
+          <div>
+            <label>التاريخ <span class="req">*</span></label>
+            <input id="date" type="date" required>
+          </div>
+        </div>
+
+        <div class="row three" style="margin-top:10px">
+          <div>
+            <label>الوردية <span class="req">*</span></label>
+            <select id="shift" required>
+              <option value="">اختر</option>
+              <option value="صباحي">صباحي</option>
+              <option value="مسائي">مسائي</option>
+              <option value="يومي">يومي (كامل)</option>
+            </select>
+          </div>
+          <div>
+            <label>اسم الكاشير <span class="req">*</span></label>
+            <input id="cashier" placeholder="اسم الكاشير" required>
+          </div>
+          <div>
+            <label>اسم المشرف/المدير <span class="req">*</span></label>
+            <input id="supervisor" placeholder="اسم المشرف" required>
+          </div>
+        </div>
+
+        <div class="row three" style="margin-top:10px">
+          <div>
+            <label>عدد الطلبات (اختياري)</label>
+            <input id="orders" type="number" min="0" step="1" placeholder="0">
+          </div>
+          <div>
+            <label>رقم جهاز الشبكة (اختياري)</label>
+            <input id="spanDevice" placeholder="مثال: SP-01 / آخر 4 أرقام">
+          </div>
+          <div>
+            <label>رصيد افتتاحية الصندوق (Float) <span class="req">*</span></label>
+            <input id="openingFloat" type="number" min="0" step="0.01" placeholder="0.00" required>
+            <div class="hint">مهم لتفادي عجز/زيادة وهمية</div>
+          </div>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0">
+
+        <h2>2) المبيعات (POS vs فعلي)</h2>
+        <div class="row three">
+          <div>
+            <label>إجمالي المبيعات من النظام (POS) <span class="req">*</span></label>
+            <input id="posTotal" type="number" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+          <div>
+            <label>إجمالي الشبكة من النظام (POS) <span class="req">*</span></label>
+            <input id="posCard" type="number" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+          <div>
+            <label>إجمالي الكاش من النظام (POS) <span class="req">*</span></label>
+            <input id="posCash" type="number" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+        </div>
+
+        <div class="row three" style="margin-top:10px">
+          <div>
+            <label>الشبكة الفعلية (حسب جهاز الشبكة) <span class="req">*</span></label>
+            <input id="actualCard" type="number" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+          <div>
+            <label>الكاش الفعلي داخل الدرج <span class="req">*</span></label>
+            <input id="actualCashInDrawer" type="number" step="0.01" min="0" placeholder="0.00" required>
+          </div>
+          <div>
+            <label>مصروفات من الصندوق (إن وجدت)</label>
+            <input id="cashExpenses" type="number" step="0.01" min="0" placeholder="0.00">
+            <div class="hint">مثال: مشتريات طارئة/مياه… (أرفق صورها إن لزم)</div>
+          </div>
+        </div>
+
+        <div class="kpis" style="margin-top:12px">
+          <div class="kpi" id="kpiDiffCard">
+            <div class="t">فرق الشبكة (POS - جهاز)</div>
+            <div class="v" id="diffCard">0.00</div>
+            <div class="small" id="diffCardNote">—</div>
+          </div>
+          <div class="kpi" id="kpiDiffCash">
+            <div class="t">فرق الكاش (POS - فعلي)</div>
+            <div class="v" id="diffCash">0.00</div>
+            <div class="small" id="diffCashNote">—</div>
+          </div>
+          <div class="kpi" id="kpiDeposit">
+            <div class="t">صافي الإيداع المتوقع</div>
+            <div class="v" id="expectedDeposit">0.00</div>
+            <div class="small">= (الكاش الفعلي - الافتتاحية - المصروفات)</div>
+          </div>
+        </div>
+
+        <div class="row two" style="margin-top:12px">
+          <div>
+            <label>صافي الإيداع الفعلي (Deposit) <span class="req">*</span></label>
+            <input id="actualDeposit" type="number" step="0.01" min="0" placeholder="0.00" required>
+            <div class="hint">المبلغ الذي تم إيداعه/تجهيزه للإيداع</div>
+          </div>
+          <div>
+            <label>فرق الإيداع (متوقع - فعلي)</label>
+            <input id="depositDiff" type="text" readonly>
+            <div class="hint">إن ظهر فرق → يجب كتابة سبب</div>
+          </div>
+        </div>
+
+        <div class="row two" style="margin-top:10px">
+          <div>
+            <label>سبب الفارق (إجباري عند وجود فرق)</label>
+            <input id="diffReason" placeholder="مثال: خطأ إدخال/سلفة/نقص كاش/فرق شبكة…">
+          </div>
+          <div>
+            <label>تصنيف الفارق</label>
+            <select id="diffType">
+              <option value="">—</option>
+              <option value="عجز">عجز</option>
+              <option value="زيادة">زيادة</option>
+              <option value="ملاحظة">ملاحظة</option>
+            </select>
+          </div>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0">
+
+        <h2>3) تفصيل الشبكة (اختياري للتدقيق)</h2>
+        <div class="row three">
+          <div>
+            <label>مدى (Mada)</label>
+            <input id="mada" type="number" step="0.01" min="0" placeholder="0.00">
+          </div>
+          <div>
+            <label>Visa</label>
+            <input id="visa" type="number" step="0.01" min="0" placeholder="0.00">
+          </div>
+          <div>
+            <label>MasterCard</label>
+            <input id="master" type="number" step="0.01" min="0" placeholder="0.00">
+          </div>
+        </div>
+        <div class="row two" style="margin-top:10px">
+          <div>
+            <label>إجمالي تفصيل الشبكة (محسوب)</label>
+            <input id="cardsBreakdownTotal" type="text" readonly>
+          </div>
+          <div>
+            <label>ملاحظة الشبكة</label>
+            <input id="cardNote" placeholder="مثال: طباعة تقرير الجهاز تم إرفاقها">
+          </div>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0">
+
+        <h2>4) VOID / مرتجعات (عند وجودها)</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>رقم الفاتورة</th>
+              <th>رقم الجوال</th>
+              <th>المبلغ</th>
+              <th>السبب</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="voidBody"></tbody>
+        </table>
+        <div class="btns" style="justify-content:flex-start">
+          <button id="btnAddVoid">+ إضافة VOID</button>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0">
+
+        <h2>5) الملاحظات</h2>
+        <div class="row two">
+          <div>
+            <label>ملاحظات الكاشير</label>
+            <textarea id="cashierNotes" placeholder="اكتب أي ملاحظات تخص التقفيل..."></textarea>
+          </div>
+          <div>
+            <label>ملاحظات المشرف</label>
+            <textarea id="supervisorNotes" placeholder="ملاحظات المراجعة/التوجيه..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- العمود الأيمن -->
+      <div class="card">
+        <h2>6) المرفقات (صور إلزامية)</h2>
+        <div class="uploads">
+          <div class="uploadBox">
+            <div class="uploadHead">
+              <div>
+                <b>صورة ورقة التقفيل اليومية</b> <span class="req">*</span>
+                <div class="hint">صورة واضحة تشمل التاريخ والأرقام</div>
+              </div>
+              <span class="tag" id="tagClose">غير مرفوعة</span>
+            </div>
+            <input id="imgClose" type="file" accept="image/*" multiple>
+            <div class="thumbs" id="thumbClose"></div>
+          </div>
+
+          <div class="uploadBox">
+            <div class="uploadHead">
+              <div>
+                <b>صورة تقرير الشبكة/إغلاق الجهاز</b> <span class="req">*</span>
+                <div class="hint">إن كان متاحًا من الجهاز أو من النظام</div>
+              </div>
+              <span class="tag" id="tagSpan">غير مرفوعة</span>
+            </div>
+            <input id="imgSpan" type="file" accept="image/*" multiple>
+            <div class="thumbs" id="thumbSpan"></div>
+          </div>
+
+          <div class="uploadBox">
+            <div class="uploadHead">
+              <div>
+                <b>سند/إيصال الإيداع (اختياري حسب توفره)</b>
+                <div class="hint">يفضّل إرفاقه عند وجوده</div>
+              </div>
+              <span class="tag" id="tagDep">غير مرفوعة</span>
+            </div>
+            <input id="imgDep" type="file" accept="image/*" multiple>
+            <div class="thumbs" id="thumbDep"></div>
+          </div>
+        </div>
+
+        <hr style="border:0;border-top:1px solid rgba(255,255,255,.10);margin:14px 0">
+
+        <h2>7) حالة التقرير والاعتماد</h2>
+        <div class="row">
+          <div class="status neu" id="statusBox">الحالة: <b id="statusText">مسودة</b></div>
+          <div class="hint">لا يمكن الاعتماد قبل استكمال الحقول الإلزامية ورفع الصور المطلوبة.</div>
+        </div>
+
+        <div class="row two" style="margin-top:10px">
+          <div>
+            <label>إقرار الكاشير <span class="req">*</span></label>
+            <select id="cashierAck" required>
+              <option value="">اختر</option>
+              <option value="نعم">أقرّ بصحة البيانات والمرفقات</option>
+            </select>
+          </div>
+          <div>
+            <label>إقرار المشرف <span class="req">*</span></label>
+            <select id="supervisorAck" required>
+              <option value="">اختر</option>
+              <option value="نعم">أقرّ بالمراجعة والاعتماد</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="printOnly" style="margin-top:10px">
+          <h3 style="margin:0 0 6px">المرفقات (مصغّرة)</h3>
+          <div id="printThumbs"></div>
+        </div>
+
+        <div class="hint" style="margin-top:14px">
+          💡 يتم الحفظ محليًا على جهازك (LocalStorage). لاحقًا يمكننا ربطه بتخزين مركزي/سيرفر أو Google Drive.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+  // ===== Helpers =====
+  const $ = (id)=>document.getElementById(id);
+  const nf = (v)=> (isFinite(v) ? Number(v).toFixed(2) : "0.00");
+  const num = (id)=> {
+    const v = parseFloat($(id).value);
+    return isFinite(v) ? v : 0;
+  };
+  const todayISO = ()=> {
+    const d = new Date();
+    const z = (n)=> String(n).padStart(2,"0");
+    return d.getFullYear()+"-"+z(d.getMonth()+1)+"-"+z(d.getDate());
+  };
+
+  // ===== VOID Rows =====
+  function makeVoidRow(data={}){
+    const tr = document.createElement("tr");
+    tr.className = "tr";
+    tr.innerHTML = `
+      <td><input class="mini v_inv" placeholder="فاتورة" value="${data.invoice||""}"></td>
+      <td><input class="mini v_phone" placeholder="جوال" value="${data.phone||""}"></td>
+      <td><input class="mini v_amount" type="number" step="0.01" min="0" placeholder="0.00" value="${data.amount||""}"></td>
+      <td><input class="mini v_reason" placeholder="السبب" value="${data.reason||""}"></td>
+      <td><button class="danger v_del" type="button">حذف</button></td>
+    `;
+    tr.querySelector(".v_del").onclick = ()=> tr.remove();
+    return tr;
+  }
+  $("btnAddVoid").onclick = ()=> $("voidBody").appendChild(makeVoidRow());
+
+  // ===== Image handling (Base64 previews) =====
+  async function filesToBase64(fileList, maxPerFileMB=1.8){
+    // NOTE: saving base64 in LocalStorage has size limits; we compress by limiting file size policy
+    const out = [];
+    for(const f of fileList){
+      // soft warning if huge
+      if(f.size > maxPerFileMB*1024*1024){
+        alert("تنبيه: حجم صورة كبير. يُفضّل تقليل الحجم قبل الرفع لتفادي مشاكل الحفظ.");
+      }
+      const b64 = await new Promise((res, rej)=>{
+        const r = new FileReader();
+        r.onload = ()=> res(r.result);
+        r.onerror = rej;
+        r.readAsDataURL(f);
+      });
+      out.push({name:f.name, type:f.type, size:f.size, data:b64});
+    }
+    return out;
+  }
+
+  function renderThumbs(list, holderId){
+    const holder = $(holderId);
+    holder.innerHTML = "";
+    (list||[]).forEach(x=>{
+      const img = document.createElement("img");
+      img.src = x.data;
+      img.alt = x.name || "image";
+      holder.appendChild(img);
+    });
+  }
+
+  function setTag(tagId, ok){
+    const t = $(tagId);
+    t.textContent = ok ? "تم الرفع" : "غير مرفوعة";
+    t.style.background = ok ? "rgba(34,197,94,.18)" : "rgba(255,255,255,.08)";
+    t.style.borderColor = ok ? "rgba(34,197,94,.35)" : "rgba(255,255,255,.12)";
+  }
+
+  const imgs = {
+    close: [],
+    span: [],
+    dep: []
+  };
+
+  $("imgClose").addEventListener("change", async (e)=>{
+    imgs.close = await filesToBase64(e.target.files);
+    renderThumbs(imgs.close, "thumbClose");
+    setTag("tagClose", imgs.close.length>0);
+    validate();
+  });
+  $("imgSpan").addEventListener("change", async (e)=>{
+    imgs.span = await filesToBase64(e.target.files);
+    renderThumbs(imgs.span, "thumbSpan");
+    setTag("tagSpan", imgs.span.length>0);
+    validate();
+  });
+  $("imgDep").addEventListener("change", async (e)=>{
+    imgs.dep = await filesToBase64(e.target.files);
+    renderThumbs(imgs.dep, "thumbDep");
+    setTag("tagDep", imgs.dep.length>0);
+    validate();
+  });
+
+  // ===== Calculations =====
+  function recalc(){
+    const posCard = num("posCard");
+    const actualCard = num("actualCard");
+    const posCash = num("posCash");
+    const actualCash = num("actualCashInDrawer");
+    const opening = num("openingFloat");
+    const expenses = num("cashExpenses");
+    const actualDeposit = num("actualDeposit");
+
+    const diffCard = posCard - actualCard;
+    const diffCash = posCash - actualCash;
+
+    $("diffCard").textContent = nf(diffCard);
+    $("diffCash").textContent = nf(diffCash);
+
+    const expectedDeposit = Math.max(0, (actualCash - opening - expenses));
+    $("expectedDeposit").textContent = nf(expectedDeposit);
+
+    const depDiff = expectedDeposit - actualDeposit;
+    $("depositDiff").value = nf(depDiff);
+
+    // KPI styles
+    const setKpi = (boxId, val)=>{
+      const box = $(boxId);
+      box.classList.remove("ok","bad");
+      if(Math.abs(val) < 0.009) box.classList.add("ok");
+      else box.classList.add("bad");
+    };
+    setKpi("kpiDiffCard", diffCard);
+    setKpi("kpiDiffCash", diffCash);
+    setKpi("kpiDeposit", depDiff);
+
+    $("diffCardNote").textContent = Math.abs(diffCard) < 0.009 ? "مطابق" : "يوجد فرق يحتاج مراجعة";
+    $("diffCashNote").textContent = Math.abs(diffCash) < 0.009 ? "مطابق" : "يوجد فرق يحتاج مراجعة";
+
+    // Cards breakdown
+    const cardsTotal = num("mada") + num("visa") + num("master");
+    $("cardsBreakdownTotal").value = nf(cardsTotal);
+
+    validate();
+  }
+
+  ["posCard","actualCard","posCash","actualCashInDrawer","openingFloat","cashExpenses","actualDeposit","mada","visa","master"]
+    .forEach(id=> $(id).addEventListener("input", recalc));
+
+  // ===== Validation =====
+  function requiredFilled(){
+    const reqIds = ["brand","branch","date","shift","cashier","supervisor","openingFloat","posTotal","posCard","posCash","actualCard","actualCashInDrawer","actualDeposit","cashierAck","supervisorAck"];
+    for(const id of reqIds){
+      const el = $(id);
+      if(!el) continue;
+      if((el.value||"").toString().trim()==="") return false;
+    }
+    return true;
+  }
+
+  function reasonRequired(){
+    const depDiff = parseFloat($("depositDiff").value);
+    const diffCard = parseFloat($("diffCard").textContent);
+    const diffCash = parseFloat($("diffCash").textContent);
+    const anyDiff = (Math.abs(depDiff) >= 0.01) || (Math.abs(diffCard) >= 0.01) || (Math.abs(diffCash) >= 0.01);
+    if(anyDiff){
+      return ($("diffReason").value||"").trim().length >= 4;
+    }
+    return true;
+  }
+
+  function imagesOk(){
+    return imgs.close.length>0 && imgs.span.length>0; // dep optional
+  }
+
+  function validate(){
+    const ok = requiredFilled() && imagesOk() && reasonRequired();
+    $("btnApprove").disabled = !ok;
+
+    const status = $("statusBox");
+    status.classList.remove("ok","bad","neu");
+
+    if(!requiredFilled()){
+      status.classList.add("bad");
+      $("statusText").textContent = "مسودة (حقول ناقصة)";
+      return;
+    }
+    if(!imagesOk()){
+      status.classList.add("bad");
+      $("statusText").textContent = "مسودة (مرفقات ناقصة)";
+      return;
+    }
+    if(!reasonRequired()){
+      status.classList.add("bad");
+      $("statusText").textContent = "مسودة (سبب الفارق مطلوب)";
+      return;
+    }
+    status.classList.add("ok");
+    $("statusText").textContent = "جاهز للاعتماد";
+  }
+
+  ["brand","branch","date","shift","cashier","supervisor","posTotal","posCard","posCash","actualCard","actualCashInDrawer","actualDeposit","cashierAck","supervisorAck","diffReason"]
+    .forEach(id=> $(id).addEventListener("input", validate));
+
+  // ===== Data pack/unpack =====
+  function collectVoid(){
+    const rows = Array.from($("voidBody").querySelectorAll("tr"));
+    return rows.map(r=>({
+      invoice: r.querySelector(".v_inv").value.trim(),
+      phone: r.querySelector(".v_phone").value.trim(),
+      amount: parseFloat(r.querySelector(".v_amount").value) || 0,
+      reason: r.querySelector(".v_reason").value.trim()
+    })).filter(x=> x.invoice || x.phone || x.amount || x.reason);
+  }
+
+  function pack(status="DRAFT"){
+    return {
+      meta: {
+        app: "Nasaq Daily Closing",
+        version: "1.0",
+        status,
+        savedAt: new Date().toISOString()
+      },
+      header: {
+        brand: $("brand").value,
+        branch: $("branch").value.trim(),
+        date: $("date").value,
+        shift: $("shift").value,
+        cashier: $("cashier").value.trim(),
+        supervisor: $("supervisor").value.trim(),
+        orders: parseInt($("orders").value||"0",10) || 0,
+        spanDevice: $("spanDevice").value.trim(),
+        openingFloat: num("openingFloat")
+      },
+      sales: {
+        posTotal: num("posTotal"),
+        posCard: num("posCard"),
+        posCash: num("posCash"),
+        actualCard: num("actualCard"),
+        actualCashInDrawer: num("actualCashInDrawer"),
+        cashExpenses: num("cashExpenses"),
+        expectedDeposit: parseFloat($("expectedDeposit").textContent) || 0,
+        actualDeposit: num("actualDeposit"),
+        diffCard: parseFloat($("diffCard").textContent) || 0,
+        diffCash: parseFloat($("diffCash").textContent) || 0,
+        depositDiff: parseFloat($("depositDiff").value) || 0,
+        diffType: $("diffType").value,
+        diffReason: $("diffReason").value.trim()
+      },
+      cardsBreakdown: {
+        mada: num("mada"),
+        visa: num("visa"),
+        master: num("master"),
+        total: parseFloat($("cardsBreakdownTotal").value) || 0,
+        note: $("cardNote").value.trim()
+      },
+      voids: collectVoid(),
+      notes: {
+        cashier: $("cashierNotes").value.trim(),
+        supervisor: $("supervisorNotes").value.trim()
+      },
+      approvals: {
+        cashierAck: $("cashierAck").value,
+        supervisorAck: $("supervisorAck").value
+      },
+      attachments: {
+        closeSheetImages: imgs.close,
+        spanReportImages: imgs.span,
+        depositSlipImages: imgs.dep
+      }
+    };
+  }
+
+  function fill(data){
+    if(!data) return;
+
+    $("brand").value = data.header?.brand || "";
+    $("branch").value = data.header?.branch || "";
+    $("date").value = data.header?.date || todayISO();
+    $("shift").value = data.header?.shift || "";
+    $("cashier").value = data.header?.cashier || "";
+    $("supervisor").value = data.header?.supervisor || "";
+    $("orders").value = data.header?.orders ?? "";
+    $("spanDevice").value = data.header?.spanDevice || "";
+    $("openingFloat").value = data.header?.openingFloat ?? "";
+
+    $("posTotal").value = data.sales?.posTotal ?? "";
+    $("posCard").value = data.sales?.posCard ?? "";
+    $("posCash").value = data.sales?.posCash ?? "";
+    $("actualCard").value = data.sales?.actualCard ?? "";
+    $("actualCashInDrawer").value = data.sales?.actualCashInDrawer ?? "";
+    $("cashExpenses").value = data.sales?.cashExpenses ?? "";
+    $("actualDeposit").value = data.sales?.actualDeposit ?? "";
+    $("diffType").value = data.sales?.diffType || "";
+    $("diffReason").value = data.sales?.diffReason || "";
+
+    $("mada").value = data.cardsBreakdown?.mada ?? "";
+    $("visa").value = data.cardsBreakdown?.visa ?? "";
+    $("master").value = data.cardsBreakdown?.master ?? "";
+    $("cardNote").value = data.cardsBreakdown?.note || "";
+
+    $("cashierNotes").value = data.notes?.cashier || "";
+    $("supervisorNotes").value = data.notes?.supervisor || "";
+
+    $("cashierAck").value = data.approvals?.cashierAck || "";
+    $("supervisorAck").value = data.approvals?.supervisorAck || "";
+
+    // voids
+    $("voidBody").innerHTML = "";
+    (data.voids||[]).forEach(v=> $("voidBody").appendChild(makeVoidRow(v)));
+
+    // images
+    imgs.close = data.attachments?.closeSheetImages || [];
+    imgs.span  = data.attachments?.spanReportImages || [];
+    imgs.dep   = data.attachments?.depositSlipImages || [];
+    renderThumbs(imgs.close, "thumbClose");
+    renderThumbs(imgs.span, "thumbSpan");
+    renderThumbs(imgs.dep, "thumbDep");
+    setTag("tagClose", imgs.close.length>0);
+    setTag("tagSpan", imgs.span.length>0);
+    setTag("tagDep", imgs.dep.length>0);
+
+    recalc();
+  }
+
+  // ===== Save/Load (LocalStorage) =====
+  const KEY = "nasaq_daily_closing_last";
+
+  function save(status="DRAFT"){
+    recalc();
+    const data = pack(status);
+    localStorage.setItem(KEY, JSON.stringify(data));
+    return data;
+  }
+
+  $("btnDraft").onclick = ()=>{
+    save("DRAFT");
+    const box = $("statusBox");
+    box.classList.remove("bad","neu"); box.classList.add("ok");
+    $("statusText").textContent = "تم حفظ المسودة";
+    setTimeout(()=> validate(), 800);
+  };
+
+  $("btnLoad").onclick = ()=>{
+    const raw = localStorage.getItem(KEY);
+    if(!raw){ alert("لا يوجد حفظ سابق."); return; }
+    try{
+      fill(JSON.parse(raw));
+      alert("تم استرجاع آخر حفظ.");
+    }catch(e){
+      alert("تعذر الاسترجاع. ربما البيانات تالفة.");
+    }
+  };
+
+  $("btnExport").onclick = ()=>{
+    const data = save("DRAFT");
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const safeDate = (data.header.date||"").replaceAll("-","");
+    a.href = url;
+    a.download = `daily-closing_${data.header.brand||"brand"}_${safeDate||"date"}_${data.header.branch||"branch"}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 1500);
+  };
+
+  $("btnPrint").onclick = ()=>{
+    // print thumbs (optional)
+    const p = $("printThumbs");
+    p.innerHTML = "";
+    [...(imgs.close||[]), ...(imgs.span||[]), ...(imgs.dep||[])].slice(0,8).forEach(x=>{
+      const img = document.createElement("img");
+      img.src = x.data;
+      img.style.width="120px"; img.style.height="120px"; img.style.objectFit="cover";
+      img.style.margin="6px"; img.style.border="1px solid #e5e7eb"; img.style.borderRadius="12px";
+      p.appendChild(img);
+    });
+    window.print();
+  };
+
+  $("btnClear").onclick = ()=>{
+    if(!confirm("تأكيد مسح النموذج؟")) return;
+    localStorage.removeItem(KEY);
+    location.reload();
+  };
+
+  $("btnApprove").onclick = ()=>{
+    // hard validate
+    recalc();
+    if($("btnApprove").disabled){
+      alert("لا يمكن الاعتماد. تأكد من استكمال الحقول ورفع الصور وكتابة سبب الفارق عند وجوده.");
+      return;
+    }
+    const data = save("APPROVED");
+    const box = $("statusBox");
+    box.classList.remove("bad","neu"); box.classList.add("ok");
+    $("statusText").textContent = "✅ معتمد";
+    alert("تم اعتماد التقرير وحفظه محليًا. يمكنك أيضًا تصدير JSON للأرشفة.");
+  };
+
+  // Init
+  (function init(){
+    $("date").value = todayISO();
+    // add one void row by default? (no)
+    recalc();
+    validate();
+  })();
+</script>
+</body>
+</html>
