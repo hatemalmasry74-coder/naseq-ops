@@ -3,288 +3,119 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>منصة نَسَق – مكتبة SOP</title>
+  <title>منصة نَسَق – SOP</title>
 
   <link rel="stylesheet" href="nasaq-theme.css">
-  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    .mini{font-size:12px}
-    .row .input{flex:1;min-width:180px}
-    .list{display:flex;flex-direction:column;gap:10px;margin-top:10px}
-    .item{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      border-radius:14px;padding:12px;
-      display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
-      align-items:flex-start;
+    body{font-family:"Almarai",sans-serif}
+    .cardx{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 12px 26px rgba(0,0,0,.08);padding:16px}
+    .muted{color:#6b7280}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+    @media(max-width:1100px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .doc{border:1px solid rgba(0,0,0,.10);border-radius:18px;background:#fff;box-shadow:0 10px 22px rgba(0,0,0,.08);padding:14px}
+    .doc h3{margin:0;font-weight:900}
+    .doc .meta{margin-top:8px;font-size:12px;color:#6b7280}
+    .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:10px 12px;font-weight:900;text-decoration:none}
+    .btn-primary{background:var(--nasaq-primary,#b91c1c);color:#fff}
+    .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
+
+    /* ===== Unified Top Nav ===== */
+    .nasaq-topnav{
+      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
+      padding:14px; margin:14px auto;
+      border-radius:18px; background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
-    .muted2{color:rgba(234,240,255,.72)}
-    .tag{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;font-size:12px;
-      border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04)
+    .nasaq-topnav .tab{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff; color:#111827; font-weight:900;
+      text-decoration:none; transition:.15s ease;
     }
-    .filebox{
-      font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px; direction:ltr; text-align:left;
-      padding:10px;border-radius:12px;background:rgba(255,255,255,.06);
-      border:1px solid rgba(255,255,255,.10); color:rgba(234,240,255,.85);
-      overflow:auto;
-      max-width:520px;
+    .nasaq-topnav .tab:hover{transform:translateY(-1px)}
+    .nasaq-topnav .tab-active{
+      background: var(--nasaq-primary, #b91c1c);
+      color:#fff;
+      border-color: var(--nasaq-primary, #b91c1c);
     }
-    .btn{white-space:nowrap}
-    @media print{
-      .topbar,.nav,.no-print{display:none!important}
-      body{background:#fff!important;color:#000!important}
-    }
+    input{width:100%;padding:12px 12px;border-radius:14px;border:1px solid rgba(0,0,0,.14);font-family:inherit;margin-top:12px}
   </style>
 </head>
 
 <body>
-<div class="topbar">
-  <div class="brand">
-    <div class="logo">ن</div>
-    <div>
-      <div style="font-weight:900;font-size:18px">غرفة عمليات نَسَق</div>
-      <div class="muted">Pilot: طوبى • سدف • دبل بي — SOP Library</div>
-    </div>
-  </div>
-  <div class="badge">MVP محلي</div>
-</div>
+<main class="container">
 
-<div class="container">
-  <div class="nav">
-    <a data-nav href="index.html">لوحة التحكم</a>
-    <a data-nav href="visits.html">الزيارات</a>
-    <a data-nav href="issues.html">CAPA &amp; الملاحظات</a>
-    <a data-nav href="tasks.html">المهام</a>
-    <a data-nav href="cleaning.html">النظافة اليومية</a>
-    <a data-nav href="sop.html">مكتبة SOP</a>
-    <a data-nav href="settings.html">الإعدادات</a>
+  <!-- NAV الموحد -->
+  <div class="nasaq-topnav" id="topnav">
+    <a href="index.html" class="tab" data-page="index.html">الرئيسية</a>
+    <a href="visits.html" class="tab" data-page="visits.html">الزيارات</a>
+    <a href="tasks.html" class="tab" data-page="tasks.html">المهام</a>
+    <a href="cleaning.html" class="tab" data-page="cleaning.html">النظافة</a>
+    <a href="sop.html" class="tab" data-page="sop.html">SOP</a>
+    <a href="settings.html" class="tab" data-page="settings.html">الإعدادات</a>
+    <a href="plans.html" class="tab" data-page="plans.html">الخطط</a>
   </div>
 
-  <div class="grid">
-    <!-- Add SOP -->
-    <div class="card" style="grid-column:span 5">
-      <h3>إضافة SOP</h3>
-      <div class="muted mini">
-        في MVP المحلي: نحفظ (اسم + وصف + رابط ملف). في الإنتاج سنخزن الملف على السيرفر.
-      </div>
-
-      <label class="small" style="margin-top:12px;display:block">العنوان</label>
-      <input id="sTitle" class="input" placeholder="مثال: SOP درجة حرارة الثلاجات">
-
-      <label class="small" style="margin-top:10px;display:block">التصنيف</label>
-      <select id="sCategory" class="input">
-        <option>تشغيل</option>
-        <option>مالي</option>
-        <option>سلامة غذاء</option>
-        <option>HR</option>
-        <option>أخرى</option>
-      </select>
-
-      <label class="small" style="margin-top:10px;display:block">وصف مختصر</label>
-      <textarea id="sDesc" class="input" style="min-height:90px" placeholder="ملخص سريع عن محتوى الملف..."></textarea>
-
-      <label class="small" style="margin-top:10px;display:block">ملف (PDF/Word/صورة) — اختياري</label>
-      <input id="sFile" type="file" class="input" accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp">
-
-      <div class="row no-print" style="margin-top:12px">
-        <button class="btn primary" id="addSop">حفظ</button>
-        <button class="btn ghost" id="resetSop" type="button">تفريغ</button>
-      </div>
-
-      <div class="muted mini" style="margin-top:10px">
-        تلميح: إذا ما عندك ملف الآن، اتركه فاضي — وسيظهر SOP كنص فقط.
-      </div>
-    </div>
-
-    <!-- SOP List -->
-    <div class="card" style="grid-column:span 7">
-      <h3>مكتبة SOP</h3>
-      <div class="row no-print" style="margin:10px 0">
-        <select id="fCat" class="input" style="max-width:220px">
-          <option value="">كل التصنيفات</option>
-          <option>تشغيل</option><option>مالي</option><option>سلامة غذاء</option><option>HR</option><option>أخرى</option>
-        </select>
-        <input id="fSearch" class="input" placeholder="بحث (عنوان/وصف/تصنيف)">
-        <button class="btn" onclick="window.print()">PDF</button>
-      </div>
-
-      <div id="sopList" class="list"></div>
-
-      <div class="footer">
-        الملفات هنا للاستخدام الداخلي. فعليًا سنضيف صلاحيات + أرشفة + نسخ نسخية.
-      </div>
-    </div>
+  <div class="cardx">
+    <h1 style="margin:0;font-weight:900">مكتبة SOP</h1>
+    <div class="muted">ضع هنا روابط ملفات SOP (PDF/Word) أو صفحات داخل المنصة.</div>
+    <input id="q" placeholder="بحث داخل SOP... (عنوان/وصف)">
   </div>
-</div>
+
+  <div class="grid" id="grid"></div>
+
+</main>
 
 <script>
-/* ===== DB ===== */
-const DB_KEY="naseq_ops_db_v1";
-const nowISO=()=>new Date().toISOString();
-const load=()=>JSON.parse(localStorage.getItem(DB_KEY)||"null")||seed();
-const save=db=>localStorage.setItem(DB_KEY,JSON.stringify(db));
+  (function activateTab(){
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("#topnav .tab").forEach(a=>{
+      const p = (a.getAttribute("data-page")||"").toLowerCase();
+      if(p === file) a.classList.add("tab-active");
+    });
+  })();
 
-function seed(){
-  const db={
-    meta:{createdAt:nowISO(), language:"ar", pilot:true},
-    brands:[
-      {id:"tuba",name:"طوبى",branches:[{id:"tuba-main",name:"طوبى – الفرع الرئيسي"}]},
-      {id:"sdf",name:"سدف",branches:[{id:"sdf-main",name:"سدف – الفرع الرئيسي"}]},
-      {id:"dbb",name:"دبل بي",branches:[{id:"dbb-main",name:"دبل بي – الفرع الرئيسي"}]}
-    ],
-    visits:[], tasks:[], cleaningLogs:[], issues:[],
-    sops:[
-      {id:"sop-fridge", title:"SOP – درجة حرارة الثلاجة", category:"سلامة غذاء",
-        desc:"تسجيل درجة الحرارة يوميًا + متابعة الصلاحية بعد الفتح.", fileName:"", fileUrl:"",
-        createdAt:nowISO()}
-    ]
-  };
-  save(db); return db;
-}
+  // غيّر/أضف SOP حسب ملفاتك
+  const sops = [
+    {title:"دليل المشغل – الزيارات", desc:"توثيق الزيارات + رفع صور إلزامي + احتساب الزيارات.", link:"visits.html", tag:"تشغيل"},
+    {title:"نموذج خطة 7 أيام – Flavor Town", desc:"خطة تنفيذ عاجلة 7 أيام مع JSON.", link:"ft-7days-plan.html", tag:"خطط"},
+    {title:"خطة تصحيح سكن سدف – 7 أيام", desc:"مبنية على تقرير سكن الموظفين.", link:"sadaf-7days-plan.html", tag:"صحة وسلامة"},
+  ];
 
-/* ===== Helpers ===== */
-const $=id=>document.getElementById(id);
-const $$=sel=>Array.from(document.querySelectorAll(sel));
+  const grid=document.getElementById("grid");
+  const q=document.getElementById("q");
 
-function setActiveNav(){
-  const p=location.pathname.split("/").pop();
-  $$("[data-nav]").forEach(a=>a.getAttribute("href")===p && a.classList.add("active"));
-}
-function safe(s){ return (s||"").toString().replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function render(){
+    const query=(q.value||"").trim().toLowerCase();
+    const filtered=sops.filter(x=>{
+      return !query || (x.title+x.desc+x.tag).toLowerCase().includes(query);
+    });
 
-function renderSops(){
-  const db=load();
-  let rows=(db.sops||[]).slice();
+    if(!filtered.length){
+      grid.innerHTML=`<div class="cardx"><b>لا توجد نتائج</b><div class="muted">جرّب تعديل البحث.</div></div>`;
+      return;
+    }
 
-  const cat=$("fCat").value;
-  const q=($("fSearch").value||"").toLowerCase();
-
-  if(cat) rows=rows.filter(x=>x.category===cat);
-  if(q) rows=rows.filter(x=>JSON.stringify(x).toLowerCase().includes(q));
-
-  rows=rows.reverse();
-
-  $("sopList").innerHTML = rows.map(s=>`
-    <div class="item">
-      <div style="min-width:260px;max-width:760px">
-        <b>${safe(s.title)}</b>
-        <div class="muted2 mini" style="margin-top:6px">
-          <span class="tag">${safe(s.category||"أخرى")}</span>
-          <span class="tag">تاريخ: ${new Date(s.createdAt||nowISO()).toLocaleDateString("ar-SA")}</span>
+    grid.innerHTML=filtered.map(x=>`
+      <div class="doc">
+        <h3>${x.title}</h3>
+        <div class="meta">${x.tag} • ${x.desc}</div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+          <a class="btn btn-primary" href="${x.link}">فتح</a>
+          <a class="btn btn-outline" href="plans.html">الخطط</a>
         </div>
-        <div class="muted2 mini" style="margin-top:10px">${safe(s.desc||"—")}</div>
-
-        ${s.fileUrl ? `
-          <div style="margin-top:10px">
-            <div class="muted2 mini">File:</div>
-            <div class="filebox">${safe(s.fileName||"file")}</div>
-          </div>
-        ` : ``}
       </div>
-
-      <div class="no-print" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        ${s.fileUrl ? `<a class="btn primary" href="${s.fileUrl}" target="_blank" rel="noopener">فتح الملف</a>` : ``}
-        <button class="btn ghost" data-copy="${s.id}">نسخ ملخص</button>
-        <button class="btn danger" data-del="${s.id}">حذف</button>
-      </div>
-    </div>
-  `).join("") || `<div class="muted2 mini">لا توجد SOP حتى الآن.</div>`;
-
-  $$("[data-del]").forEach(btn=>{
-    btn.onclick=()=>{
-      const id=btn.getAttribute("data-del");
-      delSop(id);
-    };
-  });
-  $$("[data-copy]").forEach(btn=>{
-    btn.onclick=()=>{
-      const id=btn.getAttribute("data-copy");
-      copySop(id);
-    };
-  });
-}
-
-function addSop(){
-  const title=($("sTitle").value||"").trim();
-  if(!title) return alert("اكتب عنوان SOP");
-
-  const db=load();
-  const file=$("sFile").files?.[0] || null;
-
-  let fileUrl="", fileName="";
-  if(file){
-    // محليًا: ObjectURL
-    fileUrl = URL.createObjectURL(file);
-    fileName = file.name;
+    `).join("");
   }
 
-  db.sops = db.sops || [];
-  db.sops.push({
-    id:"sop_"+Math.random().toString(16).slice(2),
-    title,
-    category:$("sCategory").value,
-    desc:($("sDesc").value||"").trim(),
-    fileName,
-    fileUrl,
-    createdAt:nowISO()
-  });
-
-  save(db);
-  resetSop();
-  renderSops();
-  alert("تم حفظ SOP ✅");
-}
-
-function resetSop(){
-  $("sTitle").value="";
-  $("sCategory").value="تشغيل";
-  $("sDesc").value="";
-  $("sFile").value="";
-}
-
-function delSop(id){
-  const db=load();
-  const item=db.sops?.find(x=>x.id===id);
-  const ok=confirm(`تأكيد حذف SOP: ${item?.title||id}`);
-  if(!ok) return;
-
-  // إذا كان عنده ObjectURL، نحرره
-  if(item?.fileUrl && item.fileUrl.startsWith("blob:")){
-    try{ URL.revokeObjectURL(item.fileUrl); }catch(e){}
-  }
-
-  db.sops = (db.sops||[]).filter(x=>x.id!==id);
-  save(db);
-  renderSops();
-}
-
-async function copySop(id){
-  const db=load();
-  const s=db.sops?.find(x=>x.id===id);
-  if(!s) return;
-  const text = `SOP: ${s.title}\nCategory: ${s.category}\nDesc: ${s.desc||"-"}\nFile: ${s.fileName||"-"}`;
-  try{
-    await navigator.clipboard.writeText(text);
-    alert("تم النسخ ✅");
-  }catch(e){
-    alert("لم يتم النسخ — المتصفح منع الوصول للـ Clipboard");
-  }
-}
-
-/* ===== Init ===== */
-(function(){
-  setActiveNav();
-  renderSops();
-
-  $("addSop").onclick=addSop;
-  $("resetSop").onclick=resetSop;
-  $("fCat").onchange=renderSops;
-  $("fSearch").oninput=renderSops;
-})();
+  q.addEventListener("input", render);
+  render();
 </script>
+
 </body>
 </html>
