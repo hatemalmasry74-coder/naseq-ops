@@ -5,174 +5,338 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>منصة نَسَق – الزيارات</title>
 
-  <!-- ثيم نسق -->
   <link rel="stylesheet" href="nasaq-theme.css">
   <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    /* ===============================
-       FIX نهائي لمشكلة اختفاء النصوص
-       صفحة الزيارات فقط
-    =============================== */
+    body{font-family:"Almarai",sans-serif}
+    .cardx{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:18px;box-shadow:0 12px 26px rgba(0,0,0,.08);padding:16px}
+    .muted{color:#6b7280}
+    .grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}
+    @media(max-width:950px){.grid2{grid-template-columns:1fr}}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:700px){.row{grid-template-columns:1fr}}
+    input,select,textarea{width:100%;padding:12px 12px;border-radius:14px;border:1px solid rgba(0,0,0,.14);font-family:inherit}
+    textarea{min-height:110px;resize:vertical}
+    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{border:none;border-radius:14px;padding:10px 14px;font-weight:900;cursor:pointer}
+    .btn-primary{background:var(--nasaq-primary,#b91c1c);color:#fff}
+    .btn-outline{background:#fff;border:1px solid rgba(0,0,0,.14);color:#111827}
+    .table{width:100%;border-collapse:collapse;margin-top:10px}
+    .table th,.table td{border-bottom:1px solid rgba(0,0,0,.08);padding:10px;text-align:right;font-size:13px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,.12);font-weight:900;font-size:12px;background:#fff}
+    .dot{width:10px;height:10px;border-radius:50%}
+    .dot-green{background:#22c55e}
 
-    body {
-      font-family: "Almarai", sans-serif;
-      background: linear-gradient(135deg,#f6efe9,#efe4db);
-      color: #111827 !important;
-      opacity: 1 !important;
+    /* ===== Unified Top Nav ===== */
+    .nasaq-topnav{
+      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
+      padding:14px; margin:14px auto;
+      border-radius:18px; background: rgba(255,255,255,.92);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
     }
-
-    * {
-      opacity: 1 !important;
+    .nasaq-topnav .tab{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:10px 14px; border-radius:999px;
+      border:1px solid rgba(0,0,0,.12);
+      background:#fff; color:#111827; font-weight:900;
+      text-decoration:none; transition:.15s ease;
     }
-
-    h1, h2, h3, h4, h5, h6,
-    p, span, label, div, th, td {
-      color: #111827 !important;
-    }
-
-    /* الحاويات */
-    .container, .wrap, main, section {
-      opacity: 1 !important;
-    }
-
-    /* البطاقات */
-    .card, .panel, .box {
-      background: #ffffff !important;
-      border-radius: 18px;
-      border: 1px solid rgba(0,0,0,.08);
-      box-shadow: 0 12px 30px rgba(0,0,0,.12);
-      padding: 16px;
-    }
-
-    /* التبويبات */
-    .tabs a, .tabs button {
-      color: #111827 !important;
-      font-weight: 700;
-    }
-
-    /* الجداول */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th {
-      font-weight: 800;
-      background: #f9fafb;
-      border-bottom: 2px solid #e5e7eb;
-    }
-
-    td {
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    /* الحقول */
-    input, select, textarea {
-      background: #ffffff !important;
-      color: #111827 !important;
-      border: 1px solid #d1d5db !important;
-      border-radius: 12px;
-      padding: 10px 12px;
-      font-size: 14px;
-    }
-
-    input::placeholder,
-    textarea::placeholder {
-      color: #6b7280 !important;
-      opacity: 1 !important;
-    }
-
-    /* الأزرار */
-    button, .btn {
-      background: #b91c1c !important;
-      color: #ffffff !important;
-      border-radius: 12px;
-      border: none;
-      font-weight: 800;
-      padding: 10px 14px;
-      cursor: pointer;
-    }
-
-    button.secondary {
-      background: #374151 !important;
-    }
-
-    /* منع أي طبقات زجاجية */
-    .glass, .blur, .overlay {
-      background: #ffffff !important;
-      opacity: 1 !important;
-      backdrop-filter: none !important;
+    .nasaq-topnav .tab:hover{transform:translateY(-1px)}
+    .nasaq-topnav .tab-active{
+      background: var(--nasaq-primary, #b91c1c);
+      color:#fff;
+      border-color: var(--nasaq-primary, #b91c1c);
     }
   </style>
 </head>
 
 <body>
+<main class="container">
 
-  <main class="container" style="max-width:1200px;margin:0 auto;padding:20px">
+  <!-- NAV الموحد -->
+  <div class="nasaq-topnav" id="topnav">
+    <a href="index.html" class="tab" data-page="index.html">الرئيسية</a>
+    <a href="visits.html" class="tab" data-page="visits.html">الزيارات</a>
+    <a href="tasks.html" class="tab" data-page="tasks.html">المهام</a>
+    <a href="cleaning.html" class="tab" data-page="cleaning.html">النظافة</a>
+    <a href="sop.html" class="tab" data-page="sop.html">SOP</a>
+    <a href="settings.html" class="tab" data-page="settings.html">الإعدادات</a>
+    <a href="plans.html" class="tab" data-page="plans.html">الخطط</a>
+  </div>
 
-    <!-- العنوان -->
-    <div class="card" style="margin-bottom:16px">
-      <h1>سجل الزيارات – منصة نَسَق</h1>
-      <p>إدارة وتوثيق الزيارات التشغيلية والرقابية</p>
+  <div class="cardx">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+      <div>
+        <h1 style="margin:0;font-weight:900">سجل الزيارات – منصة نَسَق</h1>
+        <div class="muted">إنشاء زيارة وتخزينها محليًا (LocalStorage) وتظهر فورًا في لوحة CEO.</div>
+      </div>
+      <span class="pill"><span class="dot dot-green"></span> حفظ محلي</span>
+    </div>
+  </div>
 
-      <!-- زر الخطة -->
-      <a href="ft-7days-plan.html" class="btn" style="margin-top:10px;display:inline-block">
-        خطة Flavor Town – 7 أيام
-      </a>
+  <div class="grid2" style="margin-top:14px">
+    <div class="cardx">
+      <h2 style="margin:0 0 10px;font-weight:900">إنشاء زيارة</h2>
+
+      <div class="row">
+        <div>
+          <label class="muted">التاريخ</label>
+          <input id="date" type="date">
+        </div>
+        <div>
+          <label class="muted">البراند</label>
+          <select id="brand">
+            <option value="سدف">سدف</option>
+            <option value="طوبى">طوبى</option>
+            <option value="دبل بي">دبل بي</option>
+            <option value="Flavor Town">Flavor Town</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div>
+          <label class="muted">الفرع</label>
+          <input id="branch" placeholder="مثال: الفرع الرئيسي">
+        </div>
+        <div>
+          <label class="muted">نوع الزيارة</label>
+          <select id="type">
+            <option value="تشغيلية">تشغيلية</option>
+            <option value="مالية">مالية</option>
+            <option value="سكن">سكن</option>
+            <option value="افتتاح">افتتاح</option>
+            <option value="CAPA">CAPA</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top:10px">
+        <div>
+          <label class="muted">التقييم</label>
+          <select id="rating">
+            <option value="ممتاز">ممتاز</option>
+            <option value="جيد">جيد</option>
+            <option value="مقبول">مقبول</option>
+            <option value="ضعيف">ضعيف</option>
+            <option value="حرج">حرج</option>
+          </select>
+        </div>
+        <div>
+          <label class="muted">ربط بخطة</label>
+          <select id="plan">
+            <option value="">بدون</option>
+            <option value="plans.html">صفحة الخطط</option>
+            <option value="sadaf-7days-plan.html">خطة سدف (7 أيام)</option>
+            <option value="ft-7days-plan.html">خطة Flavor Town (7 أيام)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <label class="muted">ملاحظات الزيارة</label>
+        <textarea id="notes" placeholder="اكتب أهم الملاحظات والتوصيات..."></textarea>
+      </div>
+
+      <div class="btnrow">
+        <button class="btn btn-primary" onclick="saveVisit()">حفظ الزيارة</button>
+        <button class="btn btn-outline" onclick="resetForm()">مسح الحقول</button>
+        <a class="btn btn-outline" href="plans.html" style="text-decoration:none">فتح الخطط</a>
+      </div>
     </div>
 
-    <!-- إنشاء زيارة -->
-    <div class="card" style="margin-bottom:16px">
-      <h2>إنشاء زيارة</h2>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <input placeholder="البراند">
-        <input placeholder="الفرع">
-        <select>
-          <option>نوع الزيارة</option>
-          <option>تشغيلية</option>
-          <option>مالية</option>
-          <option>جودة</option>
+    <div class="cardx">
+      <h2 style="margin:0 0 10px;font-weight:900">فلاتر سريعة</h2>
+      <div class="row">
+        <select id="fBrand" onchange="render()">
+          <option value="الكل" selected>كل البراندات</option>
+          <option value="سدف">سدف</option>
+          <option value="طوبى">طوبى</option>
+          <option value="دبل بي">دبل بي</option>
+          <option value="Flavor Town">Flavor Town</option>
         </select>
-        <select>
-          <option>التقييم</option>
-          <option>ممتاز</option>
-          <option>جيد</option>
-          <option>يحتاج تحسين</option>
+        <select id="fType" onchange="render()">
+          <option value="الكل" selected>كل الأنواع</option>
+          <option value="تشغيلية">تشغيلية</option>
+          <option value="مالية">مالية</option>
+          <option value="سكن">سكن</option>
+          <option value="افتتاح">افتتاح</option>
+          <option value="CAPA">CAPA</option>
         </select>
       </div>
 
-      <textarea placeholder="ملاحظات الزيارة" style="margin-top:12px"></textarea>
+      <div class="btnrow" style="margin-top:12px">
+        <button class="btn btn-outline" onclick="exportJSON()">تصدير JSON</button>
+        <label class="btn btn-outline" style="cursor:pointer">
+          استيراد JSON
+          <input type="file" accept="application/json" style="display:none" onchange="importJSON(event)">
+        </label>
+        <button class="btn btn-outline" onclick="clearAll()">حذف كل الزيارات</button>
+      </div>
 
-      <button style="margin-top:12px">حفظ الزيارة</button>
+      <div class="muted" style="margin-top:10px;font-size:12px">
+        * البيانات محلية على هذا المتصفح فقط (LocalStorage).
+      </div>
     </div>
+  </div>
 
-    <!-- سجل الزيارات -->
-    <div class="card">
-      <h2>سجل الزيارات</h2>
+  <div class="cardx" style="margin-top:14px">
+    <h2 style="margin:0 0 10px;font-weight:900">سجل الزيارات</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>التاريخ</th>
+          <th>البراند</th>
+          <th>الفرع</th>
+          <th>النوع</th>
+          <th>التقييم</th>
+          <th>الخطة</th>
+          <th>ملاحظات</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="rows">
+        <tr><td colspan="8" class="muted">لا توجد زيارات مسجلة بعد.</td></tr>
+      </tbody>
+    </table>
+  </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>التاريخ</th>
-            <th>البراند</th>
-            <th>الفرع</th>
-            <th>النوع</th>
-            <th>النتيجة</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td colspan="5" style="text-align:center;color:#6b7280">
-              لا توجد زيارات مسجلة
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+</main>
 
-  </main>
+<script>
+  // ===== Active tab تلقائي =====
+  (function activateTab(){
+    const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll("#topnav .tab").forEach(a=>{
+      const p = (a.getAttribute("data-page")||"").toLowerCase();
+      if(p === file) a.classList.add("tab-active");
+    });
+  })();
+
+  const LS_KEY = "visits_v1";
+
+  function loadVisits(){
+    try { return JSON.parse(localStorage.getItem(LS_KEY) || "[]"); }
+    catch(e){ return []; }
+  }
+  function saveVisits(arr){
+    localStorage.setItem(LS_KEY, JSON.stringify(arr));
+  }
+
+  function resetForm(){
+    document.getElementById("branch").value = "";
+    document.getElementById("notes").value = "";
+    document.getElementById("plan").value = "";
+    document.getElementById("rating").value = "ممتاز";
+    document.getElementById("type").value = "تشغيلية";
+  }
+
+  function todayISO(){
+    const d = new Date();
+    const m = String(d.getMonth()+1).padStart(2,"0");
+    const day = String(d.getDate()).padStart(2,"0");
+    return `${d.getFullYear()}-${m}-${day}`;
+  }
+  document.getElementById("date").value = todayISO();
+
+  function saveVisit(){
+    const v = {
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      date: document.getElementById("date").value || todayISO(),
+      brand: document.getElementById("brand").value,
+      branch: document.getElementById("branch").value.trim() || "—",
+      type: document.getElementById("type").value,
+      rating: document.getElementById("rating").value,
+      plan: document.getElementById("plan").value,
+      notes: document.getElementById("notes").value.trim()
+    };
+
+    const visits = loadVisits();
+    visits.push(v);
+    saveVisits(visits);
+    render();
+    alert("تم حفظ الزيارة ✅ (ستظهر أيضًا في لوحة CEO)");
+    resetForm();
+  }
+
+  function removeVisit(id){
+    const visits = loadVisits().filter(v=>v.id !== id);
+    saveVisits(visits);
+    render();
+  }
+
+  function render(){
+    const fBrand = document.getElementById("fBrand").value;
+    const fType = document.getElementById("fType").value;
+
+    let visits = loadVisits().sort((a,b)=> (b.date||"").localeCompare(a.date||""));
+    visits = visits.filter(v=>{
+      const okB = (fBrand==="الكل") || (v.brand===fBrand);
+      const okT = (fType==="الكل") || (v.type===fType);
+      return okB && okT;
+    });
+
+    const rows = document.getElementById("rows");
+    if(!visits.length){
+      rows.innerHTML = `<tr><td colspan="8" class="muted">لا توجد زيارات مسجلة بعد.</td></tr>`;
+      return;
+    }
+
+    rows.innerHTML = visits.map(v=>`
+      <tr>
+        <td>${v.date||""}</td>
+        <td>${v.brand||""}</td>
+        <td>${v.branch||""}</td>
+        <td>${v.type||""}</td>
+        <td>${v.rating||""}</td>
+        <td>${v.plan ? `<a href="${v.plan}">فتح</a>` : "—"}</td>
+        <td>${(v.notes||"").replace(/</g,"&lt;")}</td>
+        <td><button class="btn btn-outline" onclick="removeVisit('${v.id}')">حذف</button></td>
+      </tr>
+    `).join("");
+  }
+
+  function exportJSON(){
+    const data = loadVisits();
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:"application/json"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "nasaq-visits.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }
+
+  function importJSON(ev){
+    const file = ev.target.files && ev.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try{
+        const arr = JSON.parse(reader.result);
+        if(!Array.isArray(arr)) throw new Error("invalid");
+        saveVisits(arr);
+        render();
+        alert("تم الاستيراد ✅");
+      }catch(e){
+        alert("ملف JSON غير صالح");
+      }finally{
+        ev.target.value = "";
+      }
+    };
+    reader.readAsText(file);
+  }
+
+  function clearAll(){
+    if(!confirm("سيتم حذف كل الزيارات المخزنة محليًا. هل أنت متأكد؟")) return;
+    localStorage.removeItem(LS_KEY);
+    render();
+    alert("تم الحذف ✅");
+  }
+
+  render();
+</script>
 
 </body>
 </html>
