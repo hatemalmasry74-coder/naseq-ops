@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>نَسَق – أرشفة الزيارات (V1)</title>
+
+  <link rel="stylesheet" href="nasaq-theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --muted:#98a2b3;
+      --text:#e6eaf2;
+      --line:rgba(255,255,255,.08);
+      --primary:#b91c1c;
+      --accent:#f4e7d3;
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    [data-theme="light"]{
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --muted:#667085;
+      --text:#111827;
+      --line:rgba(17,24,39,.10);
+      --shadow: 0 10px 30px rgba(17,24,39,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Almarai", system-ui, -apple-system, Segoe UI, Arial;
+      background: radial-gradient(1200px 800px at 15% 10%, rgba(185,28,28,.18), transparent 55%),
+                  radial-gradient(900px 700px at 90% 20%, rgba(244,231,211,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1200px;margin:24px auto;padding:0 14px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+    .brand{display:flex;flex-direction:column;gap:4px}
+    .brand h1{margin:0;font-size:20px;font-weight:900}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+    .top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:13px;
+      display:inline-flex;gap:8px;align-items:center;
+    }
+    .btn.primary{background:linear-gradient(135deg, rgba(185,28,28,.95), rgba(185,28,28,.70)); border-color:transparent}
+    .btn:active{transform:translateY(1px)}
+    .grid{display:grid;grid-template-columns:1fr;gap:12px}
+    @media(min-width:980px){.grid{grid-template-columns:380px 1fr}}
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .hd{
+      padding:14px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap
+    }
+    .hd h2{margin:0;font-size:14px;font-weight:900}
+    .bd{padding:14px}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:800}
+    input, select, textarea{
+      width:100%;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      border-radius:12px;
+      outline:none;
+      font-family:inherit;
+      font-size:13px;
+    }
+    [data-theme="light"] input,
+    [data-theme="light"] select,
+    [data-theme="light"] textarea{background:#fff}
+    .row{display:grid;gap:10px}
+    .row.cols-2{grid-template-columns:1fr 1fr}
+    .muted{color:var(--muted);font-size:12px}
+    .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .kpi{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(0,0,0,.12);
+    }
+    [data-theme="light"] .kpi{background:rgba(17,24,39,.03)}
+    .kpi .n{font-size:22px;font-weight:900;margin:0}
+    .kpi .t{margin:4px 0 0 0;font-size:12px;color:var(--muted);font-weight:900}
+    table{width:100%;border-collapse:separate;border-spacing:0}
+    th, td{border-bottom:1px solid var(--line);padding:10px 8px;vertical-align:top;font-size:13px}
+    th{
+      text-align:right;font-size:12px;color:var(--muted);font-weight:900;
+      background:rgba(255,255,255,.02);position:sticky;top:0;z-index:2
+    }
+    .tbl-wrap{max-height:70vh;overflow:auto;border:1px solid var(--line);border-radius:14px}
+    .badge{
+      padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)
+    }
+    .b-ok{background:rgba(22,163,74,.18); border-color:rgba(22,163,74,.25)}
+    .b-warn{background:rgba(245,158,11,.18); border-color:rgba(245,158,11,.25)}
+    .b-bad{background:rgba(239,68,68,.18); border-color:rgba(239,68,68,.25)}
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:12px;border:1px dashed var(--line);
+      color:var(--muted);font-size:12px;font-weight:900
+    }
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+    .link{
+      color:var(--accent);
+      text-decoration:none;
+      font-weight:900;
+    }
+    .danger{border-color:rgba(239,68,68,.35)}
+    .ok{border-color:rgba(22,163,74,.35)}
+    .warn{border-color:rgba(245,158,11,.35)}
+    .small{font-size:12px}
+    .mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace}
+    .hr{height:1px;background:var(--line);margin:12px 0}
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>منصة نَسَق – أرشفة الزيارات (V1)</h1>
+      <p>حفظ / بحث / تصفية / فتح / تصدير — تعمل بـ LocalStorage (بدون سيرفر)</p>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn" id="toggleTheme">🌙 / ☀️</button>
+      <button class="btn" id="importJson">📥 استيراد JSON</button>
+      <button class="btn" id="exportAll">⬇️ تصدير الكل</button>
+      <button class="btn primary" id="openSmartForm">➕ إضافة زيارة جديدة</button>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ===== Left: Filters / Stats ===== -->
+    <section class="card">
+      <div class="hd">
+        <h2>بحث وتصفية</h2>
+        <span class="pill" id="countPill">0 زيارة</span>
+      </div>
+      <div class="bd">
+        <div class="row">
+          <div>
+            <label>بحث عام (براند/فرع/مشغّل/قرار)</label>
+            <input id="q" placeholder="مثال: سدف / أبها / حاتم / خطة تصحيح">
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>البراند</label>
+            <input id="fBrand" placeholder="مثال: سدف">
+          </div>
+          <div>
+            <label>الفرع</label>
+            <input id="fBranch" placeholder="مثال: أبها">
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>من تاريخ</label>
+            <input id="fromDate" type="date">
+          </div>
+          <div>
+            <label>إلى تاريخ</label>
+            <input id="toDate" type="date">
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>القرار</label>
+            <select id="fDecision">
+              <option value="">الكل</option>
+              <option value="🟢 مستمر">🟢 مستمر</option>
+              <option value="🟠 خطة تصحيح إلزامية">🟠 خطة تصحيح إلزامية</option>
+              <option value="🔴 إيقاف تشغيلي">🔴 إيقاف تشغيلي</option>
+            </select>
+          </div>
+          <div>
+            <label>ترتيب</label>
+            <select id="sortBy">
+              <option value="date_desc">الأحدث</option>
+              <option value="date_asc">الأقدم</option>
+              <option value="score_asc">الأقل نتيجة</option>
+              <option value="score_desc">الأعلى نتيجة</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <p class="n" id="kAll">0</p>
+            <p class="t">إجمالي الزيارات</p>
+          </div>
+          <div class="kpi">
+            <p class="n" id="kRed">0</p>
+            <p class="t">إيقاف 🔴</p>
+          </div>
+        </div>
+
+        <div class="kpis" style="margin-top:10px">
+          <div class="kpi">
+            <p class="n" id="kOrange">0</p>
+            <p class="t">خطة تصحيح 🟠</p>
+          </div>
+          <div class="kpi">
+            <p class="n" id="kGreen">0</p>
+            <p class="t">مستمر 🟢</p>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <div class="actions">
+          <button class="btn" id="clearFilters">🧹 مسح الفلاتر</button>
+          <button class="btn" id="seedDemo">🌱 إنشاء بيانات تجريبية</button>
+          <button class="btn" id="wipeAll">🗑️ حذف كل الأرشيف</button>
+        </div>
+
+        <p class="muted" style="margin-top:10px">
+          ⚙️ تخزين الأرشيف محليًا داخل المتصفح. لاحقًا نربطه بقاعدة بيانات.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== Right: Archive Table ===== -->
+    <section class="card">
+      <div class="hd">
+        <h2>أرشيف الزيارات</h2>
+        <span class="muted small">تلميح: لو عندك صفحة النموذج الذكي اسمها visits-smart.html سيعمل زر إضافة/فتح تلقائيًا</span>
+      </div>
+      <div class="bd">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:14%">التاريخ</th>
+                <th style="width:14%">البراند</th>
+                <th style="width:16%">الفرع</th>
+                <th style="width:14%">المشغّل</th>
+                <th style="width:10%">النتيجة</th>
+                <th style="width:18%">القرار</th>
+                <th style="width:14%">إجراءات</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+
+        <div class="muted" style="margin-top:10px">
+          ✅ لإضافة زيارة: افتح نموذج الزيارة الذكي ثم اضغط “تنزيل JSON” وبعدها ارجع هنا واضغط “استيراد JSON”.
+          <br>
+          (في المرحلة القادمة سنعمل “حفظ إلى الأرشيف” مباشرة من نموذج الزيارة بنقرة واحدة.)
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<input id="fileInput" type="file" accept="application/json" style="display:none" />
+
+<script>
+  // ===================== Config =====================
+  const STORE_KEY = "nasaq_visits_archive_v1";
+  const THEME_KEY = "nasaq_visits_theme";
+  const SMART_FORM_PAGE = "visits-smart.html"; // غيّره إذا اسم الصفحة مختلف
+
+  // ===================== Utils =====================
+  const $ = (id)=>document.getElementById(id);
+
+  function setTheme(mode){
+    document.documentElement.setAttribute("data-theme", mode);
+    localStorage.setItem(THEME_KEY, mode);
+  }
+  setTheme(localStorage.getItem(THEME_KEY) || "dark");
+  $("toggleTheme").addEventListener("click", ()=>{
+    const cur = document.documentElement.getAttribute("data-theme") || "dark";
+    setTheme(cur === "dark" ? "light" : "dark");
+  });
+
+  function loadArchive(){
+    try{
+      const raw = localStorage.getItem(STORE_KEY);
+      if(!raw) return [];
+      const data = JSON.parse(raw);
+      return Array.isArray(data) ? data : [];
+    }catch{ return []; }
+  }
+
+  function saveArchive(list){
+    localStorage.setItem(STORE_KEY, JSON.stringify(list));
+  }
+
+  function safeText(v){ return (v ?? "").toString(); }
+
+  function decisionBadgeClass(dec){
+    if(dec?.includes("🟢")) return "b-ok";
+    if(dec?.includes("🟠")) return "b-warn";
+    if(dec?.includes("🔴")) return "b-bad";
+    return "";
+  }
+
+  function compareDate(a,b){
+    // yyyy-mm-dd
+    return (a||"").localeCompare(b||"");
+  }
+
+  function downloadBlob(content, filename, type="application/json"){
+    const blob = new Blob([content], {type});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function computeKpis(list){
+    const kAll = list.length;
+    const kRed = list.filter(x=>x.decision?.includes("🔴")).length;
+    const kOrange = list.filter(x=>x.decision?.includes("🟠")).length;
+    const kGreen = list.filter(x=>x.decision?.includes("🟢")).length;
+    $("kAll").textContent = kAll;
+    $("kRed").textContent = kRed;
+    $("kOrange").textContent = kOrange;
+    $("kGreen").textContent = kGreen;
+  }
+
+  // ===================== Data Model =====================
+  // archived item format:
+  // {
+  //   id: "VIS-20260118-ABHA-0001",
+  //   brand, branch, operator_name, visit_date,
+  //   score: number, decision: string,
+  //   payload: full JSON (optional)
+  // }
+
+  function makeId(brand, branch, visit_date, seq){
+    const d = (visit_date||"").replaceAll("-","");
+    const b = (branch||"BRANCH").toUpperCase().replace(/\s+/g,"-").slice(0,12);
+    return `VIS-${d}-${b}-${String(seq).padStart(4,"0")}`;
+  }
+
+  function nextSeqForDateBranch(list, visit_date, branch){
+    const d = (visit_date||"").replaceAll("-","");
+    const b = (branch||"BRANCH").toUpperCase().replace(/\s+/g,"-").slice(0,12);
+    const prefix = `VIS-${d}-${b}-`;
+    const nums = list
+      .map(x=>x.id||"")
+      .filter(id=>id.startsWith(prefix))
+      .map(id=>parseInt(id.split("-").pop(), 10))
+      .filter(n=>Number.isFinite(n));
+    return (nums.length ? Math.max(...nums) : 0) + 1;
+  }
+
+  function normalizeImported(json){
+    // Accepts payload from visits-smart.html "downloadJson"
+    // expected shape:
+    // { meta: {...}, items: [...], computed:{score, decision}, exported_at:... }
+    const meta = json.meta || {};
+    const computed = json.computed || {};
+
+    const brand = safeText(meta.brand).trim();
+    const branch = safeText(meta.branch).trim();
+    const operator_name = safeText(meta.operator_name).trim();
+    const visit_date = safeText(meta.visit_date).trim();
+
+    const score = Number.isFinite(Number(computed.score)) ? Number(computed.score) : null;
+    const decision = safeText(computed.decision).trim();
+
+    if(!brand || !branch || !operator_name || !visit_date){
+      return { ok:false, error:"الملف لا يحتوي على الحقول الأساسية (brand/branch/operator_name/visit_date)." };
+    }
+    if(score === null || !decision){
+      return { ok:false, error:"الملف لا يحتوي على computed.score / computed.decision." };
+    }
+
+    return {
+      ok:true,
+      data:{
+        brand, branch, operator_name, visit_date, score, decision,
+        payload: json
+      }
+    };
+  }
+
+  // ===================== Filters =====================
+  function getFilters(){
+    return {
+      q: $("q").value.trim(),
+      brand: $("fBrand").value.trim(),
+      branch: $("fBranch").value.trim(),
+      from: $("fromDate").value,
+      to: $("toDate").value,
+      decision: $("fDecision").value,
+      sortBy: $("sortBy").value
+    };
+  }
+
+  function applyFilters(list){
+    const f = getFilters();
+    let out = [...list];
+
+    if(f.q){
+      const q = f.q.toLowerCase();
+      out = out.filter(x=>{
+        const hay = [
+          x.id, x.brand, x.branch, x.operator_name, x.decision
+        ].join(" ").toLowerCase();
+        return hay.includes(q);
+      });
+    }
+    if(f.brand){
+      const q = f.brand.toLowerCase();
+      out = out.filter(x=> (x.brand||"").toLowerCase().includes(q));
+    }
+    if(f.branch){
+      const q = f.branch.toLowerCase();
+      out = out.filter(x=> (x.branch||"").toLowerCase().includes(q));
+    }
+    if(f.decision){
+      out = out.filter(x=> (x.decision||"") === f.decision);
+    }
+    if(f.from){
+      out = out.filter(x=> compareDate(x.visit_date, f.from) >= 0);
+    }
+    if(f.to){
+      out = out.filter(x=> compareDate(x.visit_date, f.to) <= 0);
+    }
+
+    // Sort
+    switch(f.sortBy){
+      case "date_asc":
+        out.sort((a,b)=> compareDate(a.visit_date,b.visit_date));
+        break;
+      case "score_asc":
+        out.sort((a,b)=> (a.score??999) - (b.score??999));
+        break;
+      case "score_desc":
+        out.sort((a,b)=> (b.score??-1) - (a.score??-1));
+        break;
+      default: // date_desc
+        out.sort((a,b)=> compareDate(b.visit_date,a.visit_date));
+        break;
+    }
+
+    return out;
+  }
+
+  // ===================== Render =====================
+  function render(){
+    const archive = loadArchive();
+    computeKpis(archive);
+
+    const filtered = applyFilters(archive);
+    $("countPill").textContent = `${filtered.length} زيارة`;
+
+    const rows = $("rows");
+    rows.innerHTML = "";
+
+    if(!filtered.length){
+      const tr = document.createElement("tr");
+      tr.innerHTML = `<td colspan="7" class="muted">لا توجد زيارات مطابقة للفلاتر الحالية.</td>`;
+      rows.appendChild(tr);
+      return;
+    }
+
+    filtered.forEach(x=>{
+      const tr = document.createElement("tr");
+      const badgeClass = decisionBadgeClass(x.decision);
+      const scoreText = (x.score ?? "-") + "%";
+
+      tr.innerHTML = `
+        <td class="mono">${safeText(x.visit_date)}</td>
+        <td><strong>${escapeHtml(x.brand)}</strong></td>
+        <td>${escapeHtml(x.branch)}<div class="muted mono">${escapeHtml(x.id)}</div></td>
+        <td>${escapeHtml(x.operator_name)}</td>
+        <td><strong>${escapeHtml(scoreText)}</strong></td>
+        <td><span class="badge ${badgeClass}">${escapeHtml(x.decision || "-")}</span></td>
+        <td>
+          <div class="actions">
+            <button class="btn small" data-act="open" data-id="${escapeHtml(x.id)}">فتح</button>
+            <button class="btn small" data-act="export" data-id="${escapeHtml(x.id)}">تصدير</button>
+            <button class="btn small" data-act="delete" data-id="${escapeHtml(x.id)}">حذف</button>
+          </div>
+        </td>
+      `;
+      rows.appendChild(tr);
+    });
+  }
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, (m)=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+    }[m]));
+  }
+
+  // ===================== Actions =====================
+  // open smart form
+  $("openSmartForm").addEventListener("click", ()=>{
+    window.location.href = SMART_FORM_PAGE;
+  });
+
+  // import json
+  $("importJson").addEventListener("click", ()=> $("fileInput").click());
+
+  $("fileInput").addEventListener("change", async (e)=>{
+    const file = e.target.files && e.target.files[0];
+    e.target.value = "";
+    if(!file) return;
+
+    try{
+      const text = await file.text();
+      const json = JSON.parse(text);
+      const norm = normalizeImported(json);
+      if(!norm.ok) return alert("تعذر الاستيراد: " + norm.error);
+
+      const archive = loadArchive();
+      const seq = nextSeqForDateBranch(archive, norm.data.visit_date, norm.data.branch);
+      const id = makeId(norm.data.brand, norm.data.branch, norm.data.visit_date, seq);
+
+      // Prevent duplicates (same exported_at + branch + date + operator)
+      const sig = (norm.data.payload?.exported_at || "") + "|" + norm.data.branch + "|" + norm.data.visit_date + "|" + norm.data.operator_name;
+      const exists = archive.some(x => (x.signature||"") === sig);
+      if(exists){
+        return alert("هذه الزيارة مستوردة مسبقًا (نفس الملف/التوقيع).");
+      }
+
+      archive.push({
+        id,
+        signature: sig,
+        brand: norm.data.brand,
+        branch: norm.data.branch,
+        operator_name: norm.data.operator_name,
+        visit_date: norm.data.visit_date,
+        score: norm.data.score,
+        decision: norm.data.decision,
+        payload: norm.data.payload
+      });
+
+      saveArchive(archive);
+      render();
+      alert("تم استيراد الزيارة وحفظها في الأرشيف ✅\nرقم الزيارة: " + id);
+    }catch(err){
+      alert("تعذر قراءة الملف. تأكد أنه JSON صحيح.");
+    }
+  });
+
+  // export all
+  $("exportAll").addEventListener("click", ()=>{
+    const archive = loadArchive();
+    const content = JSON.stringify({ exported_at: new Date().toISOString(), visits: archive }, null, 2);
+    downloadBlob(content, `nasaq-archive-all-${new Date().toISOString().slice(0,10)}.json`);
+  });
+
+  // table row actions
+  $("rows").addEventListener("click", (e)=>{
+    const btn = e.target.closest("button[data-act]");
+    if(!btn) return;
+    const act = btn.getAttribute("data-act");
+    const id = btn.getAttribute("data-id");
+
+    const archive = loadArchive();
+    const item = archive.find(x=>x.id === id);
+    if(!item) return alert("لم يتم العثور على الزيارة.");
+
+    if(act === "export"){
+      const payload = item.payload || item;
+      downloadBlob(JSON.stringify(payload, null, 2), `${id}.json`);
+      return;
+    }
+
+    if(act === "delete"){
+      if(!confirm("تأكيد حذف الزيارة من الأرشيف؟\n" + id)) return;
+      const next = archive.filter(x=>x.id !== id);
+      saveArchive(next);
+      render();
+      return;
+    }
+
+    if(act === "open"){
+      // Open details modal simple (alert-like) + option to download
+      openDetails(item);
+      return;
+    }
+  });
+
+  function openDetails(item){
+    const p = item.payload || {};
+    const meta = p.meta || {};
+    const computed = p.computed || {score:item.score, decision:item.decision};
+    const items = Array.isArray(p.items) ? p.items : [];
+
+    const nonOk = items.filter(x=>x.status && x.status !== "compliant");
+    const top = nonOk
+      .sort((a,b)=>{
+        const r = {high:0, medium:1, low:2};
+        return (r[a.risk_level]??9) - (r[b.risk_level]??9);
+      })
+      .slice(0, 8);
+
+    const lines = [];
+    lines.push(`رقم الزيارة: ${item.id}`);
+    lines.push(`التاريخ: ${item.visit_date}`);
+    lines.push(`البراند/الفرع: ${item.brand} / ${item.branch}`);
+    lines.push(`المشغّل: ${item.operator_name}`);
+    lines.push(`النتيجة: ${computed.score}%`);
+    lines.push(`القرار: ${computed.decision}`);
+    if(meta.summary) lines.push(`ملخص: ${meta.summary}`);
+
+    if(top.length){
+      lines.push(`\nأهم البنود غير المطابقة:`);
+      top.forEach(x=>{
+        const st = x.status === "violation" ? "مخالفة" : "تحسين";
+        const rk = x.risk_level === "high" ? "عالي" : x.risk_level === "medium" ? "متوسط" : "منخفض";
+        lines.push(`- ${x.item_id}: ${x.title} | ${st} | ${rk}` + (x.capa_action ? ` | CAPA: ${x.capa_action}` : ""));
+      });
+    } else {
+      lines.push(`\nجميع البنود مطابقة ✅`);
+    }
+
+    alert(lines.join("\n"));
+  }
+
+  // clear filters
+  $("clearFilters").addEventListener("click", ()=>{
+    $("q").value="";
+    $("fBrand").value="";
+    $("fBranch").value="";
+    $("fromDate").value="";
+    $("toDate").value="";
+    $("fDecision").value="";
+    $("sortBy").value="date_desc";
+    render();
+  });
+
+  // seed demo
+  $("seedDemo").addEventListener("click", ()=>{
+    if(!confirm("إنشاء 5 زيارات تجريبية؟")) return;
+    const archive = loadArchive();
+
+    const demo = [
+      {brand:"سدف", branch:"أبها", operator_name:"حاتم", visit_date: todayMinus(0), score: 86, decision:"🟢 مستمر"},
+      {brand:"سدف", branch:"خميس", operator_name:"أحمد", visit_date: todayMinus(2), score: 72, decision:"🟠 خطة تصحيح إلزامية"},
+      {brand:"طوبى", branch:"أبها", operator_name:"فيصل", visit_date: todayMinus(6), score: 58, decision:"🔴 إيقاف تشغيلي"},
+      {brand:"دبل بي", branch:"أبها", operator_name:"أمجاد", visit_date: todayMinus(10), score: 80, decision:"🟢 مستمر"},
+      {brand:"شاين", branch:"جيزان", operator_name:"عبدالله", visit_date: todayMinus(14), score: 65, decision:"🟠 خطة تصحيح إلزامية"}
+    ];
+
+    demo.forEach(d=>{
+      const seq = nextSeqForDateBranch(archive, d.visit_date, d.branch);
+      const id = makeId(d.brand, d.branch, d.visit_date, seq);
+      archive.push({
+        id,
+        signature: "DEMO|" + id,
+        ...d,
+        payload: { meta: d, items: [], computed:{score:d.score, decision:d.decision}, exported_at: new Date().toISOString() }
+      });
+    });
+
+    saveArchive(archive);
+    render();
+    alert("تم إنشاء بيانات تجريبية ✅");
+  });
+
+  function todayMinus(days){
+    const dt = new Date();
+    dt.setDate(dt.getDate() - days);
+    const y = dt.getFullYear();
+    const m = String(dt.getMonth()+1).padStart(2,"0");
+    const d = String(dt.getDate()).padStart(2,"0");
+    return `${y}-${m}-${d}`;
+  }
+
+  // wipe all
+  $("wipeAll").addEventListener("click", ()=>{
+    if(!confirm("تحذير: سيتم حذف كل الأرشيف نهائيًا من هذا المتصفح.")) return;
+    localStorage.removeItem(STORE_KEY);
+    render();
+    alert("تم حذف الأرشيف.");
+  });
+
+  // re-render on filter changes
+  ["q","fBrand","fBranch","fromDate","toDate","fDecision","sortBy"].forEach(id=>{
+    $(id).addEventListener("input", render);
+    $(id).addEventListener("change", render);
+  });
+
+  // initial
+  render();
+</script>
+</body>
+</html>
