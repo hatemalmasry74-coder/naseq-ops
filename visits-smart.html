@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>نَسَق – نموذج الزيارة الذكي (V1)</title>
+
+  <!-- (اختياري) لو عندك ملف الثيم الخاص بنَسَق -->
+  <link rel="stylesheet" href="nasaq-theme.css">
+
+  <!-- خط -->
+  <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --muted:#98a2b3;
+      --text:#e6eaf2;
+      --line:rgba(255,255,255,.08);
+      --primary:#b91c1c;  /* أحمر نسق */
+      --accent:#f4e7d3;   /* بيج نسق */
+      --ok:#16a34a;
+      --warn:#f59e0b;
+      --bad:#ef4444;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:16px;
+    }
+    [data-theme="light"]{
+      --bg:#f7f7fb;
+      --card:#ffffff;
+      --muted:#667085;
+      --text:#111827;
+      --line:rgba(17,24,39,.10);
+      --shadow: 0 10px 30px rgba(17,24,39,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Almarai", system-ui, -apple-system, Segoe UI, Arial;
+      background: radial-gradient(1200px 800px at 15% 10%, rgba(185,28,28,.18), transparent 55%),
+                  radial-gradient(900px 700px at 90% 20%, rgba(244,231,211,.18), transparent 50%),
+                  var(--bg);
+      color:var(--text);
+    }
+    .wrap{max-width:1200px;margin:24px auto;padding:0 14px}
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px
+    }
+    .brand{
+      display:flex;flex-direction:column;gap:4px
+    }
+    .brand h1{margin:0;font-size:20px;font-weight:800;letter-spacing:.2px}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
+    .top-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+      box-shadow: none;
+      font-weight:700;
+      font-size:13px;
+      display:inline-flex;gap:8px;align-items:center;
+    }
+    .btn.primary{background:linear-gradient(135deg, rgba(185,28,28,.95), rgba(185,28,28,.70)); border-color:transparent}
+    .btn.ghost{background:transparent}
+    .btn:active{transform:translateY(1px)}
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 980px){
+      .grid{grid-template-columns: 420px 1fr;}
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 14px 10px 14px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .card .hd h2{margin:0;font-size:14px;font-weight:800}
+    .card .bd{padding:14px}
+    .muted{color:var(--muted);font-size:12px}
+    .row{display:grid;gap:10px}
+    .row.cols-2{grid-template-columns:1fr 1fr}
+    .row.cols-3{grid-template-columns:1fr 1fr 1fr}
+    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px;font-weight:700}
+    input, select, textarea{
+      width:100%;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      color:var(--text);
+      border-radius:12px;
+      outline:none;
+      font-family:inherit;
+      font-size:13px;
+    }
+    [data-theme="light"] input,
+    [data-theme="light"] select,
+    [data-theme="light"] textarea{
+      background:#fff;
+    }
+    textarea{min-height:90px;resize:vertical}
+    .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .kpi{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:rgba(0,0,0,.12);
+    }
+    [data-theme="light"] .kpi{background:rgba(17,24,39,.03)}
+    .kpi .n{font-size:26px;font-weight:900;margin:0}
+    .kpi .t{margin:4px 0 0 0;font-size:12px;color:var(--muted);font-weight:800}
+    .badge{
+      padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)
+    }
+    .b-ok{background:rgba(22,163,74,.18); border-color:rgba(22,163,74,.25)}
+    .b-warn{background:rgba(245,158,11,.18); border-color:rgba(245,158,11,.25)}
+    .b-bad{background:rgba(239,68,68,.18); border-color:rgba(239,68,68,.25)}
+    table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+    }
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding:10px 8px;
+      vertical-align:top;
+      font-size:13px;
+    }
+    th{
+      text-align:right;
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      background:rgba(255,255,255,.02);
+      position:sticky;top:0;z-index:2;
+    }
+    .tbl-wrap{max-height:68vh;overflow:auto}
+    .item-title{font-weight:900}
+    .mini{font-size:11px;color:var(--muted);margin-top:4px}
+    .file{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap
+    }
+    .thumb{
+      width:42px;height:42px;border-radius:12px;border:1px solid var(--line);
+      object-fit:cover;background:rgba(255,255,255,.03)
+    }
+    .pill{
+      display:inline-flex;gap:8px;align-items:center;
+      padding:8px 10px;border-radius:12px;border:1px dashed var(--line);
+      color:var(--muted);font-size:12px;font-weight:800
+    }
+    .req{color:var(--accent);font-weight:900}
+    .footer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+    /* ====== Print (تصدير PDF عبر الطباعة) ====== */
+    @media print{
+      body{background:#fff;color:#111}
+      .top-actions, .footer-actions, .tbl-wrap{display:none !important}
+      .grid{grid-template-columns: 1fr}
+      .card{box-shadow:none}
+      .card .bd{padding:10px}
+      .print-area{display:block !important}
+      .no-print{display:none !important}
+    }
+    .print-area{display:none}
+  </style>
+</head>
+
+<body>
+<div class="wrap" id="app">
+  <header>
+    <div class="brand">
+      <h1>منصة نَسَق – نموذج الزيارة الذكي (V1)</h1>
+      <p>تشغيل + سلامة غذاء + امتثال + CAPA — حساب تلقائي للنتيجة والقرار</p>
+    </div>
+
+    <div class="top-actions">
+      <button class="btn ghost" id="toggleTheme">🌙 / ☀️</button>
+      <button class="btn" id="saveDraft">💾 حفظ مسودة</button>
+      <button class="btn" id="loadDraft">📥 استرجاع</button>
+      <button class="btn" id="downloadJson">⬇️ تنزيل JSON</button>
+      <button class="btn primary" id="printPdf">🧾 تصدير PDF</button>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <!-- ===== Left: Meta + KPI ===== -->
+    <section class="card">
+      <div class="hd">
+        <h2>بيانات الزيارة</h2>
+        <span class="badge" id="decisionBadge">—</span>
+      </div>
+
+      <div class="bd">
+        <div class="row cols-2">
+          <div>
+            <label>البراند <span class="req">*</span></label>
+            <input id="brand" placeholder="مثال: سدف / طوبى / دبل بي">
+          </div>
+          <div>
+            <label>الفرع <span class="req">*</span></label>
+            <input id="branch" placeholder="مثال: أبها / خميس / جيزان">
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>المدينة</label>
+            <input id="city" placeholder="مثال: أبها">
+          </div>
+          <div>
+            <label>تاريخ الزيارة <span class="req">*</span></label>
+            <input id="visit_date" type="date">
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>اسم المشغّل <span class="req">*</span></label>
+            <input id="operator_name" placeholder="مثال: حاتم / أحمد">
+          </div>
+          <div>
+            <label>نوع الزيارة</label>
+            <select id="visit_type">
+              <option value="تشغيلية">تشغيلية</option>
+              <option value="سلامة غذاء">سلامة غذاء</option>
+              <option value="مالية">مالية</option>
+              <option value="تطوير منتجات">تطوير منتجات</option>
+              <option value="طارئة">طارئة</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row cols-2" style="margin-top:10px">
+          <div>
+            <label>وقت الدخول</label>
+            <input id="check_in_time" type="time">
+          </div>
+          <div>
+            <label>وقت الخروج</label>
+            <input id="check_out_time" type="time">
+          </div>
+        </div>
+
+        <div style="margin-top:14px" class="kpis">
+          <div class="kpi">
+            <p class="n" id="scoreValue">0%</p>
+            <p class="t">نتيجة الزيارة</p>
+          </div>
+          <div class="kpi">
+            <p class="n" id="violationsValue">0</p>
+            <p class="t">عدد المخالفات</p>
+          </div>
+        </div>
+
+        <div style="margin-top:10px" class="kpis">
+          <div class="kpi">
+            <p class="n" id="improveValue">0</p>
+            <p class="t">بنود تحتاج تحسين</p>
+          </div>
+          <div class="kpi">
+            <p class="n" id="openCapaValue">0</p>
+            <p class="t">CAPA مفتوحة</p>
+          </div>
+        </div>
+
+        <div style="margin-top:12px">
+          <label>ملخص عام (اختياري)</label>
+          <textarea id="summary" placeholder="اكتب ملخص سريع عن حالة الفرع…"></textarea>
+          <p class="muted">ملاحظة: تصدير PDF يتم عبر الطباعة (Save as PDF).</p>
+        </div>
+
+        <div class="footer-actions no-print">
+          <button class="btn" id="markAllCompliant">✅ جعل الكل مطابق</button>
+          <button class="btn" id="markAllNeedsImprove">⚠️ جعل الكل تحسين</button>
+          <button class="btn" id="resetAll">🧹 تصفير النموذج</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Right: Checklist ===== -->
+    <section class="card">
+      <div class="hd">
+        <h2>قائمة التدقيق (29 بند)</h2>
+        <span class="muted">اختر الحالة + ارفع صورة + أضف CAPA عند الحاجة</span>
+      </div>
+
+      <div class="bd">
+        <div class="tbl-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:34%">البند</th>
+                <th style="width:12%">الحالة</th>
+                <th style="width:12%">الخطورة</th>
+                <th style="width:18%">صورة</th>
+                <th style="width:24%">ملاحظة / CAPA</th>
+              </tr>
+            </thead>
+            <tbody id="itemsBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===== Print Summary Area (يظهر فقط عند الطباعة) ===== -->
+  <section class="card print-area" style="margin-top:12px">
+    <div class="hd"><h2>ملخص الزيارة (للطباعة)</h2></div>
+    <div class="bd" id="printSummary"></div>
+  </section>
+</div>
+
+<script>
+  // ========= Items =========
+  const ITEMS = [
+    {id:"FS01", title:"يجب توفر معقمات الأيدي"},
+    {id:"FS02", title:"متطلبات الموظفين"},
+    {id:"FS03", title:"غطاء العادم (الشفاط) / المجمدات والمبردات"},
+    {id:"FS04", title:"تاريخ انتهاء طفاية الحريق"},
+    {id:"FS05", title:"اوقات راحة / غداء الموظفين"},
+    {id:"FS06", title:"انارة الفرع"},
+    {id:"FS07", title:"المخازن والرفوف"},
+    {id:"FS08", title:"تنظيم وترتيب الثلاجات"},
+    {id:"FS09", title:"النظافه العامه لجميع الموظفين والزي الرسمي"},
+    {id:"FS10", title:"تخزين مواد التنظيف والكيماويات"},
+    {id:"FS11", title:"امتناع المدخنين عن التدخين عند ارتداء المريول او شبكات الرأس"},
+    {id:"FS12", title:"التأكد من تاريخ ووقت قوائم البلديه"},
+    {id:"FS13", title:"اسلاك الكهربا"},
+    {id:"FS14", title:"تاريخ الانتهاء"},
+    {id:"FS15", title:"المنطقه الداخليه الفرع"},
+    {id:"FS16", title:"الحشرات والقوارض"},
+    {id:"FS17", title:"الاكل المطبوخ والغير مطبوخ"},
+    {id:"FS18", title:"قاتل الحشرات ومصيدة الذباب متوفر وبحاله جيدة"},
+    {id:"FS19", title:"بلاعة الارض ومغسلة الارضيه"},
+    {id:"FS20", title:"الاراضي والاسطح والجدران"},
+    {id:"FS21", title:"احكام وشروط اللمس عند ارتداء القفازات"},
+    {id:"FS22", title:"جميع الآلات والمعدات"},
+    {id:"FS23", title:"المنطقه الخارجيه للفرع"},
+    {id:"FS24", title:"الحاله الصحيه للعمال"},
+    {id:"FS25", title:"الستاره الهوائيه (المداخل الامامية والخلفية)"},
+    {id:"FS26", title:"مصفاة الزيت وخطوطها"},
+    {id:"FS27", title:"ملصقات تاريخ الانتاج والصاحيه"},
+    {id:"FS28", title:"الأنشطة التسويقية والملصقات خارجيًة"},
+    {id:"FS29", title:"ملصقات الجلسات الخارجية"}
+  ];
+
+  const points = { compliant: 100, improvement: 50, violation: 0 };
+
+  // ========= DOM =========
+  const $ = (id)=>document.getElementById(id);
+  const itemsBody = $("itemsBody");
+
+  // ========= State =========
+  const state = {
+    meta: {
+      brand:"", branch:"", city:"", visit_date:"", operator_name:"",
+      visit_type:"تشغيلية", check_in_time:"", check_out_time:"", summary:""
+    },
+    items: ITEMS.map(x => ({
+      item_id: x.id,
+      title: x.title,
+      status: "compliant",
+      risk_level: "low",
+      photo: "", // dataURL
+      note: "",
+      capa_action: "",
+      responsible: "",
+      due_date: "",
+      closed: false
+    }))
+  };
+
+  // ========= Helpers =========
+  function badgeForDecision(decision){
+    const el = $("decisionBadge");
+    el.classList.remove("b-ok","b-warn","b-bad");
+    if(decision.startsWith("🟢")){
+      el.classList.add("b-ok");
+    }else if(decision.startsWith("🟠")){
+      el.classList.add("b-warn");
+    }else if(decision.startsWith("🔴")){
+      el.classList.add("b-bad");
+    }
+    el.textContent = decision;
+  }
+
+  function compute(){
+    const total = state.items.length || 1;
+    let sum = 0, violations=0, improve=0, openCapa=0;
+
+    state.items.forEach(it=>{
+      sum += points[it.status] ?? 0;
+      if(it.status === "violation") violations++;
+      if(it.status === "improvement") improve++;
+
+      const hasCapa = (it.capa_action?.trim() || it.note?.trim() || it.responsible?.trim() || it.due_date?.trim());
+      const shouldTrack = (it.status !== "compliant") && hasCapa;
+      if(shouldTrack && !it.closed) openCapa++;
+    });
+
+    const score = Math.round((sum / (total * 100)) * 100);
+    $("scoreValue").textContent = score + "%";
+    $("violationsValue").textContent = violations;
+    $("improveValue").textContent = improve;
+    $("openCapaValue").textContent = openCapa;
+
+    let decision = "🟢 مستمر";
+    if(score < 60) decision = "🔴 إيقاف تشغيلي";
+    else if(score < 80) decision = "🟠 خطة تصحيح إلزامية";
+    badgeForDecision(decision);
+
+    return {score, decision, violations, improve, openCapa};
+  }
+
+  function readMeta(){
+    state.meta.brand = $("brand").value.trim();
+    state.meta.branch = $("branch").value.trim();
+    state.meta.city = $("city").value.trim();
+    state.meta.visit_date = $("visit_date").value;
+    state.meta.operator_name = $("operator_name").value.trim();
+    state.meta.visit_type = $("visit_type").value;
+    state.meta.check_in_time = $("check_in_time").value;
+    state.meta.check_out_time = $("check_out_time").value;
+    state.meta.summary = $("summary").value.trim();
+  }
+
+  function validateRequired(){
+    readMeta();
+    const missing = [];
+    if(!state.meta.brand) missing.push("البراند");
+    if(!state.meta.branch) missing.push("الفرع");
+    if(!state.meta.visit_date) missing.push("تاريخ الزيارة");
+    if(!state.meta.operator_name) missing.push("اسم المشغّل");
+
+    if(missing.length){
+      alert("حقول إلزامية ناقصة: " + missing.join("، "));
+      return false;
+    }
+    return true;
+  }
+
+  function toDataURL(file){
+    return new Promise((resolve,reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=>resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ========= Render =========
+  function render(){
+    itemsBody.innerHTML = "";
+    state.items.forEach((it, idx)=>{
+      const tr = document.createElement("tr");
+
+      const tdTitle = document.createElement("td");
+      tdTitle.innerHTML = `
+        <div class="item-title">${it.item_id} — ${it.title}</div>
+        <div class="mini">اختر الحالة/الخطورة وأضف صورة + CAPA عند الحاجة.</div>
+      `;
+
+      const tdStatus = document.createElement("td");
+      tdStatus.innerHTML = `
+        <select data-k="status" data-i="${idx}">
+          <option value="compliant">✅ مطابق</option>
+          <option value="improvement">⚠️ يحتاج تحسين</option>
+          <option value="violation">❌ مخالفة</option>
+        </select>
+        <div class="mini">النقاط: 100 / 50 / 0</div>
+      `;
+
+      const tdRisk = document.createElement("td");
+      tdRisk.innerHTML = `
+        <select data-k="risk_level" data-i="${idx}">
+          <option value="low">منخفض</option>
+          <option value="medium">متوسط</option>
+          <option value="high">عالي</option>
+        </select>
+      `;
+
+      const tdPhoto = document.createElement("td");
+      tdPhoto.innerHTML = `
+        <div class="file">
+          <input type="file" accept="image/*" data-k="photo" data-i="${idx}" style="max-width:190px">
+          ${it.photo ? `<img class="thumb" src="${it.photo}" alt="صورة">` : `<span class="pill">لا توجد صورة</span>`}
+        </div>
+      `;
+
+      const tdNote = document.createElement("td");
+      tdNote.innerHTML = `
+        <div class="row" style="gap:8px">
+          <input placeholder="ملاحظة" value="${escapeHtml(it.note)}" data-k="note" data-i="${idx}">
+          <input placeholder="إجراء تصحيحي (CAPA)" value="${escapeHtml(it.capa_action)}" data-k="capa_action" data-i="${idx}">
+          <div class="row cols-2">
+            <input placeholder="المسؤول" value="${escapeHtml(it.responsible)}" data-k="responsible" data-i="${idx}">
+            <input type="date" value="${it.due_date || ""}" data-k="due_date" data-i="${idx}">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <label style="margin:0;color:var(--muted);font-size:12px;font-weight:900">
+              <input type="checkbox" data-k="closed" data-i="${idx}" ${it.closed ? "checked":""} style="width:auto;vertical-align:middle;margin-left:6px">
+              تم الإغلاق
+            </label>
+            <span class="mini">يُحسب CAPA فقط عند (تحسين/مخالفة) + وجود إجراء/ملاحظة.</span>
+          </div>
+        </div>
+      `;
+
+      tr.appendChild(tdTitle);
+      tr.appendChild(tdStatus);
+      tr.appendChild(tdRisk);
+      tr.appendChild(tdPhoto);
+      tr.appendChild(tdNote);
+
+      itemsBody.appendChild(tr);
+
+      // set current selects
+      tdStatus.querySelector("select").value = it.status;
+      tdRisk.querySelector("select").value = it.risk_level;
+    });
+
+    compute();
+  }
+
+  function escapeHtml(str){
+    return (str || "").replace(/[&<>"']/g, (m)=>({
+      "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+    }[m]));
+  }
+
+  // ========= Events =========
+  document.addEventListener("input", async (e)=>{
+    const el = e.target;
+    const i = el.getAttribute("data-i");
+    const k = el.getAttribute("data-k");
+    if(i === null || !k) return;
+
+    const idx = Number(i);
+    if(!state.items[idx]) return;
+
+    if(k === "photo"){
+      const file = el.files && el.files[0];
+      if(file){
+        state.items[idx].photo = await toDataURL(file);
+      }
+      render();
+      return;
+    }
+
+    if(k === "closed"){
+      state.items[idx][k] = el.checked;
+    }else{
+      state.items[idx][k] = el.value;
+      // إذا رجع البند "مطابق" نخلي CAPA مقفلة منطقيًا
+      if(k === "status" && el.value === "compliant"){
+        state.items[idx].closed = true;
+      }
+      if(k === "status" && el.value !== "compliant"){
+        // لا نجبره يفتح، فقط نخليها كما هي
+      }
+    }
+
+    compute();
+  });
+
+  ["brand","branch","city","visit_date","operator_name","visit_type","check_in_time","check_out_time","summary"]
+    .forEach(id=>{
+      $(id).addEventListener("input", ()=>{ readMeta(); });
+      $(id).addEventListener("change", ()=>{ readMeta(); });
+    });
+
+  $("markAllCompliant").addEventListener("click", ()=>{
+    state.items.forEach(it=>{
+      it.status="compliant"; it.risk_level="low"; it.closed=true;
+    });
+    render();
+  });
+
+  $("markAllNeedsImprove").addEventListener("click", ()=>{
+    state.items.forEach(it=>{
+      it.status="improvement"; it.risk_level="medium"; it.closed=false;
+    });
+    render();
+  });
+
+  $("resetAll").addEventListener("click", ()=>{
+    if(!confirm("تأكيد تصفير النموذج بالكامل؟")) return;
+    state.meta = { brand:"", branch:"", city:"", visit_date:"", operator_name:"",
+      visit_type:"تشغيلية", check_in_time:"", check_out_time:"", summary:"" };
+    $("brand").value=""; $("branch").value=""; $("city").value="";
+    $("visit_date").value=""; $("operator_name").value="";
+    $("visit_type").value="تشغيلية"; $("check_in_time").value=""; $("check_out_time").value="";
+    $("summary").value="";
+    state.items = ITEMS.map(x=>({
+      item_id:x.id,title:x.title,status:"compliant",risk_level:"low",photo:"",
+      note:"",capa_action:"",responsible:"",due_date:"",closed:false
+    }));
+    render();
+  });
+
+  // ===== Theme =====
+  const THEME_KEY = "nasaq_visits_theme";
+  function setTheme(mode){
+    document.documentElement.setAttribute("data-theme", mode);
+    localStorage.setItem(THEME_KEY, mode);
+  }
+  $("toggleTheme").addEventListener("click", ()=>{
+    const cur = document.documentElement.getAttribute("data-theme") || "dark";
+    setTheme(cur === "dark" ? "light" : "dark");
+  });
+  setTheme(localStorage.getItem(THEME_KEY) || "dark");
+
+  // ===== Draft Save/Load =====
+  const DRAFT_KEY = "nasaq_visit_draft_v1";
+  $("saveDraft").addEventListener("click", ()=>{
+    readMeta();
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(state));
+    alert("تم حفظ المسودة ✅");
+  });
+  $("loadDraft").addEventListener("click", ()=>{
+    const raw = localStorage.getItem(DRAFT_KEY);
+    if(!raw) return alert("لا توجد مسودة محفوظة.");
+    const data = JSON.parse(raw);
+    if(!data?.items?.length) return alert("الملف المحفوظ غير صالح.");
+    Object.assign(state.meta, data.meta || {});
+    state.items = data.items;
+
+    // push meta to inputs
+    $("brand").value = state.meta.brand || "";
+    $("branch").value = state.meta.branch || "";
+    $("city").value = state.meta.city || "";
+    $("visit_date").value = state.meta.visit_date || "";
+    $("operator_name").value = state.meta.operator_name || "";
+    $("visit_type").value = state.meta.visit_type || "تشغيلية";
+    $("check_in_time").value = state.meta.check_in_time || "";
+    $("check_out_time").value = state.meta.check_out_time || "";
+    $("summary").value = state.meta.summary || "";
+
+    render();
+    alert("تم الاسترجاع ✅");
+  });
+
+  // ===== Download JSON =====
+  $("downloadJson").addEventListener("click", ()=>{
+    readMeta();
+    const {score, decision} = compute();
+    const payload = {
+      ...state,
+      computed: {score, decision},
+      exported_at: new Date().toISOString()
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    const safeName = `nasaq-visit-${(state.meta.branch||"branch").replace(/\s+/g,"-")}-${state.meta.visit_date||"date"}.json`;
+    a.download = safeName;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // ===== Print PDF =====
+  $("printPdf").addEventListener("click", ()=>{
+    if(!validateRequired()) return;
+    readMeta();
+    const {score, decision} = compute();
+
+    // Build print summary
+    const lines = [];
+    lines.push(`<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div><strong>البراند:</strong> ${escapeHtml(state.meta.brand)} — <strong>الفرع:</strong> ${escapeHtml(state.meta.branch)} — <strong>المدينة:</strong> ${escapeHtml(state.meta.city||"-")}</div>
+      <div><strong>التاريخ:</strong> ${escapeHtml(state.meta.visit_date)} — <strong>المشغّل:</strong> ${escapeHtml(state.meta.operator_name)} — <strong>النوع:</strong> ${escapeHtml(state.meta.visit_type)}</div>
+    </div>`);
+    lines.push(`<hr style="border:none;border-top:1px solid #ddd;margin:10px 0">`);
+    lines.push(`<div><strong>النتيجة:</strong> ${score}% — <strong>القرار:</strong> ${escapeHtml(decision)}</div>`);
+    if(state.meta.summary){
+      lines.push(`<div style="margin-top:8px"><strong>ملخص:</strong> ${escapeHtml(state.meta.summary)}</div>`);
+    }
+
+    // Violations & CAPA
+    const highlights = state.items.filter(it => it.status !== "compliant");
+    if(highlights.length){
+      lines.push(`<h3 style="margin:12px 0 6px 0">أهم البنود غير المطابقة</h3>`);
+      lines.push(`<ol style="margin:0;padding-right:18px">` +
+        highlights.map(it=>{
+          const st = it.status === "violation" ? "مخالفة" : "تحسين";
+          const rk = it.risk_level === "high" ? "عالي" : it.risk_level === "medium" ? "متوسط" : "منخفض";
+          return `<li style="margin:6px 0">
+            <strong>${escapeHtml(it.item_id)}:</strong> ${escapeHtml(it.title)}
+            — <strong>الحالة:</strong> ${st} — <strong>الخطورة:</strong> ${rk}
+            ${it.capa_action ? `<br><strong>CAPA:</strong> ${escapeHtml(it.capa_action)}` : ""}
+            ${it.responsible ? ` — <strong>المسؤول:</strong> ${escapeHtml(it.responsible)}` : ""}
+            ${it.due_date ? ` — <strong>الموعد:</strong> ${escapeHtml(it.due_date)}` : ""}
+          </li>`;
+        }).join("") +
+      `</ol>`);
+    } else {
+      lines.push(`<div style="margin-top:10px"><strong>ملاحظة:</strong> جميع البنود مطابقة ✅</div>`);
+    }
+
+    $("printSummary").innerHTML = lines.join("");
+    window.print();
+  });
+
+  // init meta defaults
+  $("visit_date").valueAsDate = new Date();
+
+  // initial render
+  render();
+</script>
+</body>
+</html>
